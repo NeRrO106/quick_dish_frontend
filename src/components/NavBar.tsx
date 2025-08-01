@@ -108,11 +108,11 @@ hover:text-black"
           className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
           id="navbar-user"
         >
-          <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-red-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-red-500">
+          <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-red-100 rounded-lg bg-red-500 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-red-500">
             <li>
               <a
                 href="/about"
-                className="block py-2 px-3 text-white rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-gray-700 md:p-0"
+                className="block py-2 px-3 text-white rounded-sm hover:bg-red-200 hover:text-black md:hover:bg-transparent md:hover:text-black md:p-0"
               >
                 About
               </a>
@@ -120,7 +120,7 @@ hover:text-black"
             <li>
               <a
                 href="/menu"
-                className="block py-2 px-3 text-white rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-gray-700 md:p-0"
+                className="block py-2 px-3 text-white rounded-sm hover:bg-red-200 hover:text-black md:hover:bg-transparent md:hover:text-black md:p-0"
               >
                 Menu
               </a>
@@ -128,7 +128,7 @@ hover:text-black"
             <li>
               <a
                 href="/contact"
-                className="block py-2 px-3 text-white rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-gray-700 md:p-0"
+                className="block py-2 px-3 text-white rounded-sm hover:bg-red-200 hover:text-black md:hover:bg-transparent md:hover:text-black md:p-0"
               >
                 Contact
               </a>
