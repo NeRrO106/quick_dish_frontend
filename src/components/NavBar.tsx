@@ -3,7 +3,11 @@ function NavBar() {
     <nav className="bg-red-500 border-gray-200">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <div className="flex items-center space-x-3 rtl:space-x-reverse">
-          <img src="" className="h-8" alt="Flowbite Logo" />
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/1046/1046784.png"
+            className="h-8"
+            alt="Flowbite Logo"
+          />
           <span className="self-center text-2xl font-semibold whitespace-nowrap text-white">
             Quick Dish
           </span>
@@ -21,7 +25,7 @@ function NavBar() {
             <span className="sr-only">Open user menu</span>
             <img
               className="w-8 h-8 rounded-full"
-              src="/docs/images/people/profile-picture-3.jpg"
+              src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
               alt="user photo"
             />
           </button>
@@ -92,9 +96,9 @@ hover:text-black"
             >
               <path
                 stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
                 d="M1 1h15M1 7h15M1 13h15"
               />
             </svg>
