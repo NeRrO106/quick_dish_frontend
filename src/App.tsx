@@ -2,6 +2,10 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import Hero from "./pages/Hero";
 import Footer from "./components/Footer";
+import NoPage from "./pages/NoPage";
+import About from "./pages/About";
+import Menu from "./pages/Menu";
+import Contact from "./pages/Contact";
 function App() {
   return (
     <>
@@ -9,9 +13,10 @@ function App() {
         <NavBar />
         <Routes>
           <Route path="/" element={<Hero />} />
-          <Route path="blogs" element={<h1>Ceva</h1>} />
-          <Route path="contact" element={<h1>Ceva</h1>} />
-          <Route path="*" element={<h1>Ceva</h1>} />
+          <Route path="/about" element={<About />} />
+          <Route path="/menu" element={<Menu />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="*" element={<NoPage />} />
         </Routes>
         <Footer />
       </BrowserRouter>
