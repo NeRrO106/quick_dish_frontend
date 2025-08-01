@@ -6,6 +6,8 @@ import NoPage from "./pages/NoPage";
 import About from "./pages/About";
 import Menu from "./pages/Menu";
 import Contact from "./pages/Contact";
+import Login from "./features/auth/Login";
+import Register from "./features/auth/Register";
 function App() {
   return (
     <>
@@ -16,6 +18,8 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/menu" element={<Menu />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           <Route path="*" element={<NoPage />} />
         </Routes>
         <Footer />
