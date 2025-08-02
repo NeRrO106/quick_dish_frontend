@@ -1,4 +1,37 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 function Login() {
+  const navigate = useNavigate();
+  const [form, setForm] = useState({
+    name: "",
+    password: "",
+  });
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!form.name || !form.password) {
+      alert("Name and password needs to be filled");
+      return;
+    }
+    fetch("https://localhost:7100/api/user/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(form),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to login");
+        }
+      })
+      .catch((error) => {
+        console.error("Error on loggin: ", error);
+      });
+    navigate("/");
+  };
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-md">
@@ -18,6 +51,8 @@ function Login() {
               id="username"
               className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Enter your username"
+              onChange={(e) => setForm({ ...form, name: e.target.value })}
+              value={form.name}
             />
           </div>
           <div className="mb-6">
@@ -32,11 +67,14 @@ function Login() {
               id="password"
               className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Enter your password"
+              onChange={(e) => setForm({ ...form, password: e.target.value })}
+              value={form.password}
             />
           </div>
           <button
             type="submit"
             className="w-full px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            onClick={(e) => handleLogin(e)}
           >
             Login
           </button>

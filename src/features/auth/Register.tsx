@@ -37,7 +37,7 @@ function Register() {
         if (!response.ok) throw new Error("Failed to add new user");
       })
       .catch((error) => {
-        console.log("Error adding user: ", error);
+        console.error("Error adding user: ", error);
       });
     navigate("/login");
   };
