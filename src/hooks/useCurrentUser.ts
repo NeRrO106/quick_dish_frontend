@@ -20,7 +20,7 @@ export function useCurrentUser(){
             credentials: "include",
             headers: {
             Accept: "application/json",
-            },
+        },
         });
         if(!result.ok){
             if(result.status === 401){

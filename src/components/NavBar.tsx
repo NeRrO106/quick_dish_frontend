@@ -2,6 +2,16 @@ import { useCurrentUser } from "../hooks/useCurrentUser";
 
 function NavBar() {
   const { user } = useCurrentUser();
+  const apiUrl = import.meta.env.VITE_API_URL;
+
+  const handleSignOut = () => {
+    fetch(`${apiUrl}/user/logout`, {
+      method: "POST",
+      credentials: "include",
+    }).catch((error) => {
+      console.error("Error: ", error);
+    });
+  };
 
   return (
     <nav className="bg-red-500 border-gray-200">
@@ -38,11 +48,9 @@ function NavBar() {
             id="user-dropdown"
           >
             <div className="px-4 py-3">
-              <span className="block text-md text-white">
-                {user?.name || "Guest"}
-              </span>
+              <span className="block text-md text-white">{user?.name}</span>
               <span className="block text-sm text-white truncate">
-                {user?.email || ""}
+                {user?.email}
               </span>
             </div>
             <ul className="py-2" aria-labelledby="user-menu-button">
@@ -65,22 +73,21 @@ hover:text-black"
                 </a>
               </li>
               <li>
-                <a
-                  href="#"
+                <button
                   className="block px-4 py-2 text-md text-white hover:bg-red-700
 hover:text-black"
                 >
                   Settings
-                </a>
+                </button>
               </li>
               <li>
-                <a
-                  href="#"
+                <button
+                  onClick={() => handleSignOut()}
                   className="block px-4 py-2 text-md text-white hover:bg-red-700
 hover:text-black"
                 >
                   Sign out
-                </a>
+                </button>
               </li>
             </ul>
           </div>
@@ -139,6 +146,16 @@ hover:text-black"
                 Contact
               </a>
             </li>
+            {(user?.role === "Admin" || user?.role === "Moderator") && (
+              <li>
+                <a
+                  href="/contact"
+                  className="block py-2 px-3 text-white rounded-sm hover:bg-red-200 hover:text-black md:hover:bg-transparent md:hover:text-black md:p-0"
+                >
+                  Admin Contact
+                </a>
+              </li>
+            )}
           </ul>
         </div>
       </div>

@@ -8,7 +8,7 @@ import Menu from "./pages/Menu";
 import Contact from "./pages/Contact";
 import Login from "./features/auth/Login";
 import Register from "./features/auth/Register";
-import AuthRedirect from "./features/auth/AuthRedirect";
+import AuthRedirect from "./routes/AuthRedirect";
 
 function App() {
   return (
