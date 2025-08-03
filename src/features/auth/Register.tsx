@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function Register() {
+  const apiUrl = import.meta.env.VITE_API_URL;
   const navigate = useNavigate();
   const [form, setForm] = useState({
     name: "",
@@ -26,7 +27,7 @@ function Register() {
       return;
     }
 
-    fetch("https://localhost:7100/api/user/createuser", {
+    fetch(`${apiUrl}/user/createuser`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

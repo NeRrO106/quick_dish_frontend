@@ -1,4 +1,8 @@
+import { useCurrentUser } from "../hooks/useCurrentUser";
+
 function NavBar() {
+  const { user } = useCurrentUser();
+
   return (
     <nav className="bg-red-500 border-gray-200">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -34,9 +38,11 @@ function NavBar() {
             id="user-dropdown"
           >
             <div className="px-4 py-3">
-              <span className="block text-md text-white">Marian Petarde</span>
+              <span className="block text-md text-white">
+                {user?.name || "Guest"}
+              </span>
               <span className="block text-sm text-white truncate">
-                marian_vand_petarde_69@yahoo.com
+                {user?.email || ""}
               </span>
             </div>
             <ul className="py-2" aria-labelledby="user-menu-button">

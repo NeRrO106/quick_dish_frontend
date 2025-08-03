@@ -13,9 +13,10 @@ function Menu() {
   const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
-    fetch("https://localhost:7100/api/product/products")
+    fetch(`${apiUrl}/product/products`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -31,7 +32,7 @@ function Menu() {
         setError(error.message);
         setLoading(false);
       });
-  }, []);
+  }, [apiUrl]);
 
   if (loading) return <p>Loading....</p>;
   if (error) return <p>Error: {error}</p>;

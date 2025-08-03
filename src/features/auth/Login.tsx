@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function Login() {
+  const apiUrl = import.meta.env.VITE_API_URL;
   const navigate = useNavigate();
   const [form, setForm] = useState({
     name: "",
@@ -14,12 +15,11 @@ function Login() {
       alert("Name and password needs to be filled");
       return;
     }
-    fetch("https://localhost:7100/api/user/login", {
+    fetch(`${apiUrl}/user/login`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(form),
+      credentials: "include",
     })
       .then((response) => {
         if (!response.ok) {

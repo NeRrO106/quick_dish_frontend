@@ -8,13 +8,16 @@ import Menu from "./pages/Menu";
 import Contact from "./pages/Contact";
 import Login from "./features/auth/Login";
 import Register from "./features/auth/Register";
+import AuthRedirect from "./features/auth/AuthRedirect";
+
 function App() {
   return (
     <>
       <BrowserRouter>
+        <AuthRedirect />
         <NavBar />
         <Routes>
-          <Route path="/" element={<Hero />} />
+          <Route path="/hero" element={<Hero />} />
           <Route path="/about" element={<About />} />
           <Route path="/menu" element={<Menu />} />
           <Route path="/contact" element={<Contact />} />
