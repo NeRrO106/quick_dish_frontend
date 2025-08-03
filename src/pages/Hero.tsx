@@ -2,6 +2,26 @@ import { useNavigate } from "react-router-dom";
 
 function Hero() {
   const navigate = useNavigate();
+  const apiUrl = import.meta.env.VITE_API_URL;
+
+  const handleGhost = (e: React.FormEvent) => {
+    e.preventDefault();
+    fetch(`${apiUrl}/user/login-ghost`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to login");
+        }
+      })
+      .catch((error) => {
+        console.error("Error on loggin: ", error);
+      });
+    navigate("/");
+  };
+
   return (
     <div className=" min-h-screen bg-emerald-500 flex items-center justify-center px-4">
       <div className="text-center max-w-xl text-white space-y-6">
@@ -20,7 +40,7 @@ function Hero() {
           </button>
           <button
             className="transition-all duration-300 focus:outline-none text-gray-900 bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-semibold rounded-lg text-md px-6 py-2 shadow-lg dark:focus:ring-yellow-900"
-            onClick={() => localStorage.setItem("token", "abc123")}
+            onClick={(e) => handleGhost(e)}
           >
             Continue as Guest
           </button>

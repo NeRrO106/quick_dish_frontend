@@ -17,8 +17,12 @@ function AuthRedirect() {
       ) {
         navigate("/hero");
       }
-    } else {
-      if (["/", "/hero", "/login", "/register"].includes(location.pathname)) {
+    } else if (user?.role === "Client" || user?.role === "Ghost") {
+      if (
+        location.pathname === "/hero" ||
+        location.pathname === "/login" ||
+        location.pathname === "/register"
+      ) {
         navigate("/about");
       }
     }
