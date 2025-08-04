@@ -5,7 +5,7 @@ function NavBar() {
   const apiUrl = import.meta.env.VITE_API_URL;
 
   const handleSignOut = () => {
-    fetch(`${apiUrl}/user/logout`, {
+    fetch(`${apiUrl}/auth/logout`, {
       method: "POST",
       credentials: "include",
     }).catch((error) => {
@@ -122,39 +122,117 @@ hover:text-black"
           id="navbar-user"
         >
           <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-red-100 rounded-lg bg-red-500 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-red-500">
-            <li>
-              <a
-                href="/about"
-                className="block py-2 px-3 text-white rounded-sm hover:bg-red-200 hover:text-black md:hover:bg-transparent md:hover:text-black md:p-0"
-              >
-                About
-              </a>
-            </li>
-            <li>
-              <a
-                href="/menu"
-                className="block py-2 px-3 text-white rounded-sm hover:bg-red-200 hover:text-black md:hover:bg-transparent md:hover:text-black md:p-0"
-              >
-                Menu
-              </a>
-            </li>
-            <li>
-              <a
-                href="/contact"
-                className="block py-2 px-3 text-white rounded-sm hover:bg-red-200 hover:text-black md:hover:bg-transparent md:hover:text-black md:p-0"
-              >
-                Contact
-              </a>
-            </li>
-            {(user?.role === "Admin" || user?.role === "Moderator") && (
-              <li>
-                <a
-                  href="/contact"
-                  className="block py-2 px-3 text-white rounded-sm hover:bg-red-200 hover:text-black md:hover:bg-transparent md:hover:text-black md:p-0"
-                >
-                  Admin Contact
-                </a>
-              </li>
+            {(user?.role === "Client" || user?.role === "Ghost") && (
+              <>
+                <li>
+                  <a
+                    href="/about"
+                    className="block py-2 px-3 text-white rounded-sm hover:bg-red-200 hover:text-black md:hover:bg-transparent md:hover:text-black md:p-0"
+                  >
+                    About
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/menu"
+                    className="block py-2 px-3 text-white rounded-sm hover:bg-red-200 hover:text-black md:hover:bg-transparent md:hover:text-black md:p-0"
+                  >
+                    Menu
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/contact"
+                    className="block py-2 px-3 text-white rounded-sm hover:bg-red-200 hover:text-black md:hover:bg-transparent md:hover:text-black md:p-0"
+                  >
+                    Contact
+                  </a>
+                </li>
+              </>
+            )}
+            {user?.role === "Admin" && (
+              <>
+                <li>
+                  <a
+                    href="/users"
+                    className="block py-2 px-3 text-white rounded-sm hover:bg-red-200 hover:text-black md:hover:bg-transparent md:hover:text-black md:p-0"
+                  >
+                    Users
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/products"
+                    className="block py-2 px-3 text-white rounded-sm hover:bg-red-200 hover:text-black md:hover:bg-transparent md:hover:text-black md:p-0"
+                  >
+                    Products
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/orders"
+                    className="block py-2 px-3 text-white rounded-sm hover:bg-red-200 hover:text-black md:hover:bg-transparent md:hover:text-black md:p-0"
+                  >
+                    Orders
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/menu"
+                    className="block py-2 px-3 text-white rounded-sm hover:bg-red-200 hover:text-black md:hover:bg-transparent md:hover:text-black md:p-0"
+                  >
+                    Menu
+                  </a>
+                </li>
+              </>
+            )}
+            {user?.role === "Moderator" && (
+              <>
+                <li>
+                  <a
+                    href="/products"
+                    className="block py-2 px-3 text-white rounded-sm hover:bg-red-200 hover:text-black md:hover:bg-transparent md:hover:text-black md:p-0"
+                  >
+                    Products
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/orders"
+                    className="block py-2 px-3 text-white rounded-sm hover:bg-red-200 hover:text-black md:hover:bg-transparent md:hover:text-black md:p-0"
+                  >
+                    Orders
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/menu"
+                    className="block py-2 px-3 text-white rounded-sm hover:bg-red-200 hover:text-black md:hover:bg-transparent md:hover:text-black md:p-0"
+                  >
+                    Menu
+                  </a>
+                </li>
+              </>
+            )}
+            {user?.role === "Courier" && (
+              <>
+                <li>
+                  <a
+                    href="/orders"
+                    className="block py-2 px-3 text-white rounded-sm hover:bg-red-200 hover:text-black md:hover:bg-transparent md:hover:text-black md:p-0"
+                  >
+                    Orders
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/menu"
+                    className="block py-2 px-3 text-white rounded-sm hover:bg-red-200 hover:text-black md:hover:bg-transparent md:hover:text-black md:p-0"
+                  >
+                    Menu
+                  </a>
+                </li>
+              </>
             )}
           </ul>
         </div>

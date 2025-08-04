@@ -27,7 +27,7 @@ function Register() {
       return;
     }
 
-    fetch(`${apiUrl}/user/createuser`, {
+    fetch(`${apiUrl}/user`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -15,7 +15,7 @@ function Login() {
       alert("Name and password needs to be filled");
       return;
     }
-    fetch(`${apiUrl}/user/login`, {
+    fetch(`${apiUrl}/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(form),

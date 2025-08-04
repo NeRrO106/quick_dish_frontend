@@ -16,7 +16,7 @@ function Menu() {
   const apiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
-    fetch(`${apiUrl}/product/products`)
+    fetch(`${apiUrl}/product`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
