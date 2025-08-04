@@ -35,12 +35,12 @@ function Products() {
   }, [apiUrl]);
 
   const handleDelete = (id: number) => {
-    fetch(`${apiUrl}/user/${id}`, {
+    fetch(`${apiUrl}/product/${id}`, {
       method: "DELETE",
     })
       .then((response) => {
         if (!response.ok) {
-          throw new Error("Failed to delete user");
+          throw new Error("Failed to delete product");
         }
         setMenuItems(menuItems.filter((items) => items.id !== id));
       })
