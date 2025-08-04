@@ -34,6 +34,21 @@ function Products() {
       });
   }, [apiUrl]);
 
+  const handleDelete = (id: number) => {
+    fetch(`${apiUrl}/user/${id}`, {
+      method: "DELETE",
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to delete user");
+        }
+        setMenuItems(menuItems.filter((items) => items.id !== id));
+      })
+      .catch((error) => {
+        setError(error.message);
+      });
+  };
+
   if (loading) return <p>Loading....</p>;
   if (error) return <p>Error: {error}</p>;
 
@@ -67,7 +82,10 @@ function Products() {
             <button className="text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:focus:ring-yellow-900">
               Edit product
             </button>
-            <button className="text-white bg-red-700 hover:bg-red-900 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:focus:ring-red-900">
+            <button
+              onClick={() => handleDelete(item.id)}
+              className="text-white bg-red-700 hover:bg-red-900 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:focus:ring-red-900"
+            >
               Delete product
             </button>
           </li>
