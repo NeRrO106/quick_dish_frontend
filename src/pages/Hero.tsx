@@ -6,7 +6,7 @@ function Hero() {
 
   const handleGhost = (e: React.FormEvent) => {
     e.preventDefault();
-    fetch(`${apiUrl}/auth/login-ghost`, {
+    fetch(`${apiUrl}/api/auth/login-ghost`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",

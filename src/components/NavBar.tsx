@@ -1,11 +1,11 @@
 import { useCurrentUser } from "../hooks/useCurrentUser";
 
 function NavBar() {
-  const { user } = useCurrentUser();
+  const { data } = useCurrentUser();
   const apiUrl = import.meta.env.VITE_API_URL;
 
   const handleSignOut = () => {
-    fetch(`${apiUrl}/auth/logout`, {
+    fetch(`${apiUrl}/api/auth/logout`, {
       method: "POST",
       credentials: "include",
     }).catch((error) => {
@@ -48,9 +48,9 @@ function NavBar() {
             id="user-dropdown"
           >
             <div className="px-4 py-3">
-              <span className="block text-md text-white">{user?.name}</span>
+              <span className="block text-md text-white">{data?.name}</span>
               <span className="block text-sm text-white truncate">
-                {user?.email}
+                {data?.email}
               </span>
             </div>
             <ul className="py-2" aria-labelledby="user-menu-button">
@@ -122,7 +122,7 @@ hover:text-black"
           id="navbar-user"
         >
           <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-red-100 rounded-lg bg-red-500 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-red-500">
-            {(user?.role === "Client" || user?.role === "Ghost") && (
+            {(data?.role === "Client" || data?.role === "Ghost") && (
               <>
                 <li>
                   <a
@@ -150,7 +150,7 @@ hover:text-black"
                 </li>
               </>
             )}
-            {user?.role === "Admin" && (
+            {data?.role === "Admin" && (
               <>
                 <li>
                   <a
@@ -186,7 +186,7 @@ hover:text-black"
                 </li>
               </>
             )}
-            {user?.role === "Moderator" && (
+            {data?.role === "Moderator" && (
               <>
                 <li>
                   <a
@@ -214,7 +214,7 @@ hover:text-black"
                 </li>
               </>
             )}
-            {user?.role === "Courier" && (
+            {data?.role === "Courier" && (
               <>
                 <li>
                   <a

@@ -11,26 +11,31 @@ import Register from "./features/auth/Register";
 import AuthRedirect from "./routes/AuthRedirect";
 import Users from "./features/users/Users";
 import Products from "./features/products/Products";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 function App() {
   return (
     <>
-      <BrowserRouter>
-        <AuthRedirect />
-        <NavBar />
-        <Routes>
-          <Route path="/hero" element={<Hero />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/menu" element={<Menu />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/users" element={<Users />} />
-          <Route path="/products" element={<Products />} />
-          <Route path="*" element={<NoPage />} />
-        </Routes>
-        <Footer />
-      </BrowserRouter>
+      <QueryClientProvider client={queryClient}>
+        <BrowserRouter>
+          <AuthRedirect />
+          <NavBar />
+          <Routes>
+            <Route path="/hero" element={<Hero />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/menu" element={<Menu />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/users" element={<Users />} />
+            <Route path="/products" element={<Products />} />
+            <Route path="*" element={<NoPage />} />
+          </Routes>
+          <Footer />
+        </BrowserRouter>
+      </QueryClientProvider>
     </>
   );
 }

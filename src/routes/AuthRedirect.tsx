@@ -3,13 +3,13 @@ import { useCurrentUser } from "../hooks/useCurrentUser";
 import { useEffect } from "react";
 
 function AuthRedirect() {
-  const { user, loading } = useCurrentUser();
+  const { data, isLoading } = useCurrentUser();
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
-    if (loading) return;
-    if (!user || user?.role === null) {
+    if (isLoading) return;
+    if (!data || data?.role === null) {
       if (
         location.pathname !== "/hero" &&
         location.pathname !== "/login" &&
@@ -17,7 +17,7 @@ function AuthRedirect() {
       ) {
         navigate("/hero");
       }
-    } else if (user?.role === "Client" || user?.role === "Ghost") {
+    } else if (data?.role === "Client" || data?.role === "Ghost") {
       if (
         location.pathname === "/hero" ||
         location.pathname === "/login" ||
@@ -26,7 +26,7 @@ function AuthRedirect() {
         navigate("/about");
       }
     }
-  }, [user, loading, location.pathname, navigate]);
+  }, [data, isLoading, location.pathname, navigate]);
   return null;
 }
 export default AuthRedirect;

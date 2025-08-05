@@ -1,8 +1,10 @@
+import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function Register() {
   const apiUrl = import.meta.env.VITE_API_URL;
+  const endpointUrl = import.meta.env.VITE_USERS_ENDPOINT;
   const navigate = useNavigate();
   const [form, setForm] = useState({
     name: "",
@@ -27,20 +29,19 @@ function Register() {
       return;
     }
 
-    fetch(`${apiUrl}/user`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(form),
-    })
+    axios
+      .post(`${apiUrl}${endpointUrl}`, form, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
       .then((response) => {
-        if (!response.ok) throw new Error("Failed to add new user");
+        console.log(response);
+        navigate("/login");
       })
       .catch((error) => {
-        console.error("Error adding user: ", error);
+        console.log(error);
       });
-    navigate("/login");
   };
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
