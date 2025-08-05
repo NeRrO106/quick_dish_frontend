@@ -1,0 +1,155 @@
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import type { User } from "./User";
+import getEntity from "../../utils/GetEntity";
+import { useQuery } from "@tanstack/react-query";
+import putEntity from "../../utils/PutEntity";
+
+function EditUser() {
+  const roles = ["Client", "Admin", "Manager", "Courier"];
+  const { id } = useParams<{ id: string }>();
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    password: "",
+    role: "",
+  });
+  const endpointUrl = import.meta.env.VITE_USERS_ENDPOINT;
+  const { data } = useQuery<User | null>({
+    queryKey: ["users", id],
+    queryFn: () => getEntity<User>(`${endpointUrl}${id}`),
+    enabled: !!id,
+  });
+
+  useEffect(() => {
+    if (data) {
+      setForm({
+        name: data.name,
+        email: data.email,
+        password: "",
+        role: data.role,
+      });
+    }
+  }, [data]);
+
+  const handleSave = async () => {
+    const data = await putEntity(`${endpointUrl}${id}`, form);
+    if (data === null) {
+      console.log("Null data");
+    } else {
+      console.log("User updated", data);
+      window.history.back();
+    }
+  };
+  const handleSelect = (role: string) => {
+    setForm({ ...form, role: role });
+  };
+  return (
+    <>
+      <div className="w-full max-w-2xl bg-white border border-gray-200 rounded-lg shadow-sm p-6 dark:bg-purple-500 dark:border-gray-700">
+        <h2 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white md-5">
+          Edit user
+        </h2>
+        <div>
+          <label className="block mb-2 text-md font-medium text-white-900 dark:text-white">
+            User Name
+          </label>
+          <input
+            className="bg-gray-50 border border-gray-300 text-white-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4"
+            name="name"
+            value={form.name}
+            onChange={(e) => setForm({ ...form, name: e.target.value })}
+          />
+        </div>
+
+        <div>
+          <label className="block mb-2 text-md font-medium text-white-900 dark:text-white">
+            Email
+          </label>
+          <input
+            className="bg-gray-50 border border-gray-300 text-white-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4"
+            name="email"
+            value={form.email}
+            onChange={(e) => setForm({ ...form, email: e.target.value })}
+          />
+        </div>
+
+        <div>
+          <label className="block mb-2 text-md font-medium text-white-900 dark:text-white">
+            Role
+          </label>
+          <button
+            id="dropdownDefaultButton"
+            data-dropdown-toggle="dropdown"
+            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            type="button"
+          >
+            {form.role}
+            <svg
+              className="w-2.5 h-2.5 ms-3"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 10 6"
+            >
+              <path
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="m1 1 4 4 4-4"
+              />
+            </svg>
+          </button>
+          <div
+            id="dropdown"
+            className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700"
+          >
+            <ul
+              className="py-2 text-sm text-gray-700 dark:text-gray-200"
+              aria-labelledby="dropdownDefaultButton"
+            >
+              {roles.map((role) => (
+                <li key={role}>
+                  <button
+                    onClick={() => handleSelect(role)}
+                    className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                  >
+                    {" "}
+                    {role}{" "}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <div>
+          <label className="block mb-2 text-md font-medium text-white-900 dark:text-white">
+            Password
+          </label>
+          <input
+            className="bg-gray-50 border border-gray-300 text-white-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4"
+            name="password"
+            type="password"
+            value={form.password}
+            onChange={(e) => setForm({ ...form, password: e.target.value })}
+          />
+        </div>
+        <button
+          className="text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+          onClick={handleSave}
+        >
+          Save
+        </button>
+        <button
+          className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
+          onClick={() => window.history.back()}
+        >
+          Back
+        </button>
+      </div>
+    </>
+  );
+}
+export default EditUser;

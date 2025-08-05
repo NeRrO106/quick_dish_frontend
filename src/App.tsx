@@ -12,6 +12,8 @@ import AuthRedirect from "./routes/AuthRedirect";
 import Users from "./features/users/Users";
 import Products from "./features/products/Products";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import EditUser from "./features/users/EditUser";
+import EditProduct from "./features/products/EditProduct";
 
 const queryClient = new QueryClient();
 
@@ -30,7 +32,9 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/users" element={<Users />} />
+            <Route path="/users/:id" element={<EditUser />} />
             <Route path="/products" element={<Products />} />
+            <Route path="/products/:id" element={<EditProduct />} />
             <Route path="*" element={<NoPage />} />
           </Routes>
           <Footer />

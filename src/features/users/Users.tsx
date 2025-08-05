@@ -1,15 +1,12 @@
 import getEntity from "../../utils/GetEntity";
 import deleteEntity from "../../utils/DeleteEntity";
-import { useQuery } from "@tanstack/react-query";
-
-interface User {
-  id: number;
-  name: string;
-  email: string;
-  createdAt: string;
-}
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import type { User } from "./User";
+import { useNavigate } from "react-router-dom";
 
 function Users() {
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const endpointUrl = import.meta.env.VITE_USERS_ENDPOINT;
   const { data, isLoading, isError, error } = useQuery<User[] | null>({
     queryKey: ["users"],
@@ -18,6 +15,7 @@ function Users() {
 
   const handleDelete = async (id: number) => {
     await deleteEntity(endpointUrl, id);
+    queryClient.invalidateQueries({ queryKey: ["users"] });
   };
 
   if (isLoading) return <p>Loading....</p>;
@@ -42,10 +40,16 @@ function Users() {
             <p className="text-sm text-center font-medium text-white mb-2">
               {user.email}
             </p>
-            <p className="text-xl font-bold text-white mb-2">
-              {user.createdAt}
+            <p className="text-sm text-center font-medium text-white mb-2">
+              {user.role}
             </p>
-            <button className="text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:focus:ring-yellow-900">
+            <p className="text-xl font-bold text-white mb-2">
+              {new Date(user.createdAt).toLocaleDateString()}
+            </p>
+            <button
+              onClick={() => navigate(`/users/${user.id}`)}
+              className="text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:focus:ring-yellow-900"
+            >
               Edit user
             </button>
             <button

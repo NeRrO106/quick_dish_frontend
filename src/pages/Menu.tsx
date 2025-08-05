@@ -1,21 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import getEntity from "../utils/GetEntity";
-
-interface MenuItem {
-  id: number;
-  name: string;
-  description: string;
-  price: number;
-  category: string;
-  ImageUrl: string;
-}
+import type { Product } from "../features/products/Product";
 
 function Menu() {
-  //const apiUrl = import.meta.env.VITE_API_URL;
   const endpointUrl = import.meta.env.VITE_PRODUCTS_ENDPOINT;
-  const { data, isLoading, isError, error } = useQuery<MenuItem[] | null>({
+  const { data, isLoading, isError, error } = useQuery<Product[] | null>({
     queryKey: ["products"],
-    queryFn: () => getEntity<MenuItem[]>(endpointUrl),
+    queryFn: () => getEntity<Product[]>(endpointUrl),
   });
 
   if (isLoading) return <p>Loading....</p>;

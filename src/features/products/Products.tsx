@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import getEntity from "../../utils/GetEntity";
 import deleteEntity from "../../utils/DeleteEntity";
+import { useNavigate } from "react-router-dom";
 
 interface MenuItem {
   id: number;
@@ -12,6 +13,7 @@ interface MenuItem {
 }
 
 function Products() {
+  const navigate = useNavigate();
   const endpointUrl = import.meta.env.VITE_PRODUCTS_ENDPOINT;
   const { data, isLoading, isError, error } = useQuery<MenuItem[] | null>({
     queryKey: ["products"],
@@ -52,7 +54,10 @@ function Products() {
             <p className="text-xl font-bold text-white mb-2">
               {prod.price.toFixed(2)} lei
             </p>
-            <button className="text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:focus:ring-yellow-900">
+            <button
+              onClick={() => navigate(`/products/${prod.id}`)}
+              className="text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:focus:ring-yellow-900"
+            >
               Edit product
             </button>
             <button
