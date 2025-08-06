@@ -2,23 +2,24 @@ import { useQuery } from "@tanstack/react-query";
 import getEntity from "../../utils/GetEntity";
 import deleteEntity from "../../utils/DeleteEntity";
 import { useNavigate } from "react-router-dom";
-
-interface MenuItem {
-  id: number;
-  name: string;
-  description: string;
-  price: number;
-  category: string;
-  ImageUrl: string;
-}
+import type { Product } from "./Product";
+import { useEffect } from "react";
 
 function Products() {
   const navigate = useNavigate();
   const endpointUrl = import.meta.env.VITE_PRODUCTS_ENDPOINT;
-  const { data, isLoading, isError, error } = useQuery<MenuItem[] | null>({
+  const { data, isLoading, isError, error } = useQuery<Product[] | null>({
     queryKey: ["products"],
-    queryFn: () => getEntity<MenuItem[]>(endpointUrl),
+    queryFn: () => getEntity<Product[]>(endpointUrl),
   });
+
+  useEffect(() => {
+    if (data) {
+      data.forEach((prod) => {
+        console.log("Image URL:", prod.imageUrl);
+      });
+    }
+  }, [data]);
 
   const handleDelete = async (id: number) => {
     await deleteEntity(endpointUrl, id);
@@ -47,7 +48,7 @@ function Products() {
             className="w-64 p-2 border border-gray-200 rounded-lg shadow-sm bg-gray-800 border-gray-700 mb-4"
           >
             <img
-              src={prod.ImageUrl}
+              src={prod.imageUrl}
               alt={prod.name}
               className="w-full h-36 object-cover rounded-lg mb-3"
             />

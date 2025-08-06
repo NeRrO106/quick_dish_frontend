@@ -26,7 +26,7 @@ function Menu() {
             className="w-64 p-2 border border-gray-200 rounded-lg shadow-sm bg-gray-800 border-gray-700 mb-4"
           >
             <img
-              src={prod.ImageUrl}
+              src={prod.imageUrl}
               alt={prod.name}
               className="w-full h-36 object-cover rounded-lg mb-3"
             />

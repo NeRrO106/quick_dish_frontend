@@ -28,7 +28,7 @@ function EditProduct() {
         description: data.description,
         price: data.price,
         category: data.category,
-        ImageUrl: data.ImageUrl,
+        ImageUrl: data.imageUrl,
       });
     }
   }, [data]);
