@@ -1,56 +1,40 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useState } from "react";
 import type { User } from "./User";
-import getEntity from "../../utils/GetEntity";
-import { useQuery } from "@tanstack/react-query";
-import putEntity from "../../utils/PutEntity";
+import postEntity from "../../utils/PostEntity";
 
-function EditUser() {
-  const roles = ["Client", "Admin", "Manager", "Courier"];
-  const { id } = useParams<{ id: string }>();
+function AddUser() {
   const [form, setForm] = useState({
+    id: 0,
     name: "",
     email: "",
     password: "",
     role: "",
+    createdAt: "",
   });
-  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const roles = ["Client", "Admin", "Manager", "Courier"];
   const endpointUrl = import.meta.env.VITE_USERS_ENDPOINT;
-  const { data } = useQuery<User | null>({
-    queryKey: ["users", id],
-    queryFn: () => getEntity<User>(`${endpointUrl}${id}`),
-    enabled: !!id,
-  });
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  useEffect(() => {
-    if (data) {
-      setForm({
-        name: data.name,
-        email: data.email,
-        password: "",
-        role: data.role,
-      });
-    }
-  }, [data]);
-
-  const handleSave = async () => {
-    const data = await putEntity(`${endpointUrl}${id}`, form);
-    if (data === null) {
-      console.log("Null data");
-    } else {
-      console.log("User updated", data);
-      window.history.back();
-    }
-  };
   const handleSelect = (role: string) => {
     setForm({ ...form, role: role });
     setDropdownOpen(!dropdownOpen);
   };
+
+  const handleSave = async () => {
+    const data = await postEntity<User>(`${endpointUrl}`, form);
+    if (data === null) {
+      console.log("Null data");
+    } else {
+      console.log("Product updated", data);
+      window.history.back();
+    }
+  };
+
   return (
     <>
       <div className="w-full max-w-2xl bg-white border border-gray-200 rounded-lg shadow-sm p-6 dark:bg-purple-500 dark:border-gray-700">
         <h2 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white md-5">
-          Edit user
+          Create user
         </h2>
         <div>
           <label className="block mb-2 text-md font-medium text-white-900 dark:text-white">
@@ -84,7 +68,7 @@ function EditUser() {
             onClick={() => setDropdownOpen(!dropdownOpen)}
             className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           >
-            {form.role}
+            {form.role || "Select Role"}
             <svg
               className="w-2.5 h-2.5 ms-3"
               aria-hidden="true"
@@ -147,4 +131,4 @@ function EditUser() {
     </>
   );
 }
-export default EditUser;
+export default AddUser;

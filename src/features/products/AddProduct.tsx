@@ -1,13 +1,10 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useState } from "react";
 import type { Product } from "./Product";
-import getEntity from "../../utils/GetEntity";
-import { useQuery } from "@tanstack/react-query";
-import putEntity from "../../utils/PutEntity";
+import postEntity from "../../utils/PostEntity";
 
 function EditProduct() {
-  const { id } = useParams<{ id: string }>();
   const [form, setForm] = useState({
+    id: 0,
     name: "",
     description: "",
     price: 0,
@@ -15,26 +12,9 @@ function EditProduct() {
     ImageUrl: "",
   });
   const endpointUrl = import.meta.env.VITE_PRODUCTS_ENDPOINT;
-  const { data } = useQuery<Product | null>({
-    queryKey: ["products", id],
-    queryFn: () => getEntity<Product>(`${endpointUrl}${id}`),
-    enabled: !!id,
-  });
-
-  useEffect(() => {
-    if (data) {
-      setForm({
-        name: data.name,
-        description: data.description,
-        price: data.price,
-        category: data.category,
-        ImageUrl: data.ImageUrl,
-      });
-    }
-  }, [data]);
 
   const handleSave = async () => {
-    const data = await putEntity(`${endpointUrl}${id}`, form);
+    const data = await postEntity<Product>(`${endpointUrl}`, form);
     if (data === null) {
       console.log("Null data");
     } else {

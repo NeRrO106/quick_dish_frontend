@@ -11,15 +11,15 @@ function AuthRedirect() {
     if (isLoading) return;
     if (!data || data?.role === null) {
       if (
-        location.pathname !== "/hero" &&
+        location.pathname !== "/" &&
         location.pathname !== "/login" &&
         location.pathname !== "/register"
       ) {
-        navigate("/hero");
+        navigate("/");
       }
     } else if (data?.role === "Client" || data?.role === "Ghost") {
       if (
-        location.pathname === "/hero" ||
+        location.pathname === "/" ||
         location.pathname === "/login" ||
         location.pathname === "/register"
       ) {

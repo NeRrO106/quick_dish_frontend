@@ -30,6 +30,12 @@ function Products() {
   return (
     <div className="min-h-screen bg-emerald-500 flex items-center justify-center px-4 flex-col">
       <div className="text-center max-w-xl text-white space-y-6">
+        <button
+          onClick={() => navigate("/products/add")}
+          className="text-white bg-red-700 hover:bg-red-900 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:focus:ring-red-900"
+        >
+          Add product
+        </button>
         <h1 className="text-6xl font-extrabold tracking-tight leading-tight drop-shadow-lg">
           Product Page
         </h1>
@@ -50,6 +56,9 @@ function Products() {
             </p>
             <p className="text-sm text-center font-medium text-white mb-2">
               {prod.description}
+            </p>
+            <p className="text-sm text-center font-medium text-white mb-2">
+              {prod.category}
             </p>
             <p className="text-xl font-bold text-white mb-2">
               {prod.price.toFixed(2)} lei
