@@ -1,7 +1,7 @@
 interface OrderItem {
   id: number;
   orderId: number;
-  productId: number;
+  productName: string;
   quantity: number;
   unitPrice: number;
   totalPrice: number;
@@ -9,8 +9,8 @@ interface OrderItem {
 
 export interface Order {
   id: number;
-  userId: number;
-  courierId: number;
+  userName: string;
+  courierName: string;
   address: string;
   phoneNumber: number;
   totalAmount: number;

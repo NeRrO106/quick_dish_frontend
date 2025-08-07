@@ -27,10 +27,10 @@ function Products() {
           >
             <p>Comanda: #{order.id}</p>
             <p className="text-xl text-center font-semibold text-white mb-2">
-              {order.userId}
+              {order.userName}
             </p>
             <p className="text-sm text-center font-medium text-white mb-2">
-              {order.courierId}
+              {order.courierName}
             </p>
             <p className="text-sm text-center font-medium text-white mb-2">
               {order.address}
@@ -54,8 +54,8 @@ function Products() {
             <ul className="text-sm mt-1">
               {order.items.map((item) => (
                 <p className="text-xl font-bold text-white mb-2">
-                  Produs: #{item.productId} - {item.quantity} * {item.unitPrice}{" "}
-                  = {item.totalPrice}
+                  Produs: {item.productName} - {item.quantity} *{" "}
+                  {item.unitPrice} = {item.totalPrice}
                 </p>
               ))}
             </ul>
