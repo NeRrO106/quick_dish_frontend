@@ -16,6 +16,7 @@ import EditUser from "./features/users/EditUser";
 import EditProduct from "./features/products/EditProduct";
 import AddUser from "./features/users/AddUser";
 import AddProduct from "./features/products/AddProduct";
+import Orders from "./features/orders/Orders";
 
 const queryClient = new QueryClient();
 
@@ -39,6 +40,7 @@ function App() {
             <Route path="/products" element={<Products />} />
             <Route path="/products/:id" element={<EditProduct />} />
             <Route path="/products/add" element={<AddProduct />} />
+            <Route path="/orders" element={<Orders />} />
             <Route path="*" element={<NoPage />} />
           </Routes>
           <Footer />
