@@ -6,15 +6,14 @@ function Cart() {
   const handleIncrede = (id: number) => {
     const item = cart.find((p) => p.id === id);
     if (item) {
-      addToCart({ ...item, quantity: 1 });
+      addToCart(id, 1, item.price);
     }
   };
 
   const handleDecrese = (id: number) => {
     const item = cart.find((p) => p.id === id);
     if (item && item.quantity > 1) {
-      removeFromCart(id);
-      addToCart({ ...item, quantity: item.quantity - 1 });
+      addToCart(id, -1, item.price);
     } else {
       removeFromCart(id);
     }

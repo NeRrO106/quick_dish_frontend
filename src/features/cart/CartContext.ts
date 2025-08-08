@@ -8,7 +8,7 @@ interface CartItem {
 
 interface CartContextType {
   cart: CartItem[];
-  addToCart: (item: CartItem) => void;
+  addToCart: (id: number, quantity: number, price: number) => void;
   removeFromCart: (id: number) => void;
   totalAmount: () => number;
 }

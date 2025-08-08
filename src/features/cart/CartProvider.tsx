@@ -18,15 +18,15 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     console.log(localStorage.getItem("cart"));
   }, [cart]);
 
-  const addToCart = (item: CartItem) => {
+  const addToCart = (id: number, quantity: number, price: number) => {
     setCart((prev) => {
-      const existing = prev.find((p) => p.id === item.id);
+      const existing = prev.find((p) => p.id === id);
       if (existing) {
         return prev.map((p) =>
-          p.id === item.id ? { ...p, quantity: p.quantity + item.quantity } : p
+          p.id === id ? { ...p, quantity: p.quantity + quantity } : p
         );
       }
-      return [...prev, item];
+      return [...prev, { id, quantity, price }];
     });
   };
 

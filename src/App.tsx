@@ -19,6 +19,7 @@ import AddProduct from "./features/products/AddProduct";
 import Orders from "./features/orders/Orders";
 import { CartProvider } from "./features/cart/CartProvider";
 import Cart from "./pages/Cart";
+import ProductDetail from "./pages/ProductDetail";
 const queryClient = new QueryClient();
 
 function App() {
@@ -43,6 +44,7 @@ function App() {
             <Route path="/products/:id" element={<EditProduct />} />
             <Route path="/products/add" element={<AddProduct />} />
             <Route path="/orders" element={<Orders />} />
+            <Route path="/productdetails/:id" element={<ProductDetail />} />
             <Route path="*" element={<NoPage />} />
           </Routes>
           <Footer />
