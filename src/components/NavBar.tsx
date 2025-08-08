@@ -56,7 +56,7 @@ function NavBar() {
             <ul className="py-2" aria-labelledby="user-menu-button">
               <li>
                 <a
-                  href="#"
+                  href="/cart"
                   className="block px-4 py-2 text-md text-white hover:bg-red-700
 hover:text-black"
                 >

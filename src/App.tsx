@@ -17,12 +17,13 @@ import EditProduct from "./features/products/EditProduct";
 import AddUser from "./features/users/AddUser";
 import AddProduct from "./features/products/AddProduct";
 import Orders from "./features/orders/Orders";
-
+import { CartProvider } from "./features/cart/CartProvider";
+import Cart from "./pages/Cart";
 const queryClient = new QueryClient();
 
 function App() {
   return (
-    <>
+    <CartProvider>
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
           <AuthRedirect />
@@ -32,6 +33,7 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/menu" element={<Menu />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/cart" element={<Cart />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/users" element={<Users />} />
@@ -46,7 +48,7 @@ function App() {
           <Footer />
         </BrowserRouter>
       </QueryClientProvider>
-    </>
+    </CartProvider>
   );
 }
 

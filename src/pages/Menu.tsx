@@ -1,8 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import getEntity from "../utils/GetEntity";
 import type { Product } from "../features/products/Product";
+import { useCart } from "../features/cart/useCart";
 
 function Menu() {
+  const { addToCart } = useCart();
+
   const endpointUrl = import.meta.env.VITE_PRODUCTS_ENDPOINT;
   const { data, isLoading, isError, error } = useQuery<Product[] | null>({
     queryKey: ["products"],
@@ -11,6 +14,14 @@ function Menu() {
 
   if (isLoading) return <p>Loading....</p>;
   if (isError) return <p>Error: {(error as Error).message}</p>;
+
+  const handleAddToCart = (prodId: number, prodPrice: number) => {
+    addToCart({
+      id: prodId,
+      quantity: 1,
+      price: prodPrice,
+    });
+  };
 
   return (
     <div className="min-h-screen bg-emerald-500 flex items-center justify-center px-4 flex-col">
@@ -40,6 +51,12 @@ function Menu() {
               {prod.price.toFixed(2)} lei
             </p>
             <button className="text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:focus:ring-yellow-900">
+              View Product
+            </button>
+            <button
+              onClick={() => handleAddToCart(prod.id, prod.price)}
+              className="text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:focus:ring-yellow-900"
+            >
               Add to cart
             </button>
           </li>
