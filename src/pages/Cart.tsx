@@ -1,7 +1,24 @@
 import { useCart } from "../features/cart/useCart";
 
 function Cart() {
-  const { cart, totalAmount } = useCart();
+  const { cart, addToCart, removeFromCart, totalAmount } = useCart();
+
+  const handleIncrede = (id: number) => {
+    const item = cart.find((p) => p.id === id);
+    if (item) {
+      addToCart({ ...item, quantity: 1 });
+    }
+  };
+
+  const handleDecrese = (id: number) => {
+    const item = cart.find((p) => p.id === id);
+    if (item && item.quantity > 1) {
+      removeFromCart(id);
+      addToCart({ ...item, quantity: item.quantity - 1 });
+    } else {
+      removeFromCart(id);
+    }
+  };
 
   if (cart.length === 0) return <p> Cart is empty</p>;
 
@@ -21,9 +38,24 @@ function Cart() {
               <p>Subtotal: {(item.price * item.quantity).toFixed(2)} lei</p>
             </div>
             <div>
-              <button className="bg-gray-300 px-3 rounded">-</button>
-              <button className="bg-gray-300 px-3 rounded">+</button>
-              <button className="bg-gray-300 px-3">Sterge</button>
+              <button
+                onClick={() => handleDecrese(item.id)}
+                className="bg-gray-300 px-3 rounded"
+              >
+                -
+              </button>
+              <button
+                onClick={() => handleIncrede(item.id)}
+                className="bg-gray-300 px-3 rounded"
+              >
+                +
+              </button>
+              <button
+                onClick={() => removeFromCart(item.id)}
+                className="bg-gray-300 px-3"
+              >
+                Sterge
+              </button>
             </div>
           </li>
         ))}
