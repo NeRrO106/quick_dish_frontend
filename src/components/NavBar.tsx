@@ -65,7 +65,7 @@ hover:text-black"
               </li>
               <li>
                 <a
-                  href="#"
+                  href={`myorders/${data?.id}`}
                   className="block px-4 py-2 text-md text-white hover:bg-red-700
 hover:text-black"
                 >

@@ -1,12 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
-import getEntity from "../../utils/GetEntity";
-import type { Order } from "./Order";
+import { useParams } from "react-router-dom";
+import type { Order } from "../features/orders/Order";
+import getEntity from "../utils/GetEntity";
 
-function Orders() {
+function MyOrder() {
+  const { id } = useParams();
   const endpointUrl = import.meta.env.VITE_ORDERS_ENDPOINT;
   const { data, isLoading, isError, error } = useQuery<Order[] | null>({
-    queryKey: ["orders"],
-    queryFn: () => getEntity<Order[]>(endpointUrl),
+    queryKey: ["orders", id],
+    queryFn: () => getEntity<Order[]>(`${endpointUrl}orders/${id}`),
   });
 
   if (isLoading) return <p>Loading....</p>;
@@ -70,4 +72,4 @@ function Orders() {
     </div>
   );
 }
-export default Orders;
+export default MyOrder;

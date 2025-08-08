@@ -20,6 +20,7 @@ import Orders from "./features/orders/Orders";
 import { CartProvider } from "./features/cart/CartProvider";
 import Cart from "./pages/Cart";
 import ProductDetail from "./pages/ProductDetail";
+import MyOrder from "./pages/MyOrder";
 const queryClient = new QueryClient();
 
 function App() {
@@ -45,6 +46,7 @@ function App() {
             <Route path="/products/add" element={<AddProduct />} />
             <Route path="/orders" element={<Orders />} />
             <Route path="/productdetails/:id" element={<ProductDetail />} />
+            <Route path="/myorders/:id" element={<MyOrder />} />
             <Route path="*" element={<NoPage />} />
           </Routes>
           <Footer />
