@@ -1,16 +1,26 @@
+import { useNavigate } from "react-router-dom";
 import { useCurrentUser } from "../hooks/useCurrentUser";
+import { useQueryClient } from "@tanstack/react-query";
 
 function NavBar() {
   const { data } = useCurrentUser();
   const apiUrl = import.meta.env.VITE_API_URL;
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const handleSignOut = () => {
     fetch(`${apiUrl}/api/auth/logout`, {
       method: "POST",
       credentials: "include",
-    }).catch((error) => {
-      console.error("Error: ", error);
-    });
+    })
+      .then((response) => {
+        if (!response.ok) throw new Error("Logout failed");
+        queryClient.invalidateQueries({ queryKey: ["currentUser"] });
+        navigate("/");
+      })
+      .catch((error) => {
+        console.error("Error: ", error);
+      });
   };
 
   return (
