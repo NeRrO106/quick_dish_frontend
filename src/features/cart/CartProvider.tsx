@@ -15,7 +15,6 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart));
-    console.log(localStorage.getItem("cart"));
   }, [cart]);
 
   const addToCart = (id: number, quantity: number, price: number) => {

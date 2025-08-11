@@ -81,7 +81,7 @@ function Login() {
         </form>
         <p className="mt-4 text-sm text-center text-gray-600">
           You forgot you password?{" "}
-          <a href="/register" className="text-blue-600 hover:underline">
+          <a href="/forgot-password" className="text-blue-600 hover:underline">
             Reset Password
           </a>
         </p>

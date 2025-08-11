@@ -13,7 +13,9 @@ function AuthRedirect() {
       if (
         location.pathname !== "/" &&
         location.pathname !== "/login" &&
-        location.pathname !== "/register"
+        location.pathname !== "/register" &&
+        location.pathname !== "/forgot-password" &&
+        location.pathname !== "/reset-password"
       ) {
         navigate("/");
       }
@@ -21,7 +23,9 @@ function AuthRedirect() {
       if (
         location.pathname === "/" ||
         location.pathname === "/login" ||
-        location.pathname === "/register"
+        location.pathname === "/register" ||
+        location.pathname === "/forgot-password" ||
+        location.pathname === "/reset-password"
       ) {
         navigate("/about");
       }

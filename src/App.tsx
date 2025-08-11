@@ -21,6 +21,8 @@ import { CartProvider } from "./features/cart/CartProvider";
 import Cart from "./pages/Cart";
 import ProductDetail from "./pages/ProductDetail";
 import MyOrder from "./pages/MyOrder";
+import ResetPassword from "./features/auth/ResetPassword";
+import ForgotPassword from "./features/auth/ForgotPassword";
 const queryClient = new QueryClient();
 
 function App() {
@@ -47,6 +49,8 @@ function App() {
             <Route path="/orders" element={<Orders />} />
             <Route path="/productdetails/:id" element={<ProductDetail />} />
             <Route path="/myorders/:id" element={<MyOrder />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="*" element={<NoPage />} />
           </Routes>
           <Footer />
