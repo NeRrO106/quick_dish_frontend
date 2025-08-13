@@ -1,11 +1,6 @@
 import { useEffect, useState } from "react";
 import { CartContext } from "./CartContext";
-
-interface CartItem {
-  id: number;
-  quantity: number;
-  price: number;
-}
+import type { CartItem } from "./CartItem";
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [cart, setCart] = useState<CartItem[]>(() => {

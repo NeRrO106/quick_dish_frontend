@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import type { User } from "./User";
 import getEntity from "../../utils/GetEntity";
@@ -16,22 +16,22 @@ function EditUser() {
   });
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const endpointUrl = import.meta.env.VITE_USERS_ENDPOINT;
-  const { data } = useQuery<User | null>({
+  useQuery<User | null>({
     queryKey: ["users", id],
-    queryFn: () => getEntity<User>(`${endpointUrl}${id}`),
     enabled: !!id,
+    queryFn: async () => {
+      const result = await getEntity<User>(`${endpointUrl}${id}`);
+      if (result) {
+        setForm({
+          name: result.Name,
+          email: result.Email,
+          password: "",
+          role: result.Role,
+        });
+      }
+      return result;
+    },
   });
-
-  useEffect(() => {
-    if (data) {
-      setForm({
-        name: data.Name,
-        email: data.Email,
-        password: "",
-        role: data.Role,
-      });
-    }
-  }, [data]);
 
   const handleSave = async () => {
     const data = await putEntity(`${endpointUrl}${id}`, form);

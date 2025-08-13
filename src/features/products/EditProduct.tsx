@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import type { Product } from "./Product";
 import getEntity from "../../utils/GetEntity";
@@ -15,23 +15,23 @@ function EditProduct() {
     ImageUrl: "",
   });
   const endpointUrl = import.meta.env.VITE_PRODUCTS_ENDPOINT;
-  const { data } = useQuery<Product | null>({
+  useQuery<Product | null>({
     queryKey: ["products", id],
-    queryFn: () => getEntity<Product>(`${endpointUrl}${id}`),
     enabled: !!id,
+    queryFn: async () => {
+      const result = await getEntity<Product>(`${endpointUrl}${id}`);
+      if (result) {
+        setForm({
+          name: result.Name,
+          description: result.Description,
+          price: result.Price,
+          category: result.Category,
+          ImageUrl: result.ImageUrl,
+        });
+      }
+      return result;
+    },
   });
-
-  useEffect(() => {
-    if (data) {
-      setForm({
-        name: data.Name,
-        description: data.Description,
-        price: data.Price,
-        category: data.Category,
-        ImageUrl: data.ImageUrl,
-      });
-    }
-  }, [data]);
 
   const handleSave = async () => {
     const data = await putEntity(`${endpointUrl}${id}`, form);
