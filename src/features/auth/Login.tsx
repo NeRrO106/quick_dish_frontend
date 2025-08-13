@@ -24,7 +24,7 @@ function Login() {
         withCredentials: true,
       })
       .then((response) => {
-        console.log(response);
+        localStorage.setItem("user", JSON.stringify(response.data));
         navigate("/");
       })
       .catch((error) => {

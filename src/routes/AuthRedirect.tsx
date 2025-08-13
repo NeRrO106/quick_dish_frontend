@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { useCurrentUser } from "../hooks/useCurrentUser";
 import { useEffect } from "react";
+import { useCurrentUser } from "../hooks/useCurrentUser";
 
 function AuthRedirect() {
   const { data, isLoading } = useCurrentUser();

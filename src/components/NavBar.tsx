@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import { useCurrentUser } from "../hooks/useCurrentUser";
 import { useQueryClient } from "@tanstack/react-query";
+import { useCurrentUser } from "../hooks/useCurrentUser";
 
 function NavBar() {
   const { data } = useCurrentUser();
@@ -16,7 +16,8 @@ function NavBar() {
       .then((response) => {
         if (!response.ok) throw new Error("Logout failed");
         queryClient.invalidateQueries({ queryKey: ["currentUser"] });
-        navigate("/");
+        localStorage.removeItem("user");
+        navigate("/hero");
       })
       .catch((error) => {
         console.error("Error: ", error);
