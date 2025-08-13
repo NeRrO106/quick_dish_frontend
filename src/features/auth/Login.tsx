@@ -1,30 +1,26 @@
-import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import postEntity from "../../utils/PostEntity";
 
 function Login() {
-  const apiUrl = import.meta.env.VITE_API_URL;
+  const endpoitUrl = import.meta.env.VITE_AUTH_ENDPOINT;
   const navigate = useNavigate();
   const [form, setForm] = useState({
     name: "",
     password: "",
   });
+  const [error, setError] = useState("");
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.name || !form.password) {
-      alert("Name and password needs to be filled");
+      setError("Name and password needs to be filled");
       return;
     }
-    axios
-      .post(`${apiUrl}/api/auth/login`, form, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        withCredentials: true,
-      })
-      .then((response) => {
-        localStorage.setItem("user", JSON.stringify(response.data));
+    await postEntity(`${endpoitUrl}/login`, form)
+      .then((data) => {
+        localStorage.setItem("user", JSON.stringify(data));
+        console.log("Login successful", localStorage.getItem("user"));
         navigate("/");
       })
       .catch((error) => {
@@ -39,6 +35,7 @@ function Login() {
           Login
         </h2>
         <form>
+          {error && <p className="text-black-500">{error}</p>}
           <div className="mb-4">
             <label
               className="block text-sm font-medium text-gray-700 mb-2"

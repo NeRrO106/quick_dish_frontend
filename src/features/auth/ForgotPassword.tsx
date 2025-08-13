@@ -1,24 +1,20 @@
-import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import postEntity from "../../utils/PostEntity";
 
 function ForgotPassword() {
-  const apiUrl = import.meta.env.VITE_API_URL;
+  const endpointUrl = import.meta.env.VITE_AUTH_ENDPOINT;
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
 
-  const handleForgotPassword = (e: React.FormEvent) => {
+  const handleForgotPassword = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) {
-      alert("Name and password needs to be filled");
+      setError("Please fill in your email");
       return;
     }
-    axios
-      .post(`${apiUrl}/api/auth/forgot-password`, email, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
+    await postEntity(`${endpointUrl}/forgot-password`, email)
       .then((response) => {
         console.log(response);
         navigate("/reset-password");
@@ -35,6 +31,7 @@ function ForgotPassword() {
           Forgot Password
         </h2>
         <form>
+          {error && <p className="text-red-500 mb-4">{error}</p>}
           <div className="mb-4">
             <label
               className="block text-sm font-medium text-gray-700 mb-2"

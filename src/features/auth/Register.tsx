@@ -1,9 +1,9 @@
-import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import postEntity from "../../utils/PostEntity";
 
 function Register() {
-  const apiUrl = import.meta.env.VITE_API_URL;
+  //const apiUrl = import.meta.env.VITE_API_URL;
   const endpointUrl = import.meta.env.VITE_USERS_ENDPOINT;
   const navigate = useNavigate();
   const [form, setForm] = useState({
@@ -14,7 +14,7 @@ function Register() {
   });
   const [error, setError] = useState("");
 
-  const handleRegister = (e: React.FormEvent) => {
+  const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.name || !form.email || !form.password || !form.confirmPassword) {
       setError("Please fill in all the fields");
@@ -29,12 +29,7 @@ function Register() {
       return;
     }
 
-    axios
-      .post(`${apiUrl}${endpointUrl}`, form, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
+    await postEntity(`${endpointUrl}`, form)
       .then((response) => {
         console.log(response);
         navigate("/login");

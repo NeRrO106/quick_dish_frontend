@@ -1,9 +1,9 @@
-import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import postEntity from "../../utils/PostEntity";
 
 function ForgotPassword() {
-  const apiUrl = import.meta.env.VITE_API_URL;
+  const endpointUrl = import.meta.env.VITE_AUTH_ENDPOINT;
   const navigate = useNavigate();
   const [form, setForm] = useState({
     email: "",
@@ -13,7 +13,7 @@ function ForgotPassword() {
   });
   const [error, setError] = useState("");
 
-  const handleResetPassword = (e: React.FormEvent) => {
+  const handleResetPassword = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.email || !form.newPassword || !form.confirmNewPassword) {
       setError("Please fill in all the fields");
@@ -23,15 +23,11 @@ function ForgotPassword() {
       setError("Password doesnt match");
       return;
     }
-    axios
-      .post(`${apiUrl}/api/auth/reset-password`, form, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
+
+    await postEntity(`${endpointUrl}/reset-password`, form)
       .then((response) => {
         console.log(response);
-        navigate("/");
+        navigate("/reset-password");
       })
       .catch((error) => {
         console.log(error);
