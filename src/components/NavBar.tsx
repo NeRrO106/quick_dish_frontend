@@ -1,23 +1,18 @@
 import { useNavigate } from "react-router-dom";
-import { useQueryClient } from "@tanstack/react-query";
 import { useCurrentUser } from "../hooks/useCurrentUser";
+import postEntity from "../utils/PostEntity";
 
 function NavBar() {
   const { data } = useCurrentUser();
-  const apiUrl = import.meta.env.VITE_API_URL;
+  const endpointUrl = import.meta.env.VITE_AUTH_ENDPOINT;
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
 
-  const handleSignOut = () => {
-    fetch(`${apiUrl}/api/auth/logout`, {
-      method: "POST",
-      credentials: "include",
-    })
+  const handleSignOut = async () => {
+    await postEntity(`${endpointUrl}/logout`, {})
       .then((response) => {
-        if (!response.ok) throw new Error("Logout failed");
-        queryClient.invalidateQueries({ queryKey: ["currentUser"] });
+        console.log(response);
         localStorage.removeItem("user");
-        navigate("/hero");
+        navigate("/");
       })
       .catch((error) => {
         console.error("Error: ", error);

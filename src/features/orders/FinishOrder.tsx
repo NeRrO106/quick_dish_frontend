@@ -36,9 +36,9 @@ function FinishOrder() {
         <h1 className="text-6xl font-extrabold tracking-tight leading-tight drop-shadow-lg">
           Finish Order
         </h1>
-        <p className="text-lg md:text-xl font-light">Order ID: {data?.id}</p>
+        <p className="text-lg md:text-xl font-light">Order ID: {data?.Id}</p>
         <p className="text-lg md:text-xl font-light">
-          Total Amount: {data?.totalAmount.toFixed(2)} lei
+          Total Amount: {data?.TotalAmount.toFixed(2)} lei
         </p>
         <button
           onClick={handleFinishOrder}
