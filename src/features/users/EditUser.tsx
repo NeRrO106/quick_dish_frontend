@@ -25,10 +25,10 @@ function EditUser() {
   useEffect(() => {
     if (data) {
       setForm({
-        name: data.name,
-        email: data.email,
+        name: data.Name,
+        email: data.Email,
         password: "",
-        role: data.role,
+        role: data.Role,
       });
     }
   }, [data]);

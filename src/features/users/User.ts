@@ -1,7 +1,7 @@
-export interface User{
-    id: number;
-    name: string;
-    email: string;
-    role: string;
-    createdAt: string;
+export interface User {
+  Id: number;
+  Name: string;
+  Email: string;
+  Role: string;
+  CreatedAt: string;
 }

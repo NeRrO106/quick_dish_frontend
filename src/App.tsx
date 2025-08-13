@@ -18,11 +18,12 @@ import AddUser from "./features/users/AddUser";
 import AddProduct from "./features/products/AddProduct";
 import Orders from "./features/orders/Orders";
 import { CartProvider } from "./features/cart/CartProvider";
-import Cart from "./pages/Cart";
-import ProductDetail from "./pages/ProductDetail";
-import MyOrder from "./pages/MyOrder";
 import ResetPassword from "./features/auth/ResetPassword";
 import ForgotPassword from "./features/auth/ForgotPassword";
+import Cart from "./features/cart/Cart";
+import ProductDetail from "./features/products/ProductDetail";
+import MyOrder from "./features/orders/MyOrder";
+import FinishOrder from "./features/orders/FinishOrder";
 const queryClient = new QueryClient();
 
 function App() {
@@ -50,7 +51,8 @@ function App() {
             <Route path="/productdetails/:id" element={<ProductDetail />} />
             <Route path="/myorders/:id" element={<MyOrder />} />
             <Route path="/reset-password" element={<ResetPassword />} />
-            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />\
+            <Route path="/finish-order/:orderId" element={<FinishOrder />} />
             <Route path="*" element={<NoPage />} />
           </Routes>
           <Footer />

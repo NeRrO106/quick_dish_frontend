@@ -35,34 +35,34 @@ function Products() {
       <ul className="flex flex-wrap justify-center items-center mt-8 space-x-4 rtl:space-x-reverse">
         {data?.map((prod) => (
           <li
-            key={prod.id}
+            key={prod.Id}
             className="w-64 p-2 border border-gray-200 rounded-lg shadow-sm bg-gray-800 border-gray-700 mb-4"
           >
             <img
-              src={prod.imageUrl}
-              alt={prod.name}
+              src={prod.ImageUrl}
+              alt={prod.Name}
               className="w-full h-36 object-cover rounded-lg mb-3"
             />
             <p className="text-xl text-center font-semibold text-white mb-2">
-              {prod.name}
+              {prod.Name}
             </p>
             <p className="text-sm text-center font-medium text-white mb-2">
-              {prod.description}
+              {prod.Description}
             </p>
             <p className="text-sm text-center font-medium text-white mb-2">
-              {prod.category}
+              {prod.Category}
             </p>
             <p className="text-xl font-bold text-white mb-2">
-              {prod.price.toFixed(2)} lei
+              {prod.Price.toFixed(2)} lei
             </p>
             <button
-              onClick={() => navigate(`/products/${prod.id}`)}
+              onClick={() => navigate(`/products/${prod.Id}`)}
               className="text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:focus:ring-yellow-900"
             >
               Edit product
             </button>
             <button
-              onClick={() => handleDelete(prod.id)}
+              onClick={() => handleDelete(prod.Id)}
               className="text-white bg-red-700 hover:bg-red-900 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:focus:ring-red-900"
             >
               Delete product

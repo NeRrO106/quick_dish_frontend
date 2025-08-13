@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
-import type { Order } from "../features/orders/Order";
-import getEntity from "../utils/GetEntity";
+import type { Order } from "./Order";
+import getEntity from "../../utils/GetEntity";
 
 function MyOrder() {
   const { id } = useParams();
@@ -24,40 +24,40 @@ function MyOrder() {
       <ul className="flex flex-wrap justify-center items-center mt-8 space-x-4 rtl:space-x-reverse">
         {data?.map((order) => (
           <li
-            key={order.id}
+            key={order.Id}
             className="w-64 p-2 border border-gray-200 rounded-lg shadow-sm bg-gray-800 border-gray-700 mb-4"
           >
-            <p>Comanda: #{order.id}</p>
+            <p>Comanda: #{order.Id}</p>
             <p className="text-xl text-center font-semibold text-white mb-2">
-              {order.userName}
+              {order.UserName}
             </p>
             <p className="text-sm text-center font-medium text-white mb-2">
-              {order.courierName}
+              {order.CourierName}
             </p>
             <p className="text-sm text-center font-medium text-white mb-2">
-              {order.address}
+              {order.Address}
             </p>
             <p className="text-sm text-center font-medium text-white mb-2">
-              {order.notes}
+              {order.Notes}
             </p>
             <p className="text-sm text-center font-medium text-white mb-2">
-              {order.status}
+              {order.Status}
             </p>
             <p className="text-sm text-center font-medium text-white mb-2">
-              {order.paymentMethod}
+              {order.PaymentMethod}
             </p>
             <p className="text-sm text-center font-medium text-white mb-2">
-              {order.phoneNumber}
+              {order.PhoneNumber}
             </p>
             <p className="text-xl font-bold text-white mb-2">
-              {order.totalAmount.toFixed(2)} lei
+              {order.TotalAmount.toFixed(2)} lei
             </p>
             <h3>Produse: </h3>
             <ul className="text-sm mt-1">
-              {order.items.map((item) => (
+              {order.Items.map((item) => (
                 <p className="text-xl font-bold text-white mb-2">
-                  Produs: {item.productName} - {item.quantity} *{" "}
-                  {item.unitPrice} = {item.totalPrice}
+                  Produs: {item.ProductName} - {item.Quantity} *{" "}
+                  {item.UnitPrice} = {item.TotalPrice}
                 </p>
               ))}
             </ul>

@@ -1,22 +1,22 @@
 interface OrderItem {
-  id: number;
-  orderId: number;
-  productName: string;
-  quantity: number;
-  unitPrice: number;
-  totalPrice: number;
+  Id: number;
+  OrderId: number;
+  ProductName: string;
+  Quantity: number;
+  UnitPrice: number;
+  TotalPrice: number;
 }
 
 export interface Order {
-  id: number;
-  userName: string;
-  courierName: string;
-  address: string;
-  phoneNumber: number;
-  totalAmount: number;
-  status: string;
-  createdAt: string;
-  notes: string;
-  paymentMethod: string;
-  items: OrderItem[];
+  Id: number;
+  UserName: string;
+  CourierName: string;
+  Address: string;
+  PhoneNumber: number;
+  TotalAmount: number;
+  Status: string;
+  CreatedAt: string;
+  Notes: string;
+  PaymentMethod: string;
+  Items: OrderItem[];
 }

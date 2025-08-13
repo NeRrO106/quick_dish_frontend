@@ -9,7 +9,7 @@ function AuthRedirect() {
 
   useEffect(() => {
     if (isLoading) return;
-    if (!data || data?.role === null) {
+    if (!data || data?.Role === null) {
       if (
         location.pathname !== "/" &&
         location.pathname !== "/login" &&
@@ -19,7 +19,7 @@ function AuthRedirect() {
       ) {
         navigate("/");
       }
-    } else if (data?.role === "Client" || data?.role === "Ghost") {
+    } else if (data?.Role === "Client" || data?.Role === "Ghost") {
       if (
         location.pathname === "/" ||
         location.pathname === "/login" ||

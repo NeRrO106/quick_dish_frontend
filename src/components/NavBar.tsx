@@ -58,9 +58,9 @@ function NavBar() {
             id="user-dropdown"
           >
             <div className="px-4 py-3">
-              <span className="block text-md text-white">{data?.name}</span>
+              <span className="block text-md text-white">{data?.Name}</span>
               <span className="block text-sm text-white truncate">
-                {data?.email}
+                {data?.Email}
               </span>
             </div>
             <ul className="py-2" aria-labelledby="user-menu-button">
@@ -75,7 +75,7 @@ hover:text-black"
               </li>
               <li>
                 <a
-                  href={`myorders/${data?.id}`}
+                  href={`myorders/${data?.Id}`}
                   className="block px-4 py-2 text-md text-white hover:bg-red-700
 hover:text-black"
                 >
@@ -132,7 +132,7 @@ hover:text-black"
           id="navbar-user"
         >
           <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-red-100 rounded-lg bg-red-500 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-red-500">
-            {(data?.role === "Client" || data?.role === "Ghost") && (
+            {(data?.Role === "Client" || data?.Role === "Ghost") && (
               <>
                 <li>
                   <a
@@ -160,7 +160,7 @@ hover:text-black"
                 </li>
               </>
             )}
-            {data?.role === "Admin" && (
+            {data?.Role === "Admin" && (
               <>
                 <li>
                   <a
@@ -196,7 +196,7 @@ hover:text-black"
                 </li>
               </>
             )}
-            {data?.role === "Moderator" && (
+            {data?.Role === "Manager" && (
               <>
                 <li>
                   <a
@@ -224,7 +224,7 @@ hover:text-black"
                 </li>
               </>
             )}
-            {data?.role === "Courier" && (
+            {data?.Role === "Courier" && (
               <>
                 <li>
                   <a

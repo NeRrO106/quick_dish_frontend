@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 function Hero() {
@@ -6,20 +7,19 @@ function Hero() {
 
   const handleGhost = (e: React.FormEvent) => {
     e.preventDefault();
-    fetch(`${apiUrl}/api/auth/login-ghost`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-    })
+
+    axios
+      .post(`${apiUrl}/api/auth/login-ghost`, {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      })
       .then((response) => {
-        if (!response.ok) {
-          throw new Error("Failed to login");
-        }
+        console.log(response);
+        navigate("/");
       })
       .catch((error) => {
         console.error("Error on loggin: ", error);
       });
-    navigate("/");
   };
 
   return (

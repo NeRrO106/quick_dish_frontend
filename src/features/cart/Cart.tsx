@@ -1,4 +1,4 @@
-import { useCart } from "../features/cart/useCart";
+import { useCart } from "./useCart";
 
 function Cart() {
   const { cart, addToCart, removeFromCart, totalAmount } = useCart();

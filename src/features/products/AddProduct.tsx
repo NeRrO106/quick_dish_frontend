@@ -7,12 +7,12 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 function EditProduct() {
   const [image, setImage] = useState<File | null>(null);
   const [form, setForm] = useState({
-    id: 0,
-    name: "",
-    description: "",
-    price: 0,
-    category: "",
-    imageUrl: "",
+    Id: 0,
+    Name: "",
+    Description: "",
+    Price: 0,
+    Category: "",
+    ImageUrl: "",
   });
   const endpointUrl = import.meta.env.VITE_PRODUCTS_ENDPOINT;
 
@@ -32,7 +32,7 @@ function EditProduct() {
     const snapshot = await uploadBytes(storageRef, image);
     const url = await getDownloadURL(snapshot.ref);
     console.log(url);
-    setForm({ ...form, imageUrl: url });
+    setForm({ ...form, ImageUrl: url });
   };
 
   return (
@@ -48,8 +48,8 @@ function EditProduct() {
           <input
             className="bg-gray-50 border border-gray-300 text-white-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4"
             name="name"
-            value={form.name}
-            onChange={(e) => setForm({ ...form, name: e.target.value })}
+            value={form.Name}
+            onChange={(e) => setForm({ ...form, Name: e.target.value })}
           />
         </div>
 
@@ -60,8 +60,8 @@ function EditProduct() {
           <input
             className="bg-gray-50 border border-gray-300 text-white-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4"
             name="description"
-            value={form.description}
-            onChange={(e) => setForm({ ...form, description: e.target.value })}
+            value={form.Description}
+            onChange={(e) => setForm({ ...form, Description: e.target.value })}
           />
         </div>
 
@@ -72,8 +72,8 @@ function EditProduct() {
           <input
             className="bg-gray-50 border border-gray-300 text-white-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4"
             name="category"
-            value={form.category}
-            onChange={(e) => setForm({ ...form, category: e.target.value })}
+            value={form.Category}
+            onChange={(e) => setForm({ ...form, Category: e.target.value })}
           />
         </div>
         <div>
@@ -85,9 +85,9 @@ function EditProduct() {
             name="price"
             type="number"
             step="0.01"
-            value={form.price}
+            value={form.Price}
             onChange={(e) =>
-              setForm({ ...form, price: parseFloat(e.target.value) })
+              setForm({ ...form, Price: parseFloat(e.target.value) })
             }
           />
         </div>

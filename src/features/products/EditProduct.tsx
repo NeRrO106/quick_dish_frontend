@@ -24,11 +24,11 @@ function EditProduct() {
   useEffect(() => {
     if (data) {
       setForm({
-        name: data.name,
-        description: data.description,
-        price: data.price,
-        category: data.category,
-        ImageUrl: data.imageUrl,
+        name: data.Name,
+        description: data.Description,
+        price: data.Price,
+        category: data.Category,
+        ImageUrl: data.ImageUrl,
       });
     }
   }, [data]);

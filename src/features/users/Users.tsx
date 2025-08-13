@@ -37,29 +37,29 @@ function Users() {
       <ul className="flex flex-wrap justify-center items-center mt-8 space-x-4 rtl:space-x-reverse">
         {data?.map((user) => (
           <li
-            key={user.id}
+            key={user.Id}
             className="w-64 p-2 border border-gray-200 rounded-lg shadow-sm bg-gray-800 border-gray-700 mb-4"
           >
             <p className="text-xl text-center font-semibold text-white mb-2">
-              {user.name}
+              {user.Name}
             </p>
             <p className="text-sm text-center font-medium text-white mb-2">
-              {user.email}
+              {user.Email}
             </p>
             <p className="text-sm text-center font-medium text-white mb-2">
-              {user.role}
+              {user.Role}
             </p>
             <p className="text-xl font-bold text-white mb-2">
-              {new Date(user.createdAt).toLocaleDateString()}
+              {new Date(user.CreatedAt).toLocaleDateString()}
             </p>
             <button
-              onClick={() => navigate(`/users/${user.id}`)}
+              onClick={() => navigate(`/users/${user.Id}`)}
               className="text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:focus:ring-yellow-900"
             >
               Edit user
             </button>
             <button
-              onClick={() => handleDelete(user.id)}
+              onClick={() => handleDelete(user.Id)}
               className="text-white bg-red-700 hover:bg-red-900 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:focus:ring-red-900"
             >
               Delete user

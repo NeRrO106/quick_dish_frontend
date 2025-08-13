@@ -1,9 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
-import getEntity from "../utils/GetEntity";
-import type { Product } from "../features/products/Product";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
-import { useCart } from "../features/cart/useCart";
+import { useCart } from "../cart/useCart";
+import getEntity from "../../utils/GetEntity";
+import type { Product } from "./Product";
 
 function ProductDetail() {
   const { addToCart } = useCart();
@@ -29,14 +29,14 @@ function ProductDetail() {
     <>
       <div className="max-w-4xl mx-auto p-4">
         <img
-          src={data?.imageUrl}
-          alt={data?.name}
+          src={data?.ImageUrl}
+          alt={data?.Name}
           className="w-full h-64 object-cover rounded-md"
         />
-        <h1 className="text-3xl font-bold mt-4">{data?.name}</h1>
-        <p className="mt-2 text-gray-700">{data?.description}</p>
+        <h1 className="text-3xl font-bold mt-4">{data?.Name}</h1>
+        <p className="mt-2 text-gray-700">{data?.Description}</p>
         <p className="text-xl font-semibold mt-4">
-          {data?.price.toFixed(2)} lei
+          {data?.Price.toFixed(2)} lei
         </p>
       </div>
       <div>
@@ -56,7 +56,7 @@ function ProductDetail() {
         <button
           onClick={() => {
             if (data) {
-              addToCart(data.id, quantity, data.price);
+              addToCart(data.Id, quantity, data.Price);
             }
           }}
           className="bg-gray-300 px-3"

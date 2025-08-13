@@ -4,19 +4,20 @@ import postEntity from "../../utils/PostEntity";
 
 function AddUser() {
   const [form, setForm] = useState({
-    id: 0,
-    name: "",
-    email: "",
-    password: "",
-    role: "",
-    createdAt: "",
+    Id: 0,
+    Name: "",
+    Email: "",
+    Password: "",
+    Role: "",
+    CreatedAt: "",
   });
   const roles = ["Client", "Admin", "Manager", "Courier"];
   const endpointUrl = import.meta.env.VITE_USERS_ENDPOINT;
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const handleSelect = (role: string) => {
-    setForm({ ...form, role: role });
+    console.log("Selected role:", role);
+    setForm({ ...form, Role: role });
     setDropdownOpen(!dropdownOpen);
   };
 
@@ -43,8 +44,8 @@ function AddUser() {
           <input
             className="bg-gray-50 border border-gray-300 text-white-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4"
             name="name"
-            value={form.name}
-            onChange={(e) => setForm({ ...form, name: e.target.value })}
+            value={form.Name}
+            onChange={(e) => setForm({ ...form, Name: e.target.value })}
           />
         </div>
 
@@ -55,8 +56,8 @@ function AddUser() {
           <input
             className="bg-gray-50 border border-gray-300 text-white-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4"
             name="email"
-            value={form.email}
-            onChange={(e) => setForm({ ...form, email: e.target.value })}
+            value={form.Email}
+            onChange={(e) => setForm({ ...form, Email: e.target.value })}
           />
         </div>
 
@@ -68,7 +69,7 @@ function AddUser() {
             onClick={() => setDropdownOpen(!dropdownOpen)}
             className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           >
-            {form.role || "Select Role"}
+            {form.Role || "Select Role"}
             <svg
               className="w-2.5 h-2.5 ms-3"
               aria-hidden="true"
@@ -111,8 +112,8 @@ function AddUser() {
             className="bg-gray-50 border border-gray-300 text-white-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4"
             name="password"
             type="password"
-            value={form.password}
-            onChange={(e) => setForm({ ...form, password: e.target.value })}
+            value={form.Password}
+            onChange={(e) => setForm({ ...form, Password: e.target.value })}
           />
         </div>
         <button
