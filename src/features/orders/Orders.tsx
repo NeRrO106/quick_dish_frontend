@@ -1,6 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import getEntity from "../../utils/GetEntity";
 import type { Order } from "./Order";
+import { useState } from "react";
+import putEntity from "../../utils/PutEntity";
 
 function Orders() {
   const endpointUrl = import.meta.env.VITE_ORDERS_ENDPOINT;
@@ -8,6 +10,31 @@ function Orders() {
     queryKey: ["orders"],
     queryFn: () => getEntity<Order[]>(endpointUrl),
   });
+
+  const statuses = ["Pending", "In Preparation", "Ready", "Taken", "Delivered"];
+  const [orderStatus, setOrderStatus] = useState<{ [key: number]: string }>({});
+
+  const handleStatusChange = (orderId: number, status: string) => {
+    setOrderStatus((prev) => ({
+      ...prev,
+      [orderId]: status,
+    }));
+    console.log(`Order ${orderId} status changed to ${status}`);
+  };
+
+  const handleSaveStatus = async (orderId: number) => {
+    const status = orderStatus[orderId];
+    const data = await putEntity(`${endpointUrl}${orderId}`, {
+      Status: status,
+    });
+    console.log(`Order ${orderId} status saved`, data);
+    console.log(`${endpointUrl}${orderId}`, status);
+    if (data === null) {
+      console.log("Null data");
+    } else {
+      console.log("Order updated", data);
+    }
+  };
 
   if (isLoading) return <p>Loading....</p>;
   if (isError) return <p>Error: {(error as Error).message}</p>;
@@ -38,9 +65,17 @@ function Orders() {
             <p className="text-sm text-center font-medium text-white mb-2">
               Note: {order.Notes}
             </p>
-            <p className="text-sm text-center font-medium text-white mb-2">
-              Status: {order.Status}
-            </p>
+            <select
+              value={orderStatus[order.Id] || order.Status}
+              onChange={(e) => handleStatusChange(order.Id, e.target.value)}
+              className="p-2 rounded mb-2 text-black"
+            >
+              {statuses.map((status) => (
+                <option key={status} value={status}>
+                  {status}
+                </option>
+              ))}
+            </select>
             <p className="text-sm text-center font-medium text-white mb-2">
               Payment Method: {order.PaymentMethod}
             </p>
@@ -59,6 +94,12 @@ function Orders() {
                 </p>
               ))}
             </ul>
+            <button
+              onClick={() => handleSaveStatus(order.Id)}
+              className="mt-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+            >
+              Save Status
+            </button>
           </li>
         ))}
       </ul>

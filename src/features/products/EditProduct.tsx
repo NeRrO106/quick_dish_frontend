@@ -42,6 +42,7 @@ function EditProduct() {
       window.history.back();
     }
   };
+
   return (
     <>
       <div className="w-full max-w-2xl bg-white border border-gray-200 rounded-lg shadow-sm p-6 dark:bg-purple-500 dark:border-gray-700">
