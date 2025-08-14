@@ -51,8 +51,8 @@ function App() {
             <Route path="/productdetails/:id" element={<ProductDetail />} />
             <Route path="/myorders/:id" element={<MyOrder />} />
             <Route path="/reset-password" element={<ResetPassword />} />
-            <Route path="/forgot-password" element={<ForgotPassword />} />\
-            <Route path="/finish-order/:orderId" element={<FinishOrder />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/orders/finish" element={<FinishOrder />} />
             <Route path="*" element={<NoPage />} />
           </Routes>
           <Footer />

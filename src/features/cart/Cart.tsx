@@ -1,7 +1,10 @@
+import { useNavigate } from "react-router-dom";
 import { useCart } from "./useCart";
 
 function Cart() {
   const { cart, addToCart, removeFromCart, totalAmount } = useCart();
+
+  const navigate = useNavigate();
 
   const handleIncrede = (id: number) => {
     const item = cart.find((p) => p.id === id);
@@ -61,7 +64,7 @@ function Cart() {
       </ul>
       <p>Total {totalAmount().toFixed(2)} lei</p>
       <button
-        onClick={() => alert("Pasul următor: finalizare comandă")}
+        onClick={() => navigate("/orders/finish")}
         className="mt-4 bg-green-600 text-white px-6 py-2 rounded"
       >
         Finalizează comanda
