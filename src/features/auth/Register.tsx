@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import postEntity from "../../utils/PostEntity";
 
 function Register() {
-  //const apiUrl = import.meta.env.VITE_API_URL;
   const endpointUrl = import.meta.env.VITE_USERS_ENDPOINT;
   const navigate = useNavigate();
   const [form, setForm] = useState({

@@ -8,7 +8,6 @@ import Menu from "./pages/Menu";
 import Contact from "./pages/Contact";
 import Login from "./features/auth/Login";
 import Register from "./features/auth/Register";
-import AuthRedirect from "./routes/AuthRedirect";
 import Users from "./features/users/Users";
 import Products from "./features/products/Products";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -24,6 +23,8 @@ import Cart from "./features/cart/Cart";
 import ProductDetail from "./features/products/ProductDetail";
 import MyOrder from "./features/orders/MyOrder";
 import FinishOrder from "./features/orders/FinishOrder";
+import { RouteProtector } from "./routes/RouteProtector";
+import AuthRedirect from "./routes/AuthRedirect";
 const queryClient = new QueryClient();
 
 function App() {
@@ -35,24 +36,126 @@ function App() {
           <NavBar />
           <Routes>
             <Route path="/" element={<Hero />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/menu" element={<Menu />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/cart" element={<Cart />} />
+
+            <Route
+              path="/about"
+              element={
+                <RouteProtector>
+                  <About />
+                </RouteProtector>
+              }
+            />
+            <Route
+              path="/menu"
+              element={
+                <RouteProtector>
+                  <Menu />
+                </RouteProtector>
+              }
+            />
+            <Route
+              path="/productdetails/:id"
+              element={
+                <RouteProtector>
+                  <ProductDetail />
+                </RouteProtector>
+              }
+            />
+            <Route
+              path="/myorders/:id"
+              element={
+                <RouteProtector>
+                  <MyOrder />
+                </RouteProtector>
+              }
+            />
+            <Route
+              path="/contact"
+              element={
+                <RouteProtector>
+                  <Contact />
+                </RouteProtector>
+              }
+            />
+            <Route
+              path="/orders/finish"
+              element={
+                <RouteProtector>
+                  <FinishOrder />
+                </RouteProtector>
+              }
+            />
+
+            <Route
+              path="/cart"
+              element={
+                <RouteProtector>
+                  <Cart />
+                </RouteProtector>
+              }
+            />
+
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/users" element={<Users />} />
-            <Route path="/users/:id" element={<EditUser />} />
-            <Route path="/users/add" element={<AddUser />} />
-            <Route path="/products" element={<Products />} />
-            <Route path="/products/:id" element={<EditProduct />} />
-            <Route path="/products/add" element={<AddProduct />} />
-            <Route path="/orders" element={<Orders />} />
-            <Route path="/productdetails/:id" element={<ProductDetail />} />
-            <Route path="/myorders/:id" element={<MyOrder />} />
-            <Route path="/reset-password" element={<ResetPassword />} />
-            <Route path="/forgot-password" element={<ForgotPassword />} />
-            <Route path="/orders/finish" element={<FinishOrder />} />
+            <Route path="/resetpassword" element={<ResetPassword />} />
+            <Route path="/forgotpassword" element={<ForgotPassword />} />
+
+            <Route
+              path="/users"
+              element={
+                <RouteProtector allowedRoles={["Admin"]}>
+                  <Users />
+                </RouteProtector>
+              }
+            />
+            <Route
+              path="/users/:id"
+              element={
+                <RouteProtector allowedRoles={["Admin"]}>
+                  <EditUser />
+                </RouteProtector>
+              }
+            />
+            <Route
+              path="/users/add"
+              element={
+                <RouteProtector allowedRoles={["Admin"]}>
+                  <AddUser />
+                </RouteProtector>
+              }
+            />
+            <Route
+              path="/products"
+              element={
+                <RouteProtector allowedRoles={["Admin", "Manager"]}>
+                  <Products />
+                </RouteProtector>
+              }
+            />
+            <Route
+              path="/products/:id"
+              element={
+                <RouteProtector allowedRoles={["Admin", "Manager"]}>
+                  <EditProduct />
+                </RouteProtector>
+              }
+            />
+            <Route
+              path="/products/add"
+              element={
+                <RouteProtector allowedRoles={["Admin", "Manager"]}>
+                  <AddProduct />
+                </RouteProtector>
+              }
+            />
+            <Route
+              path="/orders"
+              element={
+                <RouteProtector allowedRoles={["Admin", "Manager", "Courier"]}>
+                  <Orders />
+                </RouteProtector>
+              }
+            />
             <Route path="*" element={<NoPage />} />
           </Routes>
           <Footer />

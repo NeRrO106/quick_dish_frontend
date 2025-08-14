@@ -1,4 +1,4 @@
-//import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useCart } from "../cart/useCart";
 import postEntity from "../../utils/PostEntity";
@@ -16,6 +16,7 @@ function FinishOrder() {
 
   const [error, setError] = useState("");
   const endpoint = import.meta.env.VITE_ORDERS_ENDPOINT;
+  const navigate = useNavigate();
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user") || "{}");
@@ -49,13 +50,14 @@ function FinishOrder() {
     };
     try {
       await postEntity(`${endpoint}`, orderData);
+      localStorage.removeItem("cart");
+      navigate("/");
     } catch (error) {
       console.error("Error placing order:", error);
       setError(
         "A apărut o eroare la plasarea comenzii. Vă rugăm să încercați din nou."
       );
     }
-    localStorage.removeItem("cart");
   };
 
   return (

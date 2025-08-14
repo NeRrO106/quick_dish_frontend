@@ -17,7 +17,7 @@ function Login() {
       setError("Name and password needs to be filled");
       return;
     }
-    await postEntity(`${endpoitUrl}/login`, form)
+    await postEntity(`${endpoitUrl}login`, form)
       .then((data) => {
         localStorage.setItem("user", JSON.stringify(data));
         console.log("Login successful", localStorage.getItem("user"));
@@ -78,7 +78,7 @@ function Login() {
         </form>
         <p className="mt-4 text-sm text-center text-gray-600">
           You forgot you password?{" "}
-          <a href="/forgot-password" className="text-blue-600 hover:underline">
+          <a href="/forgotpassword" className="text-blue-600 hover:underline">
             Reset Password
           </a>
         </p>

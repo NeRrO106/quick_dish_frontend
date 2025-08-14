@@ -14,7 +14,7 @@ function ForgotPassword() {
       setError("Please fill in your email");
       return;
     }
-    await postEntity(`${endpointUrl}/forgot-password`, email)
+    await postEntity(`${endpointUrl}forgotpassword`, email)
       .then((response) => {
         console.log(response);
         navigate("/reset-password");

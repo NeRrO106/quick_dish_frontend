@@ -55,7 +55,7 @@ function MyOrder() {
             <h3>Produse: </h3>
             <ul className="text-sm mt-1">
               {order.Items.map((item) => (
-                <p className="text-xl font-bold text-white mb-2">
+                <p key={item.Id} className="text-xl font-bold text-white mb-2">
                   Produs: {item.ProductName} - {item.Quantity} *{" "}
                   {item.UnitPrice} = {item.TotalPrice}
                 </p>

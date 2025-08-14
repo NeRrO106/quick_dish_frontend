@@ -24,10 +24,10 @@ function ForgotPassword() {
       return;
     }
 
-    await postEntity(`${endpointUrl}/reset-password`, form)
+    await postEntity(`${endpointUrl}resetpassword`, form)
       .then((response) => {
         console.log(response);
-        navigate("/reset-password");
+        navigate("/resetpassword");
       })
       .catch((error) => {
         console.log(error);
