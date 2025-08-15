@@ -101,7 +101,7 @@ function NavBar() {
               </li>
               <li>
                 <a
-                  href={`myorders/${data?.Id}`}
+                  href={`/myorders/${data?.Id}`}
                   className="block px-4 py-2 text-md text-[var(--text-light)] hover:bg-[var(--color-accent1)] hover:scale-85"
                 >
                   My Orders

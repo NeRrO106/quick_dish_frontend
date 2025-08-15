@@ -61,9 +61,11 @@ function FinishOrder() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-white rounded shadow">
-      <h1 className="text-2xl font-bold mb-4">Finalizează Comanda</h1>
-      {error && <p className="text-red-500 mb-4">{error}</p>}
+    <div className="max-w mx-auto p-6 bg-[var(--color-secondary)] shadow-2xl gap-8">
+      <h1 className="text-3xl font-extrabold text-center text-[var(--text-dark)] mb-6">
+        Finalizează Comanda
+      </h1>
+      {error && <p className="text-[var(--color-accent2)]">{error}</p>}
       <div className="mb-4">
         <label className="block mb-2">
           Adresă de livrare*:
@@ -73,7 +75,7 @@ function FinishOrder() {
             onChange={(e) =>
               setFormData({ ...formData, address: e.target.value })
             }
-            className="w-full p-2 border rounded"
+            className="w-full px-3 py-2 border border-black-300 rounded focus:outline-none focus:ring-2 focus:ring-[var(--color-accent2)]"
             required
           />
         </label>
@@ -85,7 +87,7 @@ function FinishOrder() {
             onChange={(e) =>
               setFormData({ ...formData, phone: e.target.value })
             }
-            className="w-full p-2 border rounded"
+            className="w-full px-3 py-2 border border-black-300 rounded focus:outline-none focus:ring-2 focus:ring-[var(--color-accent2)]"
             required
           />
         </label>
@@ -96,7 +98,7 @@ function FinishOrder() {
             onChange={(e) =>
               setFormData({ ...formData, paymentMethod: e.target.value })
             }
-            className="w-full p-2 border rounded"
+            className="w-full px-3 py-2 border border-black-300 rounded focus:outline-none focus:ring-2 focus:ring-[var(--color-accent2)]"
           >
             <option value="cash">Numerar</option>
             <option value="card">Card</option>
@@ -109,7 +111,7 @@ function FinishOrder() {
             onChange={(e) =>
               setFormData({ ...formData, notes: e.target.value })
             }
-            className="w-full p-2 border rounded"
+            className="w-full px-3 py-2 border border-black-300 rounded focus:outline-none focus:ring-2 focus:ring-[var(--color-accent2)]"
           />
         </label>
       </div>
@@ -121,12 +123,16 @@ function FinishOrder() {
         ) : (
           <ul>
             {cart.map(
-              (item: { id: number; quantity: number; price: number }) => (
+              (item: {
+                id: number;
+                quantity: number;
+                price: number;
+                name: string;
+              }) => (
                 <li key={item.id} className="mb-2">
                   <p>
-                    Produs ID: {item.id}, Cantitate: {item.quantity}, Preț:{" "}
-                    {item.price} lei, Subtotal:{" "}
-                    {(item.price * item.quantity).toFixed(2)} lei
+                    {item.name}, Cantitate: {item.quantity}, Preț: {item.price}{" "}
+                    lei, Subtotal: {(item.price * item.quantity).toFixed(2)} lei
                   </p>
                 </li>
               )
@@ -136,7 +142,7 @@ function FinishOrder() {
       </div>
       <button
         onClick={handleFinishOrder}
-        className="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700"
+        className="flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-[var(--color-accent2)] text-[var(--text-light)] font-medium shadow-xl transition-transform duration-200 hover:scale-85 hover:shadow-xl"
       >
         Plasează comanda
       </button>
