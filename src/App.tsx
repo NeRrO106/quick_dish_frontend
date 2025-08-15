@@ -15,7 +15,6 @@ import EditUser from "./features/users/EditUser";
 import EditProduct from "./features/products/EditProduct";
 import AddUser from "./features/users/AddUser";
 import AddProduct from "./features/products/AddProduct";
-import Orders from "./features/orders/Orders";
 import { CartProvider } from "./features/cart/CartProvider";
 import ResetPassword from "./features/auth/ResetPassword";
 import ForgotPassword from "./features/auth/ForgotPassword";
@@ -25,6 +24,8 @@ import MyOrder from "./features/orders/MyOrder";
 import FinishOrder from "./features/orders/FinishOrder";
 import { RouteProtector } from "./routes/RouteProtector";
 import AuthRedirect from "./routes/AuthRedirect";
+import Orders from "./features/orders/Orders";
+
 const queryClient = new QueryClient();
 
 function App() {
