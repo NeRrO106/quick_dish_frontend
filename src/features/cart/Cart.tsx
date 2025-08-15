@@ -9,14 +9,14 @@ function Cart() {
   const handleIncrede = (id: number) => {
     const item = cart.find((p) => p.id === id);
     if (item) {
-      addToCart(id, 1, item.price);
+      addToCart(id, 1, item.price, item.name);
     }
   };
 
   const handleDecrese = (id: number) => {
     const item = cart.find((p) => p.id === id);
     if (item && item.quantity > 1) {
-      addToCart(id, -1, item.price);
+      addToCart(id, -1, item.price, item.name);
     } else {
       removeFromCart(id);
     }
@@ -35,6 +35,7 @@ function Cart() {
           >
             <div>
               <p>Produs ID: {item.id}</p>
+              <p>Prodcus Name: {item.name}</p>
               <p>Cantitate: {item.quantity}</p>
               <p>Preț unitar: {item.price} lei</p>
               <p>Subtotal: {(item.price * item.quantity).toFixed(2)} lei</p>

@@ -12,7 +12,12 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
 
-  const addToCart = (id: number, quantity: number, price: number) => {
+  const addToCart = (
+    id: number,
+    quantity: number,
+    price: number,
+    name: string
+  ) => {
     setCart((prev) => {
       const existing = prev.find((p) => p.id === id);
       if (existing) {
@@ -20,7 +25,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
           p.id === id ? { ...p, quantity: p.quantity + quantity } : p
         );
       }
-      return [...prev, { id, quantity, price }];
+      return [...prev, { id, quantity, price, name }];
     });
   };
 

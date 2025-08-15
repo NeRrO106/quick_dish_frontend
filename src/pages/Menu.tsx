@@ -56,7 +56,7 @@ function Menu() {
                 View Product
               </button>
               <button
-                onClick={() => addToCart(prod.Id, 1, prod.Price)}
+                onClick={() => addToCart(prod.Id, 1, prod.Price, prod.Name)}
                 className="text-[var(--text-light)] bg-[var(--color-accent1)] hover:bg-[var(--color-accent3)] font-medium rounded-full text-sm px-3 py-3 transition"
               >
                 Add to cart

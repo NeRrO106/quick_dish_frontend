@@ -94,7 +94,7 @@ function NavBar() {
               <li>
                 <a
                   href="/cart"
-                  className="block px-4 py-2 text-md text-[var(--text-light)] hover:bg-[var(--color-accent1)]"
+                  className="block px-4 py-2 text-md text-[var(--text-light)] hover:bg-[var(--color-accent1)] hover:scale-85"
                 >
                   Cart
                 </a>
@@ -102,20 +102,20 @@ function NavBar() {
               <li>
                 <a
                   href={`myorders/${data?.Id}`}
-                  className="block px-4 py-2 text-md text-[var(--text-light)] hover:bg-[var(--color-accent1)]"
+                  className="block px-4 py-2 text-md text-[var(--text-light)] hover:bg-[var(--color-accent1)] hover:scale-85"
                 >
                   My Orders
                 </a>
               </li>
               <li>
-                <button className="block px-4 py-2 text-md text-[var(--text-light)] hover:bg-[var(--color-accent1)]">
+                <button className="block px-4 py-2 text-md text-[var(--text-light)] hover:bg-[var(--color-accent1)] hover:scale-85">
                   Settings
                 </button>
               </li>
               <li>
                 <button
                   onClick={handleSignOut}
-                  className="block px-4 py-2 text-md text-[var(--text-light)] hover:bg-[var(--color-accent1)]"
+                  className="block px-4 py-2 text-md text-[var(--text-light)] hover:bg-[var(--color-accent1)] hover:scale-85"
                 >
                   Sign out
                 </button>
@@ -156,7 +156,7 @@ function NavBar() {
               <li key={link.path}>
                 <a
                   href={link.path}
-                  className="block py-2 px-3 text-[var(--text-light)] rounded-sm hover:bg-[var(--color-accent1)] md:p-0"
+                  className="block py-2 px-3 text-[var(--text-light)] rounded-sm hover:bg-[var(--color-accent1)] md:p-0 hover:scale-85"
                 >
                   {link.name}
                 </a>
