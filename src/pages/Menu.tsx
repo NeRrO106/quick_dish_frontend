@@ -18,8 +18,8 @@ function Menu() {
   if (isError) return <p>Error: {(error as Error).message}</p>;
 
   return (
-    <div className="min-h-screen bg-emerald-500 flex items-center justify-center px-4 flex-col">
-      <div className="text-center max-w-xl text-white space-y-6">
+    <div className="min-h-screen bg-[var(--color-secondary)] flex items-center justify-center px-4 flex-col">
+      <div className="text-center max-w-xl text-[var(--text-light)] space-y-6">
         <h1 className="text-6xl font-extrabold tracking-tight leading-tight drop-shadow-lg">
           Menu Page
         </h1>
@@ -28,7 +28,7 @@ function Menu() {
         {data?.map((prod) => (
           <li
             key={prod.Id}
-            className="w-64 p-2 border border-gray-200 rounded-lg shadow-sm bg-gray-800 border-gray-700 mb-4"
+            className="w-64 p-2 border border-gray-200 rounded-lg shadow-sm bg-[var(--color-accent2)] border-[var(--color-secondary)] mb-4"
           >
             {prod.ImageUrl ? (
               <img
@@ -39,32 +39,34 @@ function Menu() {
             ) : (
               <div>No image</div>
             )}
-            <p className="text-xl text-center font-semibold text-white mb-2">
+            <p className="text-xl text-center font-semibold text-[var(--text-light)] mb-2">
               {prod.Name}
             </p>
-            <p className="text-sm text-center font-medium text-white mb-2">
+            <p className="text-sm text-center font-medium text-[var(--text-light)] mb-2">
               {prod.Description}
             </p>
-            <p className="text-xl font-bold text-white mb-2">
+            <p className="text-xl font-bold text-[var(--text-light)] mb-2">
               {prod.Price.toFixed(2)} lei
             </p>
-            <button
-              onClick={() => navigate(`/productdetails/${prod.Id}`)}
-              className="text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:focus:ring-yellow-900"
-            >
-              View Product
-            </button>
-            <button
-              onClick={() => addToCart(prod.Id, 1, prod.Price)}
-              className="text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:focus:ring-yellow-900"
-            >
-              Add to cart
-            </button>
+            <div className="flex gap-2 justify-center">
+              <button
+                onClick={() => navigate(`/productdetails/${prod.Id}`)}
+                className="text-[var(--text-light)] bg-[var(--color-accent1)] hover:bg-[var(--color-accent3)] font-medium rounded-full text-sm px-3 py-3 transition"
+              >
+                View Product
+              </button>
+              <button
+                onClick={() => addToCart(prod.Id, 1, prod.Price)}
+                className="text-[var(--text-light)] bg-[var(--color-accent1)] hover:bg-[var(--color-accent3)] font-medium rounded-full text-sm px-3 py-3 transition"
+              >
+                Add to cart
+              </button>
+            </div>
           </li>
         ))}
       </ul>
       {data?.length === 0 && (
-        <p className="text-lg md:text-xl font-light text-white">
+        <p className="text-lg md:text-xl font-light text-[var(--text-light)]">
           No items available in the menu.
         </p>
       )}

@@ -27,8 +27,6 @@ function Orders() {
     const data = await putEntity(`${endpointUrl}${orderId}`, {
       Status: status,
     });
-    console.log(`Order ${orderId} status saved`, data);
-    console.log(`${endpointUrl}${orderId}`, status);
     if (data === null) {
       console.log("Null data");
     } else {

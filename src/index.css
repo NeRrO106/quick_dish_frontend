@@ -1,14 +1,12 @@
 @import "tailwindcss";
 @import "flowbite/src/themes/default";
 
-/*
-color:
-primary: red-500
-secondary: emerald-500
-background: gray-50
-text: gray-500
-buttons: #EF4444
-succes: #EF4444
-background col/card: #F9FAFB
-text-principal: #1F2937
-*/
+:root {
+  --color-primary: #F28C28;
+  --color-secondary: #e4c076;
+  --color-accent1: #FFC857;
+  --color-accent2: #E9724C;
+  --color-accent3: #8CB369;
+  --text-light: #F4F4F4;
+  --text-dark: #222222;
+}

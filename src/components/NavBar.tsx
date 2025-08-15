@@ -2,33 +2,63 @@ import { useNavigate } from "react-router-dom";
 import { useCurrentUser } from "../hooks/useCurrentUser";
 import postEntity from "../utils/PostEntity";
 
+type Role = "Client" | "Ghost" | "Admin" | "Manager" | "Courier";
+
+const navLinks: Record<Role, { name: string; path: string }[]> = {
+  Client: [
+    { name: "About", path: "/about" },
+    { name: "Menu", path: "/menu" },
+    { name: "Contact", path: "/contact" },
+  ],
+  Ghost: [
+    { name: "About", path: "/about" },
+    { name: "Menu", path: "/menu" },
+    { name: "Contact", path: "/contact" },
+  ],
+  Admin: [
+    { name: "Users", path: "/users" },
+    { name: "Products", path: "/products" },
+    { name: "Orders", path: "/orders" },
+    { name: "Menu", path: "/menu" },
+  ],
+  Manager: [
+    { name: "Products", path: "/products" },
+    { name: "Orders", path: "/orders" },
+    { name: "Menu", path: "/menu" },
+  ],
+  Courier: [
+    { name: "Orders", path: "/orders" },
+    { name: "Menu", path: "/menu" },
+  ],
+};
+
 function NavBar() {
   const { data } = useCurrentUser();
   const endpointUrl = import.meta.env.VITE_AUTH_ENDPOINT;
   const navigate = useNavigate();
 
   const handleSignOut = async () => {
-    await postEntity(`${endpointUrl}/logout`, {})
-      .then((response) => {
-        console.log(response);
-        localStorage.removeItem("user");
-        navigate("/");
-      })
-      .catch((error) => {
-        console.error("Error: ", error);
-      });
+    try {
+      await postEntity(`${endpointUrl}/logout`, {});
+      localStorage.removeItem("user");
+      navigate("/");
+    } catch (error) {
+      console.error("Error signing out: ", error);
+    }
   };
 
+  const role = (data?.Role ?? "Client") as Role;
+
   return (
-    <nav className="bg-red-500 border-gray-200">
+    <nav className="bg-[var(--color-primary)] border-b border-[var(--color-secondary)]">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <div className="flex items-center space-x-3 rtl:space-x-reverse">
           <img
             src="https://cdn-icons-png.flaticon.com/512/1046/1046784.png"
             className="h-8"
-            alt="Flowbite Logo"
+            alt="Logo"
           />
-          <span className="self-center text-2xl font-semibold whitespace-nowrap text-white">
+          <span className="self-center text-2xl font-semibold whitespace-nowrap text-[var(--text-light)]">
             Quick Dish
           </span>
         </div>
@@ -36,11 +66,10 @@ function NavBar() {
         <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
           <button
             type="button"
-            className="flex text-sm bg-red-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300"
+            className="flex text-sm bg-[var(--color-primary)] rounded-full md:me-0 focus:ring-4 focus:ring-gray-300"
             id="user-menu-button"
             aria-expanded="false"
             data-dropdown-toggle="user-dropdown"
-            data-dropdown-placement="bottom"
           >
             <span className="sr-only">Open user menu</span>
             <img
@@ -50,12 +79,14 @@ function NavBar() {
             />
           </button>
           <div
-            className="z-50 hidden my-4 text-base list-none bg-red-500 divide-y divide-gray-100 rounded-lg shadow-sm"
+            className="z-50 hidden my-4 text-base list-none bg-[var(--color-primary)] divide-y divide-gray-100 rounded-lg shadow-sm"
             id="user-dropdown"
           >
             <div className="px-4 py-3">
-              <span className="block text-md text-white">{data?.Name}</span>
-              <span className="block text-sm text-white truncate">
+              <span className="block text-md text-[var(--text-light)]">
+                {data?.Name}
+              </span>
+              <span className="block text-sm text-[var(--text-light)] truncate">
                 {data?.Email}
               </span>
             </div>
@@ -63,8 +94,7 @@ function NavBar() {
               <li>
                 <a
                   href="/cart"
-                  className="block px-4 py-2 text-md text-white hover:bg-red-700
-hover:text-black"
+                  className="block px-4 py-2 text-md text-[var(--text-light)] hover:bg-[var(--color-accent1)]"
                 >
                   Cart
                 </a>
@@ -72,178 +102,71 @@ hover:text-black"
               <li>
                 <a
                   href={`myorders/${data?.Id}`}
-                  className="block px-4 py-2 text-md text-white hover:bg-red-700
-hover:text-black"
+                  className="block px-4 py-2 text-md text-[var(--text-light)] hover:bg-[var(--color-accent1)]"
                 >
                   My Orders
                 </a>
               </li>
               <li>
-                <button
-                  className="block px-4 py-2 text-md text-white hover:bg-red-700
-hover:text-black"
-                >
+                <button className="block px-4 py-2 text-md text-[var(--text-light)] hover:bg-[var(--color-accent1)]">
                   Settings
                 </button>
               </li>
               <li>
                 <button
-                  onClick={() => handleSignOut()}
-                  className="block px-4 py-2 text-md text-white hover:bg-red-700
-hover:text-black"
+                  onClick={handleSignOut}
+                  className="block px-4 py-2 text-md text-[var(--text-light)] hover:bg-[var(--color-accent1)]"
                 >
                   Sign out
                 </button>
               </li>
             </ul>
           </div>
-
-          <button
-            data-collapse-toggle="navbar-user"
-            type="button"
-            className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
-            aria-controls="navbar-user"
-            aria-expanded="false"
-          >
-            <span className="sr-only">Open main menu</span>
-            <svg
-              className="w-5 h-5"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 17 14"
-            >
-              <path
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M1 1h15M1 7h15M1 13h15"
-              />
-            </svg>
-          </button>
         </div>
+        <button
+          data-collapse-toggle="navbar-user"
+          type="button"
+          className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-[var(--text-light)] rounded-lg md:hidden focus:outline-none focus:ring-2"
+          aria-controls="navbar-user"
+          aria-expanded="false"
+        >
+          <span className="sr-only">Open main menu</span>
+          <svg
+            className="w-5 h-5"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 17 14"
+          >
+            <path
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M1 1h15M1 7h15M1 13h15"
+            />
+          </svg>
+        </button>
         <div
           className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
           id="navbar-user"
         >
-          <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-red-100 rounded-lg bg-red-500 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-red-500">
-            {(data?.Role === "Client" || data?.Role === "Ghost") && (
-              <>
-                <li>
-                  <a
-                    href="/about"
-                    className="block py-2 px-3 text-white rounded-sm hover:bg-red-200 hover:text-black md:hover:bg-transparent md:hover:text-black md:p-0"
-                  >
-                    About
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/menu"
-                    className="block py-2 px-3 text-white rounded-sm hover:bg-red-200 hover:text-black md:hover:bg-transparent md:hover:text-black md:p-0"
-                  >
-                    Menu
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/contact"
-                    className="block py-2 px-3 text-white rounded-sm hover:bg-red-200 hover:text-black md:hover:bg-transparent md:hover:text-black md:p-0"
-                  >
-                    Contact
-                  </a>
-                </li>
-              </>
-            )}
-            {data?.Role === "Admin" && (
-              <>
-                <li>
-                  <a
-                    href="/users"
-                    className="block py-2 px-3 text-white rounded-sm hover:bg-red-200 hover:text-black md:hover:bg-transparent md:hover:text-black md:p-0"
-                  >
-                    Users
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/products"
-                    className="block py-2 px-3 text-white rounded-sm hover:bg-red-200 hover:text-black md:hover:bg-transparent md:hover:text-black md:p-0"
-                  >
-                    Products
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/orders"
-                    className="block py-2 px-3 text-white rounded-sm hover:bg-red-200 hover:text-black md:hover:bg-transparent md:hover:text-black md:p-0"
-                  >
-                    Orders
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/menu"
-                    className="block py-2 px-3 text-white rounded-sm hover:bg-red-200 hover:text-black md:hover:bg-transparent md:hover:text-black md:p-0"
-                  >
-                    Menu
-                  </a>
-                </li>
-              </>
-            )}
-            {data?.Role === "Manager" && (
-              <>
-                <li>
-                  <a
-                    href="/products"
-                    className="block py-2 px-3 text-white rounded-sm hover:bg-red-200 hover:text-black md:hover:bg-transparent md:hover:text-black md:p-0"
-                  >
-                    Products
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/orders"
-                    className="block py-2 px-3 text-white rounded-sm hover:bg-red-200 hover:text-black md:hover:bg-transparent md:hover:text-black md:p-0"
-                  >
-                    Orders
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/menu"
-                    className="block py-2 px-3 text-white rounded-sm hover:bg-red-200 hover:text-black md:hover:bg-transparent md:hover:text-black md:p-0"
-                  >
-                    Menu
-                  </a>
-                </li>
-              </>
-            )}
-            {data?.Role === "Courier" && (
-              <>
-                <li>
-                  <a
-                    href="/orders"
-                    className="block py-2 px-3 text-white rounded-sm hover:bg-red-200 hover:text-black md:hover:bg-transparent md:hover:text-black md:p-0"
-                  >
-                    Orders
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/menu"
-                    className="block py-2 px-3 text-white rounded-sm hover:bg-red-200 hover:text-black md:hover:bg-transparent md:hover:text-black md:p-0"
-                  >
-                    Menu
-                  </a>
-                </li>
-              </>
-            )}
+          <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-[var(--color-primary)] rounded-lg bg-[var(--color-primary)] md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0">
+            {navLinks[role].map((link) => (
+              <li key={link.path}>
+                <a
+                  href={link.path}
+                  className="block py-2 px-3 text-[var(--text-light)] rounded-sm hover:bg-[var(--color-accent1)] md:p-0"
+                >
+                  {link.name}
+                </a>
+              </li>
+            ))}
           </ul>
         </div>
       </div>
     </nav>
   );
 }
+
 export default NavBar;
