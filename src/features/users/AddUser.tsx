@@ -33,101 +33,107 @@ function AddUser() {
 
   return (
     <>
-      <div className="w-full max-w-2xl bg-white border border-gray-200 rounded-lg shadow-sm p-6 dark:bg-purple-500 dark:border-gray-700">
-        <h2 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white md-5">
-          Create user
-        </h2>
-        <div>
-          <label className="block mb-2 text-md font-medium text-white-900 dark:text-white">
-            User Name
-          </label>
-          <input
-            className="bg-gray-50 border border-gray-300 text-white-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4"
-            name="name"
-            value={form.Name}
-            onChange={(e) => setForm({ ...form, Name: e.target.value })}
-          />
+      <div className="min-h-screen bg-[var(--color-secondary)] flex items-center justify-center px-4 flex-col">
+        <div className="text-center max-w-xl text-[var(--text-light)] space-y-6">
+          <h2 className="text-6xl font-extrabold tracking-tight leading-tight drop-shadow-lg">
+            Create user
+          </h2>
         </div>
-
-        <div>
-          <label className="block mb-2 text-md font-medium text-white-900 dark:text-white">
-            Email
-          </label>
-          <input
-            className="bg-gray-50 border border-gray-300 text-white-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4"
-            name="email"
-            value={form.Email}
-            onChange={(e) => setForm({ ...form, Email: e.target.value })}
-          />
-        </div>
-
-        <div>
-          <label className="block mb-2 text-md font-medium text-white-900 dark:text-white">
-            Role
-          </label>
-          <button
-            onClick={() => setDropdownOpen(!dropdownOpen)}
-            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          >
-            {form.Role || "Select Role"}
-            <svg
-              className="w-2.5 h-2.5 ms-3"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 10 6"
-            >
-              <path
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="m1 1 4 4 4-4"
+        <div className="max-w-2xl w-full p-8 bg-[var(--color-secondary)]/20 backdrop-blur-md rounded-2xl shadow-2xl">
+          <div>
+            <label className="block mb-2 text-md font-medium text-[var(--text-dark)]">
+              User Name
+              <input
+                className="w-full p-3 mb-4 rounded-xl border-2 border-white/30 bg-white/10 placeholder-white/70 text-white focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 transition"
+                name="name"
+                value={form.Name}
+                onChange={(e) => setForm({ ...form, Name: e.target.value })}
               />
-            </svg>
-          </button>
-          {dropdownOpen && (
-            <div className="absolute mt-2 z-50 bg-white dark:bg-gray-700 rounded-lg shadow w-44">
-              <ul className="py-2 text-sm text-gray-700 dark:text-gray-200">
-                {roles.map((role) => (
-                  <li key={role}>
-                    <button
-                      onClick={() => handleSelect(role)}
-                      className="block w-full px-4 py-2 text-left hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                    >
-                      {role}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </div>
+            </label>
+          </div>
 
-        <div>
-          <label className="block mb-2 text-md font-medium text-white-900 dark:text-white">
-            Password
-          </label>
-          <input
-            className="bg-gray-50 border border-gray-300 text-white-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4"
-            name="password"
-            type="password"
-            value={form.Password}
-            onChange={(e) => setForm({ ...form, Password: e.target.value })}
-          />
+          <div>
+            <label className="block mb-2 text-md font-medium text-[var(--text-dark)]">
+              Email
+              <input
+                className="w-full p-3 mb-4 rounded-xl border-2 border-white/30 bg-white/10 placeholder-white/70 text-white focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 transition"
+                name="email"
+                value={form.Email}
+                onChange={(e) => setForm({ ...form, Email: e.target.value })}
+              />
+            </label>
+          </div>
+
+          <div>
+            <label className="block mb-2 text-md font-medium text-[var(--text-dark)]">
+              Role
+            </label>
+            <button
+              onClick={() => setDropdownOpen(!dropdownOpen)}
+              className="px-3 py-3 mb-4 rounded-xl border-2 border-white/30 bg-white/10 placeholder-white/70 text-white focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 transition"
+            >
+              {form.Role || "Select Role"}
+              <svg
+                className="w-2.5 h-2.5 ms-3"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 10 6"
+              >
+                <path
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="m1 1 4 4 4-4"
+                />
+              </svg>
+            </button>
+            {dropdownOpen && (
+              <div className="absolute mt-2 z-50 bg-[var(--color-secondary)]/20 rounded-lg shadow w-44">
+                <ul className="py-2 text-sm text-gray-700">
+                  {roles.map((role) => (
+                    <li key={role}>
+                      <button
+                        onClick={() => handleSelect(role)}
+                        className="block w-full px-4 py-2 text-left hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                      >
+                        {role}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+
+          <div>
+            <label className="block mb-2 text-md font-medium text-[var(--text-dark)]">
+              Password
+              <input
+                className="w-full p-3 mb-4 rounded-xl border-2 border-white/30 bg-white/10 placeholder-white/70 text-white focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 transition"
+                name="password"
+                type="password"
+                value={form.Password}
+                onChange={(e) => setForm({ ...form, Password: e.target.value })}
+              />
+            </label>
+          </div>
         </div>
-        <button
-          className="text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
-          onClick={handleSave}
-        >
-          Save
-        </button>
-        <button
-          className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
-          onClick={() => window.history.back()}
-        >
-          Back
-        </button>
+        <div>
+          <button
+            className="px-6 py-3 text-[var(--text-light)] bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+            onClick={handleSave}
+          >
+            Save
+          </button>
+          <button
+            className="px-6 py-3 text-[var(--text-light)] bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
+            onClick={() => window.history.back()}
+          >
+            Back
+          </button>
+        </div>
       </div>
     </>
   );

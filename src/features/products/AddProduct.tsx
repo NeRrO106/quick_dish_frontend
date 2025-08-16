@@ -17,13 +17,7 @@ function EditProduct() {
   const endpointUrl = import.meta.env.VITE_PRODUCTS_ENDPOINT;
 
   const handleSave = async () => {
-    const data = await postEntity<Product>(`${endpointUrl}`, form);
-    if (data === null) {
-      console.log("Null data");
-    } else {
-      console.log("Product updated", data);
-      window.history.back();
-    }
+    await postEntity<Product>(`${endpointUrl}`, form);
   };
 
   const upload = async () => {
@@ -31,102 +25,107 @@ function EditProduct() {
     const storageRef = ref(storage, `/${image?.name}`);
     const snapshot = await uploadBytes(storageRef, image);
     const url = await getDownloadURL(snapshot.ref);
-    console.log(url);
     setForm({ ...form, ImageUrl: url });
   };
 
   return (
-    <>
-      <div className="w-full max-w-2xl bg-white border border-gray-200 rounded-lg shadow-sm p-6 dark:bg-purple-500 dark:border-gray-700">
-        <h2 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white md-5">
-          Edit Product
+    <div className="min-h-screen bg-[var(--color-secondary)] flex items-center justify-center px-4 flex-col">
+      <div className="text-center max-w-xl text-[var(--text-light)] space-y-6">
+        <h2 className="text-6xl font-extrabold tracking-tight leading-tight drop-shadow-lg">
+          Add Product
         </h2>
+      </div>
+      <div className="max-w-2xl w-full p-8 bg-[var(--color-secondary)]/20 backdrop-blur-md rounded-2xl shadow-2xl">
         <div>
-          <label className="block mb-2 text-md font-medium text-white-900 dark:text-white">
+          <label className="block mb-2 text-md font-medium text-[var(--text-dark)]">
             Product Name
+            <input
+              className="w-full p-3 mb-4 rounded-xl border-2 border-white/30 bg-white/10 placeholder-white/70 text-white focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 transition"
+              name="name"
+              value={form.Name}
+              onChange={(e) => setForm({ ...form, Name: e.target.value })}
+            />
           </label>
-          <input
-            className="bg-gray-50 border border-gray-300 text-white-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4"
-            name="name"
-            value={form.Name}
-            onChange={(e) => setForm({ ...form, Name: e.target.value })}
-          />
         </div>
 
         <div>
-          <label className="block mb-2 text-md font-medium text-white-900 dark:text-white">
+          <label className="block mb-2 text-md font-medium text-[var(--text-dark)]">
             Product Description
+            <input
+              className="w-full p-3 mb-4 rounded-xl border-2 border-white/30 bg-white/10 placeholder-white/70 text-white focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 transition"
+              name="description"
+              value={form.Description}
+              onChange={(e) =>
+                setForm({ ...form, Description: e.target.value })
+              }
+            />
           </label>
-          <input
-            className="bg-gray-50 border border-gray-300 text-white-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4"
-            name="description"
-            value={form.Description}
-            onChange={(e) => setForm({ ...form, Description: e.target.value })}
-          />
         </div>
 
         <div>
-          <label className="block mb-2 text-md font-medium text-white-900 dark:text-white">
+          <label className="block mb-2 text-md font-medium text-[var(--text-dark)]">
             Product Category
+            <input
+              className="w-full p-3 mb-4 rounded-xl border-2 border-white/30 bg-white/10 placeholder-white/70 text-white focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 transition"
+              name="category"
+              value={form.Category}
+              onChange={(e) => setForm({ ...form, Category: e.target.value })}
+            />
           </label>
-          <input
-            className="bg-gray-50 border border-gray-300 text-white-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4"
-            name="category"
-            value={form.Category}
-            onChange={(e) => setForm({ ...form, Category: e.target.value })}
-          />
         </div>
         <div>
-          <label className="block mb-2 text-md font-medium text-white-900 dark:text-white">
+          <label className="block mb-2 text-md font-medium text-[var(--text-dark)]">
             Product Price
+            <input
+              className="w-full p-3 mb-4 rounded-xl border-2 border-white/30 bg-white/10 placeholder-white/70 text-white focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 transition"
+              name="price"
+              type="number"
+              step="0.01"
+              value={form.Price}
+              onChange={(e) =>
+                setForm({ ...form, Price: parseFloat(e.target.value) })
+              }
+            />
           </label>
-          <input
-            className="bg-gray-50 border border-gray-300 text-white-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4"
-            name="price"
-            type="number"
-            step="0.01"
-            value={form.Price}
-            onChange={(e) =>
-              setForm({ ...form, Price: parseFloat(e.target.value) })
-            }
-          />
         </div>
         <div>
-          <label className="block mb-2 text-md font-medium text-white-900 dark:text-white">
+          <label className="block mb-2 text-md font-medium text-[var(--text-dark)]">
             Image
+            <input
+              type="file"
+              className="w-full p-3 mb-4 rounded-xl border-2 border-white/30 bg-white/10 placeholder-white/70 text-white focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 transition"
+              onChange={(e) => {
+                if (e.target.files && e.target.files[0]) {
+                  setImage(e.target.files[0]);
+                } else {
+                  setImage(null);
+                }
+              }}
+            />
           </label>
-          <input
-            type="file"
-            className="bg-gray-50 border border-gray-300 text-white-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4"
-            onChange={(e) => {
-              if (e.target.files && e.target.files[0]) {
-                setImage(e.target.files[0]);
-              } else {
-                setImage(null);
-              }
-            }}
-          />
-          <button
-            className="text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
-            onClick={upload}
-          >
-            Upload
-          </button>
         </div>
         <button
-          className="text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+          className="py-2 px-2 text-[var(--text-dark)] bg-[var(--color-accent1)] hover:bg-[var(--color-accent3)] font-bold rounded-xl shadow-lg hover:scale-105 transform transition"
+          onClick={upload}
+        >
+          Upload
+        </button>
+      </div>
+      <div>
+        <button
+          className="px-6 py-3 text-[var(--text-light)] bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
           onClick={handleSave}
         >
           Save
         </button>
         <button
-          className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
+          className="px-6 py-3 text-[var(--text-light)] bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
           onClick={() => window.history.back()}
         >
           Back
         </button>
       </div>
-    </>
+    </div>
   );
 }
 export default EditProduct;

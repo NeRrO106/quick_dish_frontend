@@ -75,7 +75,7 @@ function FinishOrder() {
             onChange={(e) =>
               setFormData({ ...formData, address: e.target.value })
             }
-            className="w-full px-3 py-2 border border-black-300 rounded focus:outline-none focus:ring-2 focus:ring-[var(--color-accent2)]"
+            className="w-full p-3 mb-4 rounded-xl border-2 border-white/30 bg-white/10 placeholder-white/70 text-white focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 transition"
             required
           />
         </label>
@@ -87,7 +87,7 @@ function FinishOrder() {
             onChange={(e) =>
               setFormData({ ...formData, phone: e.target.value })
             }
-            className="w-full px-3 py-2 border border-black-300 rounded focus:outline-none focus:ring-2 focus:ring-[var(--color-accent2)]"
+            className="w-full p-3 mb-4 rounded-xl border-2 border-white/30 bg-white/10 placeholder-white/70 text-white focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 transition"
             required
           />
         </label>
@@ -98,7 +98,7 @@ function FinishOrder() {
             onChange={(e) =>
               setFormData({ ...formData, paymentMethod: e.target.value })
             }
-            className="w-full px-3 py-2 border border-black-300 rounded focus:outline-none focus:ring-2 focus:ring-[var(--color-accent2)]"
+            className="w-full p-3 mb-4 rounded-xl border-2 border-white/30 bg-white/10 placeholder-white/70 text-[var(--text-dark)] focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 transition"
           >
             <option value="cash">Numerar</option>
             <option value="card">Card</option>
@@ -111,7 +111,7 @@ function FinishOrder() {
             onChange={(e) =>
               setFormData({ ...formData, notes: e.target.value })
             }
-            className="w-full px-3 py-2 border border-black-300 rounded focus:outline-none focus:ring-2 focus:ring-[var(--color-accent2)]"
+            className="w-full p-3 mb-4 rounded-xl border-2 border-white/30 bg-white/10 placeholder-white/70 text-white focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 transition"
           />
         </label>
       </div>

@@ -22,11 +22,11 @@ function Users() {
   if (isError) return <p>Error: {(error as Error).message}</p>;
 
   return (
-    <div className="min-h-screen bg-emerald-500 flex items-center justify-center px-4 flex-col">
-      <div className="text-center max-w-xl text-white space-y-6">
+    <div className="min-h-screen bg-[var(--color-secondary)] flex items-center justify-center px-4 flex-col">
+      <div className="text-center max-w-xl text-[var(--text-light)] space-y-6">
         <button
           onClick={() => navigate("/users/add")}
-          className="text-white bg-red-700 hover:bg-red-900 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:focus:ring-red-900"
+          className="text-[var(--text-light)] bg-[var(--color-accent3)] hover:bg-[var(--color-darker-accent3)] font-medium rounded-full text-sm px-3 py-3 transition"
         >
           Add user
         </button>
@@ -38,37 +38,39 @@ function Users() {
         {data?.map((user) => (
           <li
             key={user.Id}
-            className="w-64 p-2 border border-gray-200 rounded-lg shadow-sm bg-gray-800 border-gray-700 mb-4"
+            className="w-64 p-2 border border-gray-200 rounded-lg shadow-sm bg-[var(--color-accent2)] border-[var(--color-secondary)] mb-4"
           >
-            <p className="text-xl text-center font-semibold text-white mb-2">
+            <p className="text-xl text-center font-semibold text-[var(--text-light)] mb-2">
               {user.Name}
             </p>
-            <p className="text-sm text-center font-medium text-white mb-2">
+            <p className="text-sm text-center font-medium text-[var(--text-light)] mb-2">
               {user.Email}
             </p>
-            <p className="text-sm text-center font-medium text-white mb-2">
+            <p className="text-sm text-center font-medium text-[var(--text-light)] mb-2">
               {user.Role}
             </p>
-            <p className="text-xl font-bold text-white mb-2">
+            <p className="text-xl font-bold text-[var(--text-light)] text-center mb-2">
               {new Date(user.CreatedAt).toLocaleDateString()}
             </p>
-            <button
-              onClick={() => navigate(`/users/${user.Id}`)}
-              className="text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:focus:ring-yellow-900"
-            >
-              Edit user
-            </button>
-            <button
-              onClick={() => handleDelete(user.Id)}
-              className="text-white bg-red-700 hover:bg-red-900 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:focus:ring-red-900"
-            >
-              Delete user
-            </button>
+            <div className="flex gap-2 justify-center">
+              <button
+                onClick={() => navigate(`/users/${user.Id}`)}
+                className="text-[var(--text-light)] bg-[var(--color-accent1)] hover:bg-[var(--color-accent3)] font-medium rounded-full text-sm px-3 py-3 transition"
+              >
+                Edit user
+              </button>
+              <button
+                onClick={() => handleDelete(user.Id)}
+                className="text-[var(--text-light)] bg-red-700 hover:bg-red-900 font-medium rounded-full text-sm px-3 py-3 transition"
+              >
+                Delete user
+              </button>
+            </div>
           </li>
         ))}
       </ul>
       {data?.length === 0 && (
-        <p className="text-lg md:text-xl font-light text-white">
+        <p className="text-lg md:text-xl font-light text-[var(--text-light)]">
           No items available in the user menu.
         </p>
       )}

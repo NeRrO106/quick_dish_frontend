@@ -21,7 +21,7 @@ export const RouteProtector = ({
   }, [isAuthenticated, user.Role, allowedRoles, navigate]);
 
   if (!isAuthenticated) return null;
-  if (allowedRoles && !allowedRoles.includes(user.role)) return null;
+  if (allowedRoles && !allowedRoles.includes(user.Role)) return null;
 
   return <>{children}</>;
 };

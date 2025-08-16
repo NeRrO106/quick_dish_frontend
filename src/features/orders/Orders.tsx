@@ -7,8 +7,10 @@ import putEntity from "../../utils/PutEntity";
 function Orders() {
   const endpointUrl = import.meta.env.VITE_ORDERS_ENDPOINT;
   const { data, isLoading, isError, error } = useQuery<Order[] | null>({
-    queryKey: ["orders"],
-    queryFn: () => getEntity<Order[]>(endpointUrl),
+    queryKey: ["orders", endpointUrl],
+    queryFn: () => {
+      return getEntity<Order[]>(endpointUrl);
+    },
   });
 
   const statuses = ["Pending", "In Preparation", "Ready", "Taken", "Delivered"];
@@ -60,7 +62,7 @@ function Orders() {
             <select
               value={orderStatus[order.Id] || order.Status}
               onChange={(e) => handleStatusChange(order.Id, e.target.value)}
-              className="p-2 rounded mb-2 text-black"
+              className="p-2 rounded mb-2 text-[var(--text-dark)] border border-gray-200 rounded-lg shadow-sm"
             >
               {statuses.map((status) => (
                 <option key={status} value={status}>
@@ -68,30 +70,33 @@ function Orders() {
                 </option>
               ))}
             </select>
-            <p className="text-xl text-center font-semibold text-[var(--text-dark)] mb-2">
+            <button
+              onClick={() => handleSaveStatus(order.Id)}
+              className="mt-2 px-4 py-2 bg-[var(--color-accent1)] text-[var(--text-light)] rounded hover:bg-[var(--color-accent3)]"
+            >
+              Save Status
+            </button>
+            <p className="text-sm text-center font-semibold text-[var(--text-dark)] mb-2">
               Payment Method: {order.PaymentMethod}
             </p>
-            <p className="text-xl text-center font-semibold text-[var(--text-dark)] mb-2">
+            <p className="text-md text-center font-semibold text-[var(--text-dark)] mb-2">
               Phone Number: {order.PhoneNumber}
             </p>
-            <p className="text-xl text-center font-semibold text-[var(--text-dark)] mb-2">
+            <p className="text-sm text-center font-semibold text-[var(--text-dark)] mb-2">
               Total Amount: {order.TotalAmount.toFixed(2)} lei
             </p>
             <h3>Produse: </h3>
             <ul className="text-sm mt-1">
               {order.Items.map((item) => (
-                <p className="text-xl text-center font-semibold text-[var(--text-dark)] mb-2">
+                <p
+                  key={item.Id}
+                  className="text-md text-center font-semibold text-[var(--text-dark)] mb-2"
+                >
                   Produs: {item.ProductName} - {item.Quantity} *{" "}
-                  {item.UnitPrice} = {item.TotalPrice}
+                  {item.UnitPrice} lei = {item.TotalPrice} lei
                 </p>
               ))}
             </ul>
-            <button
-              onClick={() => handleSaveStatus(order.Id)}
-              className="mt-2 px-4 py-2 bg-[var(--color-accent2)] text-[var(--text-light)] rounded hover:bg-[var(--color-accent3)]"
-            >
-              Save Status
-            </button>
           </li>
         ))}
       </ul>
