@@ -1,25 +1,19 @@
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import postEntity from "../utils/PostEntity";
 
 function Hero() {
   const navigate = useNavigate();
-  const apiUrl = import.meta.env.VITE_API_URL;
+  const endpoitUrl = import.meta.env.VITE_AUTH_ENDPOINT;
 
-  const handleGhost = (e: React.FormEvent) => {
+  const handleGuest = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    axios
-      .post(`${apiUrl}/api/auth/login-ghost`, {
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true,
-      })
-      .then((response) => {
-        console.log(response);
-        navigate("/");
-      })
-      .catch((error) => {
-        console.error("Error on loggin: ", error);
-      });
+    await postEntity(`${endpoitUrl}loginguest`, "");
+    localStorage.setItem(
+      "user",
+      JSON.stringify({ Name: "Guest", Role: "Guest" })
+    );
+    navigate("/");
   };
 
   return (
@@ -40,7 +34,7 @@ function Hero() {
           </button>
           <button
             className="transition-all duration-300 focus:outline-none text-[var(--text-dark)] bg-[var(--color-accent2)] hover:bg-[var(--color-accent3)] focus:ring-4 focus:ring-yellow-300 font-semibold rounded-lg text-md px-6 py-2 shadow-lg dark:focus:ring-yellow-900"
-            onClick={(e) => handleGhost(e)}
+            onClick={(e) => handleGuest(e)}
           >
             Continue as Guest
           </button>

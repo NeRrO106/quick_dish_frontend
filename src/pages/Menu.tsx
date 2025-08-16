@@ -13,6 +13,29 @@ function Menu() {
     queryKey: ["products"],
     queryFn: () => getEntity<Product[]>(endpointUrl),
   });
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+  const role = user?.Role;
+
+  const handleAddToCart = (
+    id: number,
+    quantity: number,
+    price: number,
+    name: string
+  ) => {
+    if (role === "Guest") {
+      alert("Nu poti plasa o comanda ca si oaspete!");
+      return;
+    }
+    addToCart(id, quantity, price, name);
+  };
+
+  const handleViewProduct = (id: number) => {
+    if (role === "Guest") {
+      alert("Nu poti vizualiza un produs ca si oaspete!");
+      return;
+    }
+    navigate(`/productdetails/${id}`);
+  };
 
   if (isLoading) return <p>Loading....</p>;
   if (isError) return <p>Error: {(error as Error).message}</p>;
@@ -50,13 +73,15 @@ function Menu() {
             </p>
             <div className="flex gap-2 justify-center">
               <button
-                onClick={() => navigate(`/productdetails/${prod.Id}`)}
+                onClick={() => handleViewProduct(prod.Id)}
                 className="text-[var(--text-light)] bg-[var(--color-accent1)] hover:bg-[var(--color-accent3)] font-medium rounded-full text-sm px-3 py-3 transition"
               >
                 View Product
               </button>
               <button
-                onClick={() => addToCart(prod.Id, 1, prod.Price, prod.Name)}
+                onClick={() =>
+                  handleAddToCart(prod.Id, 1, prod.Price, prod.Name)
+                }
                 className="text-[var(--text-light)] bg-[var(--color-accent1)] hover:bg-[var(--color-accent3)] font-medium rounded-full text-sm px-3 py-3 transition"
               >
                 Add to cart

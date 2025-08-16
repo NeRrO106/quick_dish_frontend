@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useCurrentUser } from "../hooks/useCurrentUser";
 import postEntity from "../utils/PostEntity";
 
-type Role = "Client" | "Ghost" | "Admin" | "Manager" | "Courier";
+type Role = "Client" | "Guest" | "Admin" | "Manager" | "Courier";
 
 const navLinks: Record<Role, { name: string; path: string }[]> = {
   Client: [
@@ -10,7 +10,7 @@ const navLinks: Record<Role, { name: string; path: string }[]> = {
     { name: "Menu", path: "/menu" },
     { name: "Contact", path: "/contact" },
   ],
-  Ghost: [
+  Guest: [
     { name: "About", path: "/about" },
     { name: "Menu", path: "/menu" },
     { name: "Contact", path: "/contact" },

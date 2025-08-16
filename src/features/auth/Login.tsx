@@ -20,7 +20,6 @@ function Login() {
     await postEntity(`${endpoitUrl}login`, form)
       .then((data) => {
         localStorage.setItem("user", JSON.stringify(data));
-        console.log("Login successful", localStorage.getItem("user"));
         navigate("/");
       })
       .catch((error) => {
