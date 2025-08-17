@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import postEntity from "../../utils/PostEntity";
+import validator from "validator";
 
 function ForgotPassword() {
   const endpointUrl = import.meta.env.VITE_AUTH_ENDPOINT;
@@ -10,14 +11,14 @@ function ForgotPassword() {
 
   const handleForgotPassword = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email) {
+    if (!validator.isEmail(email)) {
       setError("Please fill in your email");
       return;
     }
     await postEntity(`${endpointUrl}forgotpassword`, email)
       .then((response) => {
         console.log(response);
-        navigate("/reset-password");
+        navigate("/resetpassword");
       })
       .catch((error) => {
         console.log(error);

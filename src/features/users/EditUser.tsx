@@ -4,6 +4,7 @@ import type { User } from "./User";
 import getEntity from "../../utils/GetEntity";
 import { useQuery } from "@tanstack/react-query";
 import putEntity from "../../utils/PutEntity";
+import validator from "validator";
 
 function EditUser() {
   const roles = ["Client", "Admin", "Manager", "Courier"];
@@ -34,6 +35,20 @@ function EditUser() {
   });
 
   const handleSave = async () => {
+    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+
+    if (!validator.isEmail(form.email)) {
+      alert("Invalide email");
+      return;
+    }
+
+    if (passwordPattern.test(form.password)) {
+      alert(
+        "Parola trebuie sa aiba minim 8 caractere(litere mari, litere mici, caractere speciale etc."
+      );
+      return;
+    }
+
     const data = await putEntity(`${endpointUrl}${id}`, form);
     if (data === null) {
       console.log("Null data");
@@ -73,6 +88,7 @@ function EditUser() {
               <input
                 className="w-full p-3 mb-4 rounded-xl border-2 border-white/30 bg-white/10 placeholder-white/70 text-[var(--text-dark)] focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 transition"
                 name="email"
+                type="email"
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
               />

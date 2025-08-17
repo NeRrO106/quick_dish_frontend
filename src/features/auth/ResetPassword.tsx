@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import postEntity from "../../utils/PostEntity";
+import validator from "validator";
 
 function ForgotPassword() {
   const endpointUrl = import.meta.env.VITE_AUTH_ENDPOINT;
@@ -15,12 +16,30 @@ function ForgotPassword() {
 
   const handleResetPassword = async (e: React.FormEvent) => {
     e.preventDefault();
+    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+
     if (!form.email || !form.newPassword || !form.confirmNewPassword) {
       setError("Please fill in all the fields");
       return;
     }
+
+    if (
+      passwordPattern.test(form.newPassword) ||
+      passwordPattern.test(form.confirmNewPassword)
+    ) {
+      setError(
+        "Parola trebuie sa aiba minim 8 caractere(litere mari, litere mici, caractere speciale etc."
+      );
+      return;
+    }
+
     if (form.newPassword !== form.confirmNewPassword) {
       setError("Password doesnt match");
+      return;
+    }
+
+    if (!validator.isEmail(form.email)) {
+      setError("Invalide email");
       return;
     }
 

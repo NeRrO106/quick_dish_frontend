@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { User } from "./User";
 import postEntity from "../../utils/PostEntity";
+import validator from "validator";
 
 function AddUser() {
   const [form, setForm] = useState({
@@ -22,6 +23,22 @@ function AddUser() {
   };
 
   const handleSave = async () => {
+    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+
+    if (!form.Name || !form.Email || !form.Password) {
+      alert("Please fill in all the fields");
+      return;
+    }
+
+    if (!passwordPattern.test(form.Password)) {
+      alert("Invalid password / invalid confirm password");
+      return;
+    }
+
+    if (!validator.isEmail(form.Email)) {
+      alert("Invalide email");
+      return;
+    }
     const data = await postEntity<User>(`${endpointUrl}`, form);
     if (data === null) {
       console.log("Null data");
@@ -58,6 +75,7 @@ function AddUser() {
               <input
                 className="w-full p-3 mb-4 rounded-xl border-2 border-white/30 bg-white/10 placeholder-white/70 text-white focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 transition"
                 name="email"
+                type="email"
                 value={form.Email}
                 onChange={(e) => setForm({ ...form, Email: e.target.value })}
               />

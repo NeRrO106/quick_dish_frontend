@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useCart } from "../cart/useCart";
 import postEntity from "../../utils/PostEntity";
+import validator from "validator";
 
 function FinishOrder() {
   const { cart, totalAmount } = useCart();
@@ -31,6 +32,10 @@ function FinishOrder() {
   const handleFinishOrder = async () => {
     if (!formData.address || !formData.phone) {
       setError("Adresa și telefonul sunt obligatorii.");
+      return;
+    }
+    if (validator.isMobilePhone(formData.phone)) {
+      setError("Telefon invalid");
       return;
     }
     const orderData = {
