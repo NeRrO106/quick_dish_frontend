@@ -34,7 +34,7 @@ function FinishOrder() {
       setError("Adresa și telefonul sunt obligatorii.");
       return;
     }
-    if (validator.isMobilePhone(formData.phone)) {
+    if (!validator.isMobilePhone(formData.phone, "ro-RO")) {
       setError("Telefon invalid");
       return;
     }
@@ -44,7 +44,7 @@ function FinishOrder() {
       Address: formData.address,
       PhoneNumber: Number(formData.phone),
       TotalAmount: totalAmount(),
-      Notes: formData.notes,
+      Notes: formData.notes.trim() === "" ? null : formData.notes,
       PaymentMethod: formData.paymentMethod,
       UserId: formData.userId,
       items: cart.map((item) => ({

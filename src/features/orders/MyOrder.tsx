@@ -29,28 +29,28 @@ function MyOrder() {
           >
             <p>Comanda: #{order.Id}</p>
             <p className="text-xl text-center font-semibold text-[var(--text-dark)] mb-2">
-              {order.UserName}
+              Name: {order.UserName}
             </p>
             <p className="text-xl text-center font-semibold text-[var(--text-dark)] mb-2">
-              {order.CourierName}
+              Courier Name: {order.CourierName}
             </p>
             <p className="text-md text-center font-semibold text-[var(--text-dakr)] mb-2">
-              {order.Address}
+              Address: {order.Address}
             </p>
             <p className="text-md text-center font-semibold text-[var(--text-dark)] mb-2">
-              {order.Notes}
+              Notes: {order.Notes}
             </p>
             <p className="text-md text-center font-semibold text-[var(--text-dark)] mb-2">
-              {order.Status}
+              Status: {order.Status}
             </p>
             <p className="text-sm text-center font-semibold text-[var(--text-dark)] mb-2">
-              {order.PaymentMethod}
+              Payment Method: {order.PaymentMethod}
             </p>
             <p className="text-sm text-center font-semibold text-[var(--text-dark)] mb-2">
-              {order.PhoneNumber}
+              Phone Number: {order.PhoneNumber}
             </p>
             <p className="text-md font-bold text-[var(--text-light)] mb-2">
-              {order.TotalAmount.toFixed(2)} lei
+              Total Amount: {order.TotalAmount.toFixed(2)} lei
             </p>
             <h3>Produse: </h3>
             <ul className="flex flex-wrap justify-center items-center mt-8 space-x-4 rtl:space-x-reverse">

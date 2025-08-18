@@ -5,6 +5,11 @@ import { useState } from "react";
 import putEntity from "../../utils/PutEntity";
 
 function Orders() {
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+  const [deliveryCode, setDeliveryCode] = useState<{
+    [key: number]: number | "";
+  }>({});
+
   const endpointUrl = import.meta.env.VITE_ORDERS_ENDPOINT;
   const { data, isLoading, isError, error } = useQuery<Order[] | null>({
     queryKey: ["orders", endpointUrl],
@@ -13,7 +18,6 @@ function Orders() {
     },
   });
 
-  const statuses = ["Pending", "In Preparation", "Ready", "Taken", "Delivered"];
   const [orderStatus, setOrderStatus] = useState<{ [key: number]: string }>({});
 
   const handleStatusChange = (orderId: number, status: string) => {
@@ -30,6 +34,34 @@ function Orders() {
     });
   };
 
+  const handleTakeOrder = async (orderId: number) => {
+    await putEntity(`${endpointUrl}${orderId}`, {
+      Status: "Taken",
+      CourierID: user.Id,
+    });
+  };
+
+  const handleDeliverOrder = async (orderId: number) => {
+    const code = deliveryCode[orderId];
+
+    if (!code) return alert("Trebuie să introduceți codul!");
+
+    await putEntity(`${endpointUrl}${orderId}`, {
+      Status: "Delivered",
+      Code: code,
+    });
+  };
+
+  const visibleOrders = data?.filter((order) => {
+    if (user.Role === "Courier") {
+      return (
+        order.Status === "Ready" ||
+        (order.Status === "Taken" && order.CourierName === user.Name)
+      );
+    }
+    return true;
+  });
+
   if (isLoading) return <p>Loading....</p>;
   if (isError) return <p>Error: {(error as Error).message}</p>;
 
@@ -41,7 +73,7 @@ function Orders() {
         </h1>
       </div>
       <ul className="flex flex-wrap justify-center items-center mt-8 space-x-4 rtl:space-x-reverse">
-        {data?.map((order) => (
+        {visibleOrders?.map((order) => (
           <li
             key={order.Id}
             className="w-64 p-2 border border-gray-200 rounded-lg shadow-sm bg-[var(--color-accent2)] border-[var(--color-secondary)] mb-4"
@@ -59,23 +91,67 @@ function Orders() {
             <p className="text-xl text-center font-semibold text-[var(--text-dark)] mb-2">
               Note: {order.Notes}
             </p>
-            <select
-              value={orderStatus[order.Id] || order.Status}
-              onChange={(e) => handleStatusChange(order.Id, e.target.value)}
-              className="p-2 rounded mb-2 text-[var(--text-dark)] border border-gray-200 rounded-lg shadow-sm"
-            >
-              {statuses.map((status) => (
-                <option key={status} value={status}>
-                  {status}
-                </option>
-              ))}
-            </select>
-            <button
-              onClick={() => handleSaveStatus(order.Id)}
-              className="mt-2 px-4 py-2 bg-[var(--color-accent1)] text-[var(--text-light)] rounded hover:bg-[var(--color-accent3)]"
-            >
-              Save Status
-            </button>
+            {user.Role === "Manager" ? (
+              <>
+                <p className="text-xl text-center font-semibold text-[var(--text-dark)] mb-2">
+                  Status: {order.Status}
+                </p>
+                <select
+                  value={orderStatus[order.Id] || order.Status}
+                  onChange={(e) => handleStatusChange(order.Id, e.target.value)}
+                  className="p-2 rounded mb-2 text-[var(--text-dark)] border border-gray-200 rounded-lg shadow-sm"
+                >
+                  {["Pending", "In Preparation", "Ready"].map((status) => (
+                    <option key={status} value={status}>
+                      {status}
+                    </option>
+                  ))}
+                </select>
+                <button
+                  onClick={() => handleSaveStatus(order.Id)}
+                  className="mt-2 px-4 py-2 bg-[var(--color-accent1)] text-[var(--text-light)] rounded hover:bg-[var(--color-accent3)]"
+                >
+                  Save Status
+                </button>
+              </>
+            ) : (
+              <>
+                <p className="text-xl text-center font-semibold text-[var(--text-dark)] mb-2">
+                  Status: {order.Status}
+                </p>
+                {order.Status === "Ready" && (
+                  <button
+                    onClick={() => handleTakeOrder(order.Id)}
+                    className="mt-2 px-4 py-2 bg-[var(--color-accent1)] text-[var(--text-light)] rounded hover:bg-[var(--color-accent3)]"
+                  >
+                    Take Order
+                  </button>
+                )}
+                {order.Status === "Taken" &&
+                  order.CourierName === user.Name && (
+                    <>
+                      <input
+                        type="number"
+                        placeholder="Introduceți codul de livrare"
+                        value={deliveryCode[order.Id] ?? ""}
+                        onChange={(e) =>
+                          setDeliveryCode((prev) => ({
+                            ...prev,
+                            [order.Id]: Number(e.target.value),
+                          }))
+                        }
+                        className="p-2 rounded mb-2"
+                      />
+                      <button
+                        onClick={() => handleDeliverOrder(order.Id)}
+                        className="mt-2 px-4 py-2 bg-[var(--color-accent1)] text-[var(--text-light)] rounded hover:bg-[var(--color-accent3)]"
+                      >
+                        Mark as Delivered
+                      </button>
+                    </>
+                  )}
+              </>
+            )}
             <p className="text-sm text-center font-semibold text-[var(--text-dark)] mb-2">
               Payment Method: {order.PaymentMethod}
             </p>
