@@ -28,21 +28,21 @@ function Contact() {
             <input
               type="text"
               placeholder="Your Name"
-              className="w-full px-4 py-2 rounded-lg focus:outline-none focus:ring-2"
+              className="w-full p-3 mb-4 rounded-xl border-2 border-white/30 bg-white/10 placeholder-white/70 text-white focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 transition"
             />
             <input
               type="email"
               placeholder="Your Email"
-              className="w-full px-4 py-2 rounded-lg focus:outline-none focus:ring-2"
+              className="w-full p-3 mb-4 rounded-xl border-2 border-white/30 bg-white/10 placeholder-white/70 text-white focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 transition"
             />
             <textarea
               placeholder="Your Message"
-              className="w-full px-4 py-2 rounded-lg focus:outline-none focus:ring-2"
+              className="w-full p-3 mb-4 rounded-xl border-2 border-white/30 bg-white/10 placeholder-white/70 text-white focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 transition"
               rows={4}
             ></textarea>
             <button
               type="submit"
-              className="w-full text-[var(--text-light)] font-semibold py-2 rounded-lg transition"
+              className="w-full text-[var(--text-light)] bg-[var(--color-accent1)] font-semibold py-2 rounded-lg transition border hover:scale-85 hover:shadow-xl hover:bg-[var(--color-accent3)]"
             >
               Send Message
             </button>
