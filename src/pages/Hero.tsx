@@ -1,14 +1,11 @@
 import { useNavigate } from "react-router-dom";
-import postEntity from "../utils/PostEntity";
 
 function Hero() {
   const navigate = useNavigate();
-  const endpoitUrl = import.meta.env.VITE_AUTH_ENDPOINT;
 
   const handleGuest = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    await postEntity(`${endpoitUrl}loginguest`, "");
     localStorage.setItem(
       "user",
       JSON.stringify({ Name: "Guest", Role: "Guest" })

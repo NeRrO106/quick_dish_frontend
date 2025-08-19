@@ -44,7 +44,7 @@ function FinishOrder() {
       Address: formData.address,
       PhoneNumber: Number(formData.phone),
       TotalAmount: totalAmount(),
-      Notes: formData.notes.trim() === "" ? null : formData.notes,
+      Notes: formData.notes.trim() === "" ? "" : formData.notes,
       PaymentMethod: formData.paymentMethod,
       UserId: formData.userId,
       items: cart.map((item) => ({

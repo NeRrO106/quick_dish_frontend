@@ -12,7 +12,7 @@ export interface Order {
   UserName: string;
   CourierName: string;
   Address: string;
-  PhoneNumber: number;
+  PhoneNumber: string;
   TotalAmount: number;
   Status: string;
   CreatedAt: string;
