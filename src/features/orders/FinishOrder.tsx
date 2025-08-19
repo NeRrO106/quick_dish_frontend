@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useCart } from "../cart/useCart";
 import postEntity from "../../utils/PostEntity";
 import validator from "validator";
+import { showToast } from "../../utils/ShowToast";
 
 function FinishOrder() {
   const { cart, totalAmount } = useCart();
@@ -32,10 +33,12 @@ function FinishOrder() {
   const handleFinishOrder = async () => {
     if (!formData.address || !formData.phone) {
       setError("Adresa și telefonul sunt obligatorii.");
+      showToast("Adresa și telefonul sunt obligatorii.", "error");
       return;
     }
     if (!validator.isMobilePhone(formData.phone, "ro-RO")) {
       setError("Telefon invalid");
+      showToast("Telefon invalid", "error");
       return;
     }
     const orderData = {
@@ -56,11 +59,18 @@ function FinishOrder() {
     try {
       await postEntity(`${endpoint}`, orderData);
       localStorage.removeItem("cart");
-      navigate("/");
+      showToast("Comanda plasata cu succes", "success");
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
     } catch (error) {
       console.error("Error placing order:", error);
       setError(
         "A apărut o eroare la plasarea comenzii. Vă rugăm să încercați din nou."
+      );
+      showToast(
+        "A apărut o eroare la plasarea comenzii. Vă rugăm să încercați din nou.",
+        "error"
       );
     }
   };

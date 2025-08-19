@@ -3,6 +3,7 @@ import getEntity from "../utils/GetEntity";
 import type { Product } from "../features/products/Product";
 import { useCart } from "../features/cart/useCart";
 import { useNavigate } from "react-router-dom";
+import { showToast } from "../utils/ShowToast";
 
 function Menu() {
   const { addToCart } = useCart();
@@ -23,15 +24,16 @@ function Menu() {
     name: string
   ) => {
     if (role === "Guest") {
-      alert("Nu poti plasa o comanda ca si oaspete!");
+      showToast("Nu poti plasa o comanda ca si oaspete!", "warning");
       return;
     }
+    showToast("Produs adaugat in cos cu succes!", "success");
     addToCart(id, quantity, price, name);
   };
 
   const handleViewProduct = (id: number) => {
     if (role === "Guest") {
-      alert("Nu poti vizualiza un produs ca si oaspete!");
+      showToast("Nu poti vizualiza un produs ca si oaspete!", "warning");
       return;
     }
     navigate(`/productdetails/${id}`);

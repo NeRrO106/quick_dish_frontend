@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useCart } from "../cart/useCart";
 import getEntity from "../../utils/GetEntity";
 import type { Product } from "./Product";
+import { showToast } from "../../utils/ShowToast";
 
 function ProductDetail() {
   const { addToCart } = useCart();
@@ -20,6 +21,16 @@ function ProductDetail() {
       const newQuantity = q + value;
       return newQuantity < 1 ? 1 : newQuantity;
     });
+  };
+
+  const handleAddToCart = (
+    id: number,
+    quantity: number,
+    price: number,
+    name: string
+  ) => {
+    showToast("Produs adaugat in cos cu succes!", "success");
+    addToCart(id, quantity, price, name);
   };
 
   if (isLoading) return <p>Loading....</p>;
@@ -68,10 +79,13 @@ function ProductDetail() {
           </div>
 
           <button
-            onClick={() =>
-              data && addToCart(data.Id, quantity, data.Price, data.Name)
-            }
-            className="flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-[var(--color-accent2)] text-[var(--text-light)] font-medium shadow-xl transition-transform duration-200 hover:scale-85 hover:shadow-xl"
+            onClick={() => {
+              if (data) {
+                handleAddToCart(data.Id, quantity, data.Price, data.Name);
+              }
+            }}
+            disabled={!data}
+            className="flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-[var(--color-accent2)] text-[var(--text-light)] font-medium shadow-xl transition-transform duration-200 hover:scale-85 hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <svg
               className="w-5 h-5"
