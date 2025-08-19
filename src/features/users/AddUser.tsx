@@ -2,6 +2,7 @@ import { useState } from "react";
 import type { User } from "./User";
 import postEntity from "../../utils/PostEntity";
 import validator from "validator";
+import { showToast } from "../../utils/ShowToast";
 
 function AddUser() {
   const [form, setForm] = useState({
@@ -26,25 +27,28 @@ function AddUser() {
     const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
 
     if (!form.Name || !form.Email || !form.Password) {
-      alert("Please fill in all the fields");
+      showToast("Please fill in all the fields", "error");
       return;
     }
 
     if (!passwordPattern.test(form.Password)) {
-      alert("Invalid password / invalid confirm password");
+      showToast("Invalid password / invalid confirm password", "error");
       return;
     }
 
     if (!validator.isEmail(form.Email)) {
-      alert("Invalide email");
+      showToast("Invalide email", "error");
       return;
     }
     const data = await postEntity<User>(`${endpointUrl}`, form);
     if (data === null) {
-      console.log("Null data");
+      showToast("Null data", "error");
     } else {
-      console.log("Product updated", data);
-      window.history.back();
+      showToast("User added", "success");
+
+      setTimeout(() => {
+        window.history.back();
+      }, 1000);
     }
   };
 

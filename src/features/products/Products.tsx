@@ -3,6 +3,7 @@ import getEntity from "../../utils/GetEntity";
 import deleteEntity from "../../utils/DeleteEntity";
 import { useNavigate } from "react-router-dom";
 import type { Product } from "./Product";
+import { showToast } from "../../utils/ShowToast";
 
 function Products() {
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ function Products() {
   });
 
   const handleDelete = async (id: number) => {
+    showToast("Product deleted", "error");
     await deleteEntity(endpointUrl, id);
   };
 

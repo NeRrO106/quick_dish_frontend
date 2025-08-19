@@ -3,6 +3,7 @@ import getEntity from "../../utils/GetEntity";
 import type { Order } from "./Order";
 import { useState } from "react";
 import putEntity from "../../utils/PutEntity";
+import { showToast } from "../../utils/ShowToast";
 
 function Orders() {
   const user = JSON.parse(localStorage.getItem("user") || "{}");
@@ -29,27 +30,57 @@ function Orders() {
 
   const handleSaveStatus = async (orderId: number) => {
     const status = orderStatus[orderId];
-    await putEntity(`${endpointUrl}${orderId}`, {
-      Status: status,
-    });
+    if (!status) {
+      showToast("Selectați un status înainte de salvare.", "error");
+      return;
+    }
+
+    try {
+      const data = await putEntity(`${endpointUrl}${orderId}`, {
+        Status: status,
+      });
+      if (!data) {
+        showToast("Datele returnate sunt null.", "error");
+        return;
+      }
+      showToast("Order updated successfully!", "success");
+    } catch (err) {
+      console.error(err);
+      showToast("Eroare la salvarea statusului!", "error");
+    }
   };
 
   const handleTakeOrder = async (orderId: number) => {
-    await putEntity(`${endpointUrl}${orderId}`, {
-      Status: "Taken",
-      CourierID: user.Id,
-    });
+    try {
+      await putEntity(`${endpointUrl}${orderId}`, {
+        Status: "Taken",
+        CourierID: user.Id,
+      });
+      showToast("Comanda preluată!", "success");
+    } catch (err) {
+      console.error(err);
+      showToast("Eroare la preluarea comenzii!", "error");
+    }
   };
 
   const handleDeliverOrder = async (orderId: number) => {
     const code = deliveryCode[orderId];
 
-    if (!code) return alert("Trebuie să introduceți codul!");
+    if (!code) {
+      showToast("Trebuie să introduceți codul!", "error");
+      return;
+    }
 
-    await putEntity(`${endpointUrl}${orderId}`, {
-      Status: "Delivered",
-      Code: code,
-    });
+    try {
+      await putEntity(`${endpointUrl}${orderId}`, {
+        Status: "Delivered",
+        Code: code,
+      });
+      showToast("Comanda marcată ca livrată!", "success");
+    } catch (err) {
+      console.error(err);
+      showToast("Eroare la marcarea comenzii!", "error");
+    }
   };
 
   const visibleOrders = data?.filter((order) => {

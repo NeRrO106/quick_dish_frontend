@@ -3,6 +3,7 @@ import deleteEntity from "../../utils/DeleteEntity";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import type { User } from "./User";
 import { useNavigate } from "react-router-dom";
+import { showToast } from "../../utils/ShowToast";
 
 function Users() {
   const navigate = useNavigate();
@@ -14,6 +15,7 @@ function Users() {
   });
 
   const handleDelete = async (id: number) => {
+    showToast("User sters cu succes", "success");
     await deleteEntity(endpointUrl, id);
     queryClient.invalidateQueries({ queryKey: ["users"] });
   };

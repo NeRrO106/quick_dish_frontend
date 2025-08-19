@@ -3,6 +3,7 @@ import type { Product } from "./Product";
 import postEntity from "../../utils/PostEntity";
 import storage from "../../../firebaseConfig";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { showToast } from "../../utils/ShowToast";
 
 function EditProduct() {
   const [image, setImage] = useState<File | null>(null);
@@ -17,7 +18,29 @@ function EditProduct() {
   const endpointUrl = import.meta.env.VITE_PRODUCTS_ENDPOINT;
 
   const handleSave = async () => {
-    await postEntity<Product>(`${endpointUrl}`, form);
+    if (
+      !form.Name.trim() ||
+      !form.Description.trim() ||
+      !form.Category.trim() ||
+      form.Price <= 0 ||
+      !form.ImageUrl
+    ) {
+      showToast(
+        "Toate câmpurile sunt obligatorii și prețul trebuie să fie mai mare decât 0.",
+        "error"
+      );
+      return;
+    }
+    const data = await postEntity<Product>(`${endpointUrl}`, form);
+    if (data === null) {
+      showToast("Null data", "error");
+    } else {
+      showToast("Product added", "success");
+
+      setTimeout(() => {
+        window.history.back();
+      }, 1000);
+    }
   };
 
   const upload = async () => {

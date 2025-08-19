@@ -5,6 +5,7 @@ import getEntity from "../../utils/GetEntity";
 import { useQuery } from "@tanstack/react-query";
 import putEntity from "../../utils/PutEntity";
 import validator from "validator";
+import { showToast } from "../../utils/ShowToast";
 
 function EditUser() {
   const roles = ["Client", "Admin", "Manager", "Courier"];
@@ -38,23 +39,27 @@ function EditUser() {
     const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
 
     if (!validator.isEmail(form.email)) {
-      alert("Invalide email");
+      showToast("Invalide email", "error");
       return;
     }
 
     if (passwordPattern.test(form.password)) {
-      alert(
-        "Parola trebuie sa aiba minim 8 caractere(litere mari, litere mici, caractere speciale etc."
+      showToast(
+        "Parola trebuie sa aiba minim 8 caractere(litere mari, litere mici, caractere speciale etc.)",
+        "error"
       );
       return;
     }
 
     const data = await putEntity(`${endpointUrl}${id}`, form);
     if (data === null) {
-      console.log("Null data");
+      showToast("Null data", "error");
     } else {
-      console.log("User updated", data);
-      window.history.back();
+      showToast("User updated", "success");
+
+      setTimeout(() => {
+        window.history.back();
+      }, 1000);
     }
   };
   const handleSelect = (role: string) => {

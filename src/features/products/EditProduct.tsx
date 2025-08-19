@@ -4,6 +4,7 @@ import type { Product } from "./Product";
 import getEntity from "../../utils/GetEntity";
 import { useQuery } from "@tanstack/react-query";
 import putEntity from "../../utils/PutEntity";
+import { showToast } from "../../utils/ShowToast";
 
 function EditProduct() {
   const { id } = useParams<{ id: string }>();
@@ -36,10 +37,13 @@ function EditProduct() {
   const handleSave = async () => {
     const data = await putEntity(`${endpointUrl}${id}`, form);
     if (data === null) {
-      console.log("Null data");
+      showToast("Null data", "error");
     } else {
-      console.log("Product updated", data);
-      window.history.back();
+      showToast("Product updated", "success");
+
+      setTimeout(() => {
+        window.history.back();
+      }, 1000);
     }
   };
 
