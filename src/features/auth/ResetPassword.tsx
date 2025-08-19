@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import postEntity from "../../utils/PostEntity";
 import validator from "validator";
+import { showToast } from "../../utils/ShowToast";
 
 function ForgotPassword() {
   const endpointUrl = import.meta.env.VITE_AUTH_ENDPOINT;
@@ -20,6 +21,7 @@ function ForgotPassword() {
 
     if (!form.email || !form.newPassword || !form.confirmNewPassword) {
       setError("Please fill in all the fields");
+      showToast("Please fill in all the fields", "error");
       return;
     }
 
@@ -28,28 +30,38 @@ function ForgotPassword() {
       passwordPattern.test(form.confirmNewPassword)
     ) {
       setError(
-        "Parola trebuie sa aiba minim 8 caractere(litere mari, litere mici, caractere speciale etc."
+        "Parola trebuie sa aiba minim 8 caractere(litere mari, litere mici, caractere speciale etc.)"
+      );
+      showToast(
+        "Parola trebuie sa aiba minim 8 caractere(litere mari, litere mici, caractere speciale etc.)",
+        "error"
       );
       return;
     }
 
     if (form.newPassword !== form.confirmNewPassword) {
       setError("Password doesnt match");
+      showToast("Password doesnt match", "error");
       return;
     }
 
     if (!validator.isEmail(form.email)) {
       setError("Invalide email");
+      showToast("Invalid email", "error");
       return;
     }
 
     await postEntity(`${endpointUrl}resetpassword`, form)
       .then((response) => {
         console.log(response);
-        navigate("/resetpassword");
+        showToast("Password reset", "success");
+        setTimeout(() => {
+          navigate("/login");
+        }, 1000);
       })
       .catch((error) => {
         console.log(error);
+        showToast(error.response?.data || "❌ Something went wrong!", "error");
       });
   };
 

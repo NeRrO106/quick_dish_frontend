@@ -1,4 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { ToastContainer, Bounce } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import NavBar from "./components/NavBar";
 import Hero from "./pages/Hero";
 import Footer from "./components/Footer";
@@ -159,6 +161,19 @@ function App() {
             />
             <Route path="*" element={<NoPage />} />
           </Routes>
+          <ToastContainer
+            position="top-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick={false}
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="dark"
+            transition={Bounce}
+          />
           <Footer />
         </BrowserRouter>
       </QueryClientProvider>

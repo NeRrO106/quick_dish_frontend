@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import postEntity from "../../utils/PostEntity";
 import validator from "validator";
+import { showToast } from "../../utils/ShowToast";
 
 function Register() {
   const endpointUrl = import.meta.env.VITE_USERS_ENDPOINT;
@@ -19,6 +20,7 @@ function Register() {
     const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
     if (!form.name || !form.email || !form.password || !form.confirmPassword) {
       setError("Please fill in all the fields");
+      showToast("All fields needs to be filled!", "error");
       return;
     }
 
@@ -27,28 +29,39 @@ function Register() {
       !passwordPattern.test(form.confirmPassword)
     ) {
       setError(
-        "Parola trebuie sa aiba minim 8 caractere(litere mari, litere mici, caractere speciale etc."
+        "Parola trebuie sa aiba minim 8 caractere(litere mari, litere mici, caractere speciale etc.)"
+      );
+      showToast(
+        "Parola trebuie sa aiba minim 8 caractere(litere mari, litere mici, caractere speciale etc.)",
+        "error"
       );
       return;
     }
 
     if (form.password !== form.confirmPassword) {
       setError("Password doesnt match");
+      showToast("Password doesnt match", "error");
       return;
     }
 
     if (!validator.isEmail(form.email)) {
       setError("Invalide email");
+      showToast("Invalide email", "error");
       return;
     }
 
     await postEntity(`${endpointUrl}`, form)
       .then((response) => {
         console.log(response);
-        navigate("/login");
+        showToast("Register successful!", "success");
+
+        setTimeout(() => {
+          navigate("/login");
+        }, 1000);
       })
       .catch((error) => {
         console.log(error);
+        showToast(error.response?.data || "❌ Something went wrong!", "error");
       });
   };
   return (

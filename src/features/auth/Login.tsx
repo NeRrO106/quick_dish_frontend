@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { showToast } from "../../utils/ShowToast";
 import postEntity from "../../utils/PostEntity";
 
 function Login() {
@@ -15,16 +16,22 @@ function Login() {
     e.preventDefault();
     if (!form.name || !form.password) {
       setError("Name and password needs to be filled");
+      showToast("Name and password needs to be filled", "error");
       return;
     }
     await postEntity(`${endpoitUrl}login`, form)
       .then((data) => {
         localStorage.setItem("user", JSON.stringify(data));
-        navigate("/");
+        showToast("Login successful!", "success");
+
+        setTimeout(() => {
+          navigate("/");
+        }, 1000);
       })
+
       .catch((error) => {
         console.log(error);
-        alert(error.response.data);
+        showToast(error.response?.data || "❌ Something went wrong!", "error");
       });
   };
 

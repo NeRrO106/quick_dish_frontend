@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import postEntity from "../../utils/PostEntity";
 import validator from "validator";
+import { showToast } from "../../utils/ShowToast";
 
 function ForgotPassword() {
   const endpointUrl = import.meta.env.VITE_AUTH_ENDPOINT;
@@ -13,15 +14,20 @@ function ForgotPassword() {
     e.preventDefault();
     if (!validator.isEmail(email)) {
       setError("Please fill in your email");
+      showToast("Please fill in your email", "error");
       return;
     }
     await postEntity(`${endpointUrl}forgotpassword`, email)
       .then((response) => {
         console.log(response);
-        navigate("/resetpassword");
+        showToast("Email send successful!", "success");
+        setTimeout(() => {
+          navigate("/resetpassword");
+        }, 1000);
       })
       .catch((error) => {
         console.log(error);
+        showToast(error.response?.data || "❌ Something went wrong!", "error");
       });
   };
 
