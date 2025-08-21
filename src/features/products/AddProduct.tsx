@@ -5,7 +5,7 @@ import storage from "../../../firebaseConfig";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { showToast } from "../../utils/ShowToast";
 
-function EditProduct() {
+function AddProduct() {
   const [image, setImage] = useState<File | null>(null);
   const [form, setForm] = useState({
     Id: 0,
@@ -151,4 +151,4 @@ function EditProduct() {
     </div>
   );
 }
-export default EditProduct;
+export default AddProduct;

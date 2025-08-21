@@ -59,6 +59,7 @@ function Menu() {
               <img
                 src={prod.ImageUrl}
                 alt={prod.Name}
+                loading="lazy"
                 className="w-full h-36 object-cover rounded-lg mb-3"
               />
             ) : (

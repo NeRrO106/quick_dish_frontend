@@ -5,8 +5,11 @@ import getEntity from "../../utils/GetEntity";
 import { useQuery } from "@tanstack/react-query";
 import putEntity from "../../utils/PutEntity";
 import { showToast } from "../../utils/ShowToast";
+import storage from "../../../firebaseConfig";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 function EditProduct() {
+  const [image, setImage] = useState<File | null>(null);
   const { id } = useParams<{ id: string }>();
   const [form, setForm] = useState({
     name: "",
@@ -35,15 +38,24 @@ function EditProduct() {
   });
 
   const handleSave = async () => {
-    const data = await putEntity(`${endpointUrl}${id}`, form);
+    let imageUrl = form.ImageUrl;
+
+    if (image) {
+      const storageRef = ref(storage, `/${form.name}`);
+      const snapshot = await uploadBytes(storageRef, image);
+      imageUrl = await getDownloadURL(snapshot.ref);
+    }
+
+    const data = await putEntity(`${endpointUrl}${id}`, {
+      ...form,
+      ImageUrl: imageUrl,
+    });
+
     if (data === null) {
       showToast("Null data", "error");
     } else {
       showToast("Product updated", "success");
-
-      setTimeout(() => {
-        window.history.back();
-      }, 1000);
+      setTimeout(() => window.history.back(), 1000);
     }
   };
 
@@ -107,6 +119,22 @@ function EditProduct() {
               setForm({ ...form, price: parseFloat(e.target.value) })
             }
           />
+        </div>
+        <div>
+          <label className="block mb-2 text-md font-medium text-[var(--text-dark)]">
+            Image
+            <input
+              type="file"
+              className="w-full p-3 mb-4 rounded-xl border-2 border-white/30 bg-white/10 placeholder-white/70 text-white focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 transition"
+              onChange={(e) => {
+                if (e.target.files && e.target.files[0]) {
+                  setImage(e.target.files[0]);
+                } else {
+                  setImage(null);
+                }
+              }}
+            />
+          </label>
         </div>
       </div>
       <div>

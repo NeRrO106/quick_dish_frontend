@@ -43,6 +43,7 @@ function Products() {
             <img
               src={prod.ImageUrl}
               alt={prod.Name}
+              loading="lazy"
               className="w-full h-36 object-cover rounded-lg mb-3"
             />
             <p className="text-xl text-center font-semibold text-[var(--text-light)] mb-2">
