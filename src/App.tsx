@@ -35,132 +35,143 @@ function App() {
     <CartProvider>
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
-          <AuthRedirect />
-          <NavBar />
-          <Routes>
-            <Route path="/" element={<Hero />} />
+          <div className="flex flex-col min-h-screen">
+            <AuthRedirect />
+            <NavBar />
 
-            <Route
-              path="/about"
-              element={
-                <RouteProtector>
-                  <About />
-                </RouteProtector>
-              }
-            />
-            <Route
-              path="/menu"
-              element={
-                <RouteProtector>
-                  <Menu />
-                </RouteProtector>
-              }
-            />
-            <Route
-              path="/productdetails/:id"
-              element={
-                <RouteProtector>
-                  <ProductDetail />
-                </RouteProtector>
-              }
-            />
-            <Route
-              path="/myorders/:id"
-              element={
-                <RouteProtector>
-                  <MyOrder />
-                </RouteProtector>
-              }
-            />
-            <Route
-              path="/contact"
-              element={
-                <RouteProtector>
-                  <Contact />
-                </RouteProtector>
-              }
-            />
-            <Route
-              path="/orders/finish"
-              element={
-                <RouteProtector>
-                  <FinishOrder />
-                </RouteProtector>
-              }
-            />
+            {/* Conținutul paginilor ocupă tot spațiul disponibil */}
+            <main className="flex-grow">
+              <Routes>
+                <Route path="/" element={<Hero />} />
+                <Route
+                  path="/about"
+                  element={
+                    <RouteProtector>
+                      <About />
+                    </RouteProtector>
+                  }
+                />
+                <Route
+                  path="/menu"
+                  element={
+                    <RouteProtector>
+                      <Menu />
+                    </RouteProtector>
+                  }
+                />
+                <Route
+                  path="/productdetails/:id"
+                  element={
+                    <RouteProtector>
+                      <ProductDetail />
+                    </RouteProtector>
+                  }
+                />
+                <Route
+                  path="/myorders/:id"
+                  element={
+                    <RouteProtector>
+                      <MyOrder />
+                    </RouteProtector>
+                  }
+                />
+                <Route
+                  path="/contact"
+                  element={
+                    <RouteProtector>
+                      <Contact />
+                    </RouteProtector>
+                  }
+                />
+                <Route
+                  path="/orders/finish"
+                  element={
+                    <RouteProtector>
+                      <FinishOrder />
+                    </RouteProtector>
+                  }
+                />
 
-            <Route
-              path="/cart"
-              element={
-                <RouteProtector>
-                  <Cart />
-                </RouteProtector>
-              }
-            />
+                <Route
+                  path="/cart"
+                  element={
+                    <RouteProtector>
+                      <Cart />
+                    </RouteProtector>
+                  }
+                />
 
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/resetpassword" element={<ResetPassword />} />
-            <Route path="/forgotpassword" element={<ForgotPassword />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/resetpassword" element={<ResetPassword />} />
+                <Route path="/forgotpassword" element={<ForgotPassword />} />
 
-            <Route
-              path="/users"
-              element={
-                <RouteProtector allowedRoles={["Admin"]}>
-                  <Users />
-                </RouteProtector>
-              }
-            />
-            <Route
-              path="/users/:id"
-              element={
-                <RouteProtector allowedRoles={["Admin"]}>
-                  <EditUser />
-                </RouteProtector>
-              }
-            />
-            <Route
-              path="/users/add"
-              element={
-                <RouteProtector allowedRoles={["Admin"]}>
-                  <AddUser />
-                </RouteProtector>
-              }
-            />
-            <Route
-              path="/products"
-              element={
-                <RouteProtector allowedRoles={["Admin", "Manager"]}>
-                  <Products />
-                </RouteProtector>
-              }
-            />
-            <Route
-              path="/products/:id"
-              element={
-                <RouteProtector allowedRoles={["Admin", "Manager"]}>
-                  <EditProduct />
-                </RouteProtector>
-              }
-            />
-            <Route
-              path="/products/add"
-              element={
-                <RouteProtector allowedRoles={["Admin", "Manager"]}>
-                  <AddProduct />
-                </RouteProtector>
-              }
-            />
-            <Route
-              path="/orders"
-              element={
-                <RouteProtector allowedRoles={["Admin", "Manager", "Courier"]}>
-                  <Orders />
-                </RouteProtector>
-              }
-            />
-            <Route path="*" element={<NoPage />} />
-          </Routes>
+                <Route
+                  path="/users"
+                  element={
+                    <RouteProtector allowedRoles={["Admin"]}>
+                      <Users />
+                    </RouteProtector>
+                  }
+                />
+                <Route
+                  path="/users/:id"
+                  element={
+                    <RouteProtector allowedRoles={["Admin"]}>
+                      <EditUser />
+                    </RouteProtector>
+                  }
+                />
+                <Route
+                  path="/users/add"
+                  element={
+                    <RouteProtector allowedRoles={["Admin"]}>
+                      <AddUser />
+                    </RouteProtector>
+                  }
+                />
+                <Route
+                  path="/products"
+                  element={
+                    <RouteProtector allowedRoles={["Admin", "Manager"]}>
+                      <Products />
+                    </RouteProtector>
+                  }
+                />
+                <Route
+                  path="/products/:id"
+                  element={
+                    <RouteProtector allowedRoles={["Admin", "Manager"]}>
+                      <EditProduct />
+                    </RouteProtector>
+                  }
+                />
+                <Route
+                  path="/products/add"
+                  element={
+                    <RouteProtector allowedRoles={["Admin", "Manager"]}>
+                      <AddProduct />
+                    </RouteProtector>
+                  }
+                />
+                <Route
+                  path="/orders"
+                  element={
+                    <RouteProtector
+                      allowedRoles={["Admin", "Manager", "Courier"]}
+                    >
+                      <Orders />
+                    </RouteProtector>
+                  }
+                />
+                <Route path="*" element={<NoPage />} />
+              </Routes>
+            </main>
+
+            {/* Footer împins jos */}
+            <Footer />
+          </div>
+
           <ToastContainer
             position="top-right"
             autoClose={5000}
@@ -174,7 +185,6 @@ function App() {
             theme="dark"
             transition={Bounce}
           />
-          <Footer />
         </BrowserRouter>
       </QueryClientProvider>
     </CartProvider>
