@@ -4,6 +4,7 @@ import type { Product } from "../features/products/Product";
 import { useCart } from "../features/cart/useCart";
 import { useNavigate } from "react-router-dom";
 import { showToast } from "../utils/ShowToast";
+import { useMemo, useState } from "react";
 
 function Menu() {
   const { addToCart } = useCart();
@@ -16,6 +17,9 @@ function Menu() {
   });
   const user = JSON.parse(localStorage.getItem("user") || "{}");
   const role = user?.Role;
+
+  const [selectedCategory, setSelectedCategory] = useState<string>("all");
+  const [sortOption, setSortOption] = useState<string>("default");
 
   const handleAddToCart = (
     id: number,
@@ -39,6 +43,26 @@ function Menu() {
     navigate(`/productdetails/${id}`);
   };
 
+  const filteredAndStored = useMemo(() => {
+    if (!data) return [];
+    let products = [...data];
+
+    if (selectedCategory !== "all") {
+      products = products.filter((p) => p.Category === selectedCategory);
+    }
+
+    if (sortOption === "name-asc") {
+      products.sort((a, b) => a.Name.localeCompare(b.Name));
+    } else if (sortOption === "name-desc") {
+      products.sort((a, b) => b.Name.localeCompare(a.Name));
+    } else if (sortOption === "price-asc") {
+      products.sort((a, b) => a.Price - b.Price);
+    } else if (sortOption === "price-desc") {
+      products.sort((a, b) => b.Price - a.Price);
+    }
+    return products;
+  }, [data, selectedCategory, sortOption]);
+
   if (isLoading) return <p>Loading....</p>;
   if (isError) return <p>Error: {(error as Error).message}</p>;
 
@@ -49,8 +73,38 @@ function Menu() {
           Menu Page
         </h1>
       </div>
+      <div className="flex flex-wrap justify-center gap-4 mt-8">
+        <select
+          value={selectedCategory}
+          onChange={(e) => setSelectedCategory(e.target.value)}
+          className="p-2 rounded-lg bg-[var(--color-accent2)] text-[var(--text-light)]"
+        >
+          <option value="all">All Categories</option>
+          <option value="Pizza">Pizza</option>
+          <option value="Burgeri">Burgeri</option>
+          <option value="Salate">Salate</option>
+          <option value="Paste">Paste</option>
+          <option value="Ciorbe">Ciorbe</option>
+          <option value="Grill">Grill</option>
+          <option value="Pește">Pește</option>
+          <option value="Desert">Desert</option>
+          <option value="Băuturi">Băuturi</option>
+        </select>
+
+        <select
+          value={sortOption}
+          onChange={(e) => setSortOption(e.target.value)}
+          className="p-2 rounded-lg bg-[var(--color-accent2)] text-[var(--text-light)]"
+        >
+          <option value="default">Default</option>
+          <option value="name-asc">Name A → Z</option>
+          <option value="name-desc">Name Z → A</option>
+          <option value="price-asc">Price Low → High</option>
+          <option value="price-desc">Price High → Low</option>
+        </select>
+      </div>
       <ul className="flex flex-wrap justify-center items-center mt-8 space-x-4 rtl:space-x-reverse">
-        {data?.map((prod) => (
+        {filteredAndStored.map((prod) => (
           <li
             key={prod.Id}
             className="w-64 p-2 border border-gray-200 rounded-lg shadow-sm bg-[var(--color-accent2)] border-[var(--color-secondary)] mb-4"
