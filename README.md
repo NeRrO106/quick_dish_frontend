@@ -17,21 +17,21 @@
 ---
 
 ## 📂 Structura proiectului
-```plaintext
-Proxy/               # Proxy pentru API .NET
-src/
-├─ components/       # Navbar, Footer
-├─ features/         # Auth, Cart, Products, Users, Orders
-├─ hooks/            # useCurrentUser, useSyncUserWithCookie
-├─ pages/            # Hero, Menu, About, Contact etc.
-├─ routes/           # Protecție rute & redirecturi
-├─ utils/            # Funcții ajutătoare (fetch, toast)
-└─ App.tsx
-.env
-package.json
-vite.config.ts
+```
+┣ 📂 Proxy             # Proxy pentru API .NET
+┣ 📂 src
+┃ ┣ 📂 components     # Navbar, Footer
+┃ ┣ 📂 features       # Auth, Cart, Products, Users, Orders
+┃ ┣ 📂 hooks          # useCurrentUser, useSyncUserWithCookie
+┃ ┣ 📂 pages          # Hero, Menu, About, Contact etc.
+┃ ┣ 📂 routes         # Protecție rute & redirecturi
+┃ ┣ 📂 utils          # Funcții ajutătoare (fetch, toast)
+┃ ┗ App.tsx
+┣ .env
+┣ package.json
+┗ vite.config.ts
 
-
+```
 ---
 
 ## ⚙️ Instalare & Rulare
@@ -42,20 +42,23 @@ vite.config.ts
    cd ceva
 
 2. Instalează dependențele:
+   ```bash
    npm install
 
-3. Rulează în development:
+4. Rulează în development:
+   ```bash
    npm run dev
-4. Build pentru productie:
-  npm run build
+5. Build pentru productie:
+   ```bash
+   npm run build
 
-✨ Features
-  🔑 Autentificare cu roluri (Admin, Manager, Courier, Client, Guest)
-  📦 CRUD pentru produse și utilizatori
-  🛒 Coș de cumpărături cu finalizare comandă
-  📸 Upload imagini în Firebase
-  ⚡ Filtrare și sortare produse (categorie, preț, alfabetic)
-  🔔 Toast notifications pentru acțiuni
+## ✨ Features
+  - 🔑 Autentificare cu roluri (Admin, Manager, Courier, Client, Guest)
+  - 📦 CRUD pentru produse și utilizatori
+  - 🛒 Coș de cumpărături cu finalizare comandă
+  - 📸 Upload imagini în Firebase
+  - ⚡ Filtrare și sortare produse (categorie, preț, alfabetic)
+  - 🔔 Toast notifications pentru acțiuni
 
 📜 License
   Distributed under the MIT License.
