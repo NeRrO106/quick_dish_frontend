@@ -38,8 +38,8 @@
 
 1. Clonează repo:
    ```bash
-   git clone https://github.com/user/ceva.git
-   cd ceva
+   git clone https://github.com/NeRrO106/quick_dish_frontend
+   cd quick_dish_frontend
 
 2. Instalează dependențele:
    ```bash
