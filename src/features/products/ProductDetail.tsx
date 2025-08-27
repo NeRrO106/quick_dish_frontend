@@ -42,7 +42,7 @@ function ProductDetail() {
         <img
           src={data?.ImageUrl}
           alt={data?.Name}
-          className="w-full h-96 object-cover rounded-xl transform transition-transform duration-500 group-hover:scale-105"
+          className="w-full h-auto object-cover rounded-xl transform transition-transform duration-500 group-hover:scale-105"
         />
       </div>
 

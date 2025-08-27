@@ -4,6 +4,7 @@ import type { Order } from "./Order";
 import { useState } from "react";
 import putEntity from "../../utils/PutEntity";
 import { showToast } from "../../utils/ShowToast";
+import axios from "axios";
 
 function Orders() {
   const user = JSON.parse(localStorage.getItem("user") || "{}");
@@ -36,13 +37,9 @@ function Orders() {
     }
 
     try {
-      const data = await putEntity(`${endpointUrl}${orderId}`, {
+      await putEntity(`${endpointUrl}${orderId}`, {
         Status: status,
       });
-      if (!data) {
-        showToast("Datele returnate sunt null.", "error");
-        return;
-      }
       showToast("Order updated successfully!", "success");
     } catch (err) {
       console.error(err);
@@ -67,7 +64,7 @@ function Orders() {
     const code = deliveryCode[orderId];
 
     if (!code) {
-      showToast("Trebuie să introduceți codul!", "error");
+      showToast("You must enter the code!", "error");
       return;
     }
 
@@ -76,10 +73,16 @@ function Orders() {
         Status: "Delivered",
         Code: code,
       });
-      showToast("Comanda marcată ca livrată!", "success");
-    } catch (err) {
-      console.error(err);
-      showToast("Eroare la marcarea comenzii!", "error");
+
+      showToast("Order marked as delivered!", "success");
+    } catch (error: unknown) {
+      let message = "Error marking order as delivered!";
+      if (axios.isAxiosError(error) && error.response) {
+        message = error.response.data || message;
+      }
+      console.error(error);
+      showToast(message, "error");
+      return;
     }
   };
 
