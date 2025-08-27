@@ -106,7 +106,7 @@ function EditUser() {
             </label>
             <button
               onClick={() => setDropdownOpen(!dropdownOpen)}
-              className="px-3 py-3 mb-4 rounded-xl border-2 border-white/30 bg-white/10 placeholder-white/70 text-white focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 transition"
+              className="px-3 py-3 mb-4 rounded-xl border-2 border-white/30 placeholder-white/70 focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 transition"
             >
               {form.role}
               <svg
@@ -126,7 +126,7 @@ function EditUser() {
               </svg>
             </button>
             {dropdownOpen && (
-              <div className="absolute mt-2 z-50 bg-[var(--color-secondary)]/20 rounded-lg shadow w-44">
+              <div className="absolute mt-2 z-50 bg-[var(--color-secondary)] rounded-lg shadow w-44">
                 <ul className="py-2 text-sm text-gray-700">
                   {roles.map((role) => (
                     <li key={role}>

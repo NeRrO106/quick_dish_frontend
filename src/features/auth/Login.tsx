@@ -25,7 +25,7 @@ function Login() {
         showToast("Login successful!", "success");
 
         setTimeout(() => {
-          navigate("/");
+          navigate("/about");
         }, 1000);
       })
 

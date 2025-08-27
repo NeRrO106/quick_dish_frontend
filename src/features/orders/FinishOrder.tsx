@@ -45,7 +45,7 @@ function FinishOrder() {
       UserName: "",
       CourierName: "",
       Address: formData.address,
-      PhoneNumber: Number(formData.phone),
+      PhoneNumber: formData.phone,
       TotalAmount: totalAmount(),
       Notes: formData.notes.trim() === "" ? "" : formData.notes,
       PaymentMethod: formData.paymentMethod,
@@ -90,7 +90,7 @@ function FinishOrder() {
             onChange={(e) =>
               setFormData({ ...formData, address: e.target.value })
             }
-            className="w-full p-3 mb-4 rounded-xl border-2 border-white/30 bg-white/10 placeholder-white/70 text-white focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 transition"
+            className="w-full p-3 mb-4 rounded-xl border-2 border-white/30 bg-white/10 placeholder-white/70 text-[var(--text-dark)] focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 transition"
             required
           />
         </label>
@@ -102,7 +102,7 @@ function FinishOrder() {
             onChange={(e) =>
               setFormData({ ...formData, phone: e.target.value })
             }
-            className="w-full p-3 mb-4 rounded-xl border-2 border-white/30 bg-white/10 placeholder-white/70 text-white focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 transition"
+            className="w-full p-3 mb-4 rounded-xl border-2 border-white/30 bg-white/10 placeholder-white/70 text-[var(--text-dark)] focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 transition"
             required
           />
         </label>
@@ -126,7 +126,7 @@ function FinishOrder() {
             onChange={(e) =>
               setFormData({ ...formData, notes: e.target.value })
             }
-            className="w-full p-3 mb-4 rounded-xl border-2 border-white/30 bg-white/10 placeholder-white/70 text-white focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 transition"
+            className="w-full p-3 mb-4 rounded-xl border-2 border-white/30 bg-white/10 placeholder-white/70 text-[var(--text-dark)] focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 transition"
           />
         </label>
       </div>

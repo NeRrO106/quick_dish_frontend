@@ -7,7 +7,9 @@ export function useSyncUserWithCookie() {
         .split("; ")
         .some((c) => c.startsWith(".AspNetCore.CookieAuth="));
 
-      if (!exist) {
+      const user = JSON.parse(localStorage.getItem("user") || "{}");
+
+      if (!exist && user.Role !== "Guest") {
         localStorage.removeItem("user");
       }
     };

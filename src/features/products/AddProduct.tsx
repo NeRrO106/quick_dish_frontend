@@ -63,7 +63,7 @@ function AddProduct() {
           <label className="block mb-2 text-md font-medium text-[var(--text-dark)]">
             Product Name
             <input
-              className="w-full p-3 mb-4 rounded-xl border-2 border-white/30 bg-white/10 placeholder-white/70 text-white focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 transition"
+              className="w-full p-3 mb-4 rounded-xl border-2 border-white/30 bg-white/10 placeholder-white/70 focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 transition"
               name="name"
               value={form.Name}
               onChange={(e) => setForm({ ...form, Name: e.target.value })}
@@ -75,7 +75,7 @@ function AddProduct() {
           <label className="block mb-2 text-md font-medium text-[var(--text-dark)]">
             Product Description
             <input
-              className="w-full p-3 mb-4 rounded-xl border-2 border-white/30 bg-white/10 placeholder-white/70 text-white focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 transition"
+              className="w-full p-3 mb-4 rounded-xl border-2 border-white/30 bg-white/10 placeholder-white/70 focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 transition"
               name="description"
               value={form.Description}
               onChange={(e) =>
@@ -89,7 +89,7 @@ function AddProduct() {
           <label className="block mb-2 text-md font-medium text-[var(--text-dark)]">
             Product Category
             <input
-              className="w-full p-3 mb-4 rounded-xl border-2 border-white/30 bg-white/10 placeholder-white/70 text-white focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 transition"
+              className="w-full p-3 mb-4 rounded-xl border-2 border-white/30 bg-white/10 placeholder-white/70 focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 transition"
               name="category"
               value={form.Category}
               onChange={(e) => setForm({ ...form, Category: e.target.value })}
@@ -100,7 +100,7 @@ function AddProduct() {
           <label className="block mb-2 text-md font-medium text-[var(--text-dark)]">
             Product Price
             <input
-              className="w-full p-3 mb-4 rounded-xl border-2 border-white/30 bg-white/10 placeholder-white/70 text-white focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 transition"
+              className="w-full p-3 mb-4 rounded-xl border-2 border-white/30 bg-white/10 placeholder-white/70 focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 transition"
               name="price"
               type="number"
               step="0.01"
@@ -116,7 +116,7 @@ function AddProduct() {
             Image
             <input
               type="file"
-              className="w-full p-3 mb-4 rounded-xl border-2 border-white/30 bg-white/10 placeholder-white/70 text-white focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 transition"
+              className="w-full p-3 mb-4 rounded-xl border-2 border-white/30 bg-white/10 placeholder-white/70 focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 transition"
               onChange={(e) => {
                 if (e.target.files && e.target.files[0]) {
                   setImage(e.target.files[0]);

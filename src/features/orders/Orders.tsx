@@ -140,7 +140,7 @@ function Orders() {
                 </select>
                 <button
                   onClick={() => handleSaveStatus(order.Id)}
-                  className="mt-2 px-4 py-2 bg-[var(--color-accent1)] text-[var(--text-light)] rounded hover:bg-[var(--color-accent3)]"
+                  className="mt-2 px-4 py-2 bg-[var(--color-accent1)] text-[var(--text-dark)] rounded hover:bg-[var(--color-accent3)]"
                 >
                   Save Status
                 </button>
@@ -153,7 +153,7 @@ function Orders() {
                 {order.Status === "Ready" && (
                   <button
                     onClick={() => handleTakeOrder(order.Id)}
-                    className="mt-2 px-4 py-2 bg-[var(--color-accent1)] text-[var(--text-light)] rounded hover:bg-[var(--color-accent3)]"
+                    className="mt-2 px-4 py-2 bg-[var(--color-accent1)] text-[var(--text-dark)] rounded hover:bg-[var(--color-accent3)]"
                   >
                     Take Order
                   </button>
@@ -171,11 +171,11 @@ function Orders() {
                             [order.Id]: Number(e.target.value),
                           }))
                         }
-                        className="p-2 rounded mb-2"
+                        className="p-2 rounded mb-2 border"
                       />
                       <button
                         onClick={() => handleDeliverOrder(order.Id)}
-                        className="mt-2 px-4 py-2 bg-[var(--color-accent1)] text-[var(--text-light)] rounded hover:bg-[var(--color-accent3)]"
+                        className="mt-2 px-4 py-2 bg-[var(--color-accent1)] text-[var(--text-dark)] rounded hover:bg-[var(--color-accent3)]"
                       >
                         Mark as Delivered
                       </button>

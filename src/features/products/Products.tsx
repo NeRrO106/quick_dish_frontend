@@ -26,7 +26,7 @@ function Products() {
       <div className="text-center max-w-xl text-[var(--text-light)] space-y-6">
         <button
           onClick={() => navigate("/products/add")}
-          className="text-[var(--text-light)] bg-[var(--color-accent3)] hover:bg-[var(--color-darker-accent3)] font-medium rounded-full text-sm px-3 py-3 transition"
+          className="text-[var(--text-dark)] bg-[var(--color-accent3)] hover:bg-[var(--color-darker-accent3)] font-medium rounded-full text-sm px-3 py-3 transition"
         >
           Add product
         </button>
@@ -46,28 +46,28 @@ function Products() {
               loading="lazy"
               className="w-full h-36 object-cover rounded-lg mb-3"
             />
-            <p className="text-xl text-center font-semibold text-[var(--text-light)] mb-2">
+            <p className="text-xl text-center font-semibold text-[var(--text-dark)] mb-2">
               {prod.Name}
             </p>
-            <p className="text-sm text-center font-medium text-[var(--text-light)] mb-2">
+            <p className="text-sm text-center font-medium text-[var(--text-dark)] mb-2">
               {prod.Description}
             </p>
-            <p className="text-sm text-center font-medium text-[var(--text-light)] mb-2">
+            <p className="text-sm text-center font-medium text-[var(--text-dark)] mb-2">
               {prod.Category}
             </p>
-            <p className="text-xl font-bold text-[var(--text-light)] mb-2">
+            <p className="text-xl font-bold text-[var(--text-dark)] mb-2">
               {prod.Price.toFixed(2)} lei
             </p>
             <div className="flex gap-2 justify-center">
               <button
                 onClick={() => navigate(`/products/${prod.Id}`)}
-                className="text-[var(--text-light)] bg-[var(--color-accent1)] hover:bg-[var(--color-accent3)] font-medium rounded-full text-sm px-3 py-3 transition"
+                className="text-[var(--text-dark)] bg-[var(--color-accent1)] hover:bg-[var(--color-accent3)] font-medium rounded-full text-sm px-3 py-3 transition"
               >
                 Edit product
               </button>
               <button
                 onClick={() => handleDelete(prod.Id)}
-                className="text-[var(--text-light)] bg-red-700 hover:bg-red-900 font-medium rounded-full text-sm px-3 py-3 transition"
+                className="text-[var(--text-dark)] bg-red-700 hover:bg-red-900 font-medium rounded-full text-sm px-3 py-3 transition"
               >
                 Delete product
               </button>
@@ -76,7 +76,7 @@ function Products() {
         ))}
       </ul>
       {data?.length === 0 && (
-        <p className="text-lg md:text-xl font-light text-[var(--text-light)]">
+        <p className="text-lg md:text-xl font-light text-[var(--text-dark)]">
           No items available in the menu.
         </p>
       )}

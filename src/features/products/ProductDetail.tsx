@@ -37,7 +37,7 @@ function ProductDetail() {
   if (isError) return <p>Error: {(error as Error).message}</p>;
 
   return (
-    <div className="max-w mx-auto p-6 bg-[var(--color-secondary)] shadow-2xl flex flex-col md:flex-row gap-8">
+    <div className="min-h-[calc(100vh-80px)] max-w mx-auto p-6 bg-[var(--color-secondary)] shadow-2xl flex flex-col md:flex-row gap-8">
       <div className="flex-1 relative group overflow-hidden rounded-xl">
         <img
           src={data?.ImageUrl}
@@ -59,7 +59,7 @@ function ProductDetail() {
           </p>
         </div>
 
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-3">
           <div className="flex items-center gap-4">
             <button
               onClick={() => handleQuantity(-1)}

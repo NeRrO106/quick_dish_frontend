@@ -68,7 +68,7 @@ function Menu() {
 
   return (
     <div className="min-h-screen bg-[var(--color-secondary)] flex items-center justify-center px-4 flex-col">
-      <div className="text-center max-w-xl text-[var(--text-light)] space-y-6">
+      <div className="text-center max-w-xl text-[var(--text-dark)] space-y-6">
         <h1 className="text-6xl font-extrabold tracking-tight leading-tight drop-shadow-lg">
           Menu Page
         </h1>
@@ -77,7 +77,7 @@ function Menu() {
         <select
           value={selectedCategory}
           onChange={(e) => setSelectedCategory(e.target.value)}
-          className="p-2 rounded-lg bg-[var(--color-accent2)] text-[var(--text-light)]"
+          className="p-2 rounded-lg bg-[var(--color-accent2)] text-[var(--text-dark)]"
         >
           <option value="all">All Categories</option>
           <option value="Pizza">Pizza</option>
@@ -94,7 +94,7 @@ function Menu() {
         <select
           value={sortOption}
           onChange={(e) => setSortOption(e.target.value)}
-          className="p-2 rounded-lg bg-[var(--color-accent2)] text-[var(--text-light)]"
+          className="p-2 rounded-lg bg-[var(--color-accent2)] text-[var(--text-dark)]"
         >
           <option value="default">Default</option>
           <option value="name-asc">Name A → Z</option>
@@ -119,19 +119,19 @@ function Menu() {
             ) : (
               <div>No image</div>
             )}
-            <p className="text-xl text-center font-semibold text-[var(--text-light)] mb-2">
+            <p className="text-xl text-center font-semibold text-[var(--text-dark)] mb-2">
               {prod.Name}
             </p>
-            <p className="text-sm text-center font-medium text-[var(--text-light)] mb-2">
+            <p className="text-sm text-center font-medium text-[var(--text-dark)] mb-2">
               {prod.Description}
             </p>
-            <p className="text-xl font-bold text-[var(--text-light)] mb-2">
+            <p className="text-xl font-bold text-[var(--text-dark)] mb-2">
               {prod.Price.toFixed(2)} lei
             </p>
             <div className="flex gap-2 justify-center">
               <button
                 onClick={() => handleViewProduct(prod.Id)}
-                className="text-[var(--text-light)] bg-[var(--color-accent1)] hover:bg-[var(--color-accent3)] font-medium rounded-full text-sm px-3 py-3 transition"
+                className="text-[var(--text-dark)] bg-[var(--color-accent1)] hover:bg-[var(--color-accent3)] font-medium rounded-full text-sm px-3 py-3 transition"
               >
                 View Product
               </button>
@@ -139,7 +139,7 @@ function Menu() {
                 onClick={() =>
                   handleAddToCart(prod.Id, 1, prod.Price, prod.Name)
                 }
-                className="text-[var(--text-light)] bg-[var(--color-accent1)] hover:bg-[var(--color-accent3)] font-medium rounded-full text-sm px-3 py-3 transition"
+                className="text-[var(--text-dark)] bg-[var(--color-accent1)] hover:bg-[var(--color-accent3)] font-medium rounded-full text-sm px-3 py-3 transition"
               >
                 Add to cart
               </button>
@@ -148,7 +148,7 @@ function Menu() {
         ))}
       </ul>
       {data?.length === 0 && (
-        <p className="text-lg md:text-xl font-light text-[var(--text-light)]">
+        <p className="text-lg md:text-xl font-light text-[var(--text-dark)]">
           No items available in the menu.
         </p>
       )}

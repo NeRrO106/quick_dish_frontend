@@ -6,25 +6,25 @@ function About() {
           About Page
         </h1>
         <div className="bg-white/10 backdrop-blur-lg rounded-xl p-8 space-y-6 shadow-lg">
-          <p className="text-lg md:text-xl font-light text-[var(--text-light)]">
+          <p className="text-lg md:text-xl font-light text-[var(--text-dark)]">
             🍴 Welcome to the About Page! We are thrilled to have you here.
           </p>
-          <p className="text-lg md:text-xl font-light text-[var(--text-light)]">
+          <p className="text-lg md:text-xl font-light text-[var(--text-dark)]">
             🌟 Our mission is to provide the{" "}
             <span className="font-semibold">best food experience</span>{" "}
             possible.
           </p>
-          <p className="text-lg md:text-xl font-light text-[var(--text-light)]">
+          <p className="text-lg md:text-xl font-light text-[var(--text-dark)]">
             💼 Our dedicated team works tirelessly to ensure quality and
             satisfaction.
           </p>
-          <p className="text-lg md:text-xl font-light text-[var(--text-light)]">
+          <p className="text-lg md:text-xl font-light text-[var(--text-dark)]">
             ❤️ Passion, commitment, and excellence define who we are.
           </p>
-          <p className="text-lg md:text-xl font-light text-[var(--text-light)]">
+          <p className="text-lg md:text-xl font-light text-[var(--text-dark)]">
             📞 For more information, feel free to contact us anytime.
           </p>
-          <p className="text-lg md:text-xl font-light text-[var(--text-light)] flex space-x-4 justify-center">
+          <p className="text-lg md:text-xl font-light text-[var(--text-dark)] flex space-x-4 justify-center">
             Follow us:
             <span>📘 Facebook</span>
             <span>🐦 Twitter</span>

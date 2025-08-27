@@ -125,7 +125,7 @@ function EditProduct() {
             Image
             <input
               type="file"
-              className="w-full p-3 mb-4 rounded-xl border-2 border-white/30 bg-white/10 placeholder-white/70 text-white focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 transition"
+              className="w-full p-3 mb-4 rounded-xl border-2 border-white/30 bg-white/10 placeholder-white/70 focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 transition"
               onChange={(e) => {
                 if (e.target.files && e.target.files[0]) {
                   setImage(e.target.files[0]);
