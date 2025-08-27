@@ -17,18 +17,19 @@
 ---
 
 ## 📂 Structura proiectului
-┣ 📂 Proxy # Proxy pentru API .NET
-┣ 📂 src
-┃ ┣ 📂 components # Navbar, Footer
-┃ ┣ 📂 features # Auth, Cart, Products, Users, Orders
-┃ ┣ 📂 hooks # useCurrentUser, useSyncUserWithCookie
-┃ ┣ 📂 pages # Hero, Menu, About, Contact etc.
-┃ ┣ 📂 routes # Protecție rute & redirecturi
-┃ ┣ 📂 utils # Funcții ajutătoare (fetch, toast)
-┃ ┗ App.tsx
-┣ .env
-┣ package.json
-┗ vite.config.ts
+```plaintext
+Proxy/               # Proxy pentru API .NET
+src/
+├─ components/       # Navbar, Footer
+├─ features/         # Auth, Cart, Products, Users, Orders
+├─ hooks/            # useCurrentUser, useSyncUserWithCookie
+├─ pages/            # Hero, Menu, About, Contact etc.
+├─ routes/           # Protecție rute & redirecturi
+├─ utils/            # Funcții ajutătoare (fetch, toast)
+└─ App.tsx
+.env
+package.json
+vite.config.ts
 
 
 ---
