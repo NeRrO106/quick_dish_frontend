@@ -1,69 +1,60 @@
-# React + TypeScript + Vite
+# 🍕 QuickDish – Food Ordering App - (frontend)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> Aplicație web pentru gestionarea comenzilor, produselor și utilizatorilor.  
+> Construită cu **React 19, Vite, TailwindCSS, React Query, Firebase** și un backend .NET cu autentificare bazată pe cookie-uri.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Tech Stack
+- ⚡ [Vite](https://vitejs.dev/) – build rapid
+- ⚛️ [React 19](https://react.dev/) – UI modern
+- 🎨 [TailwindCSS](https://tailwindcss.com/) – styling
+- 🔥 [Firebase](https://firebase.google.com/) – stocare imagini
+- 📦 [React Query](https://tanstack.com/query/v5) – data fetching
+- 🍞 [React Toastify](https://fkhadra.github.io/react-toastify/) – notificări
+- 🔐 ASP.NET + Cookie Auth – backend & autentificare
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 📂 Structura proiectului
+┣ 📂 Proxy # Proxy pentru API .NET
+┣ 📂 src
+┃ ┣ 📂 components # Navbar, Footer
+┃ ┣ 📂 features # Auth, Cart, Products, Users, Orders
+┃ ┣ 📂 hooks # useCurrentUser, useSyncUserWithCookie
+┃ ┣ 📂 pages # Hero, Menu, About, Contact etc.
+┃ ┣ 📂 routes # Protecție rute & redirecturi
+┃ ┣ 📂 utils # Funcții ajutătoare (fetch, toast)
+┃ ┗ App.tsx
+┣ .env
+┣ package.json
+┗ vite.config.ts
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## ⚙️ Instalare & Rulare
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+1. Clonează repo:
+   ```bash
+   git clone https://github.com/user/ceva.git
+   cd ceva
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+2. Instalează dependențele:
+   npm install
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+3. Rulează în development:
+   npm run dev
+4. Build pentru productie:
+  npm run build
+
+✨ Features
+  🔑 Autentificare cu roluri (Admin, Manager, Courier, Client, Guest)
+  📦 CRUD pentru produse și utilizatori
+  🛒 Coș de cumpărături cu finalizare comandă
+  📸 Upload imagini în Firebase
+  ⚡ Filtrare și sortare produse (categorie, preț, alfabetic)
+  🔔 Toast notifications pentru acțiuni
+
+📜 License
+  Distributed under the MIT License.
