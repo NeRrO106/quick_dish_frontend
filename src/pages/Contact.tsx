@@ -23,7 +23,7 @@ function Contact() {
 
           <form className="space-y-4 bg-[var(--color-accent2)]">
             <h3 className="text-xl font-bold tracking-tight leading-tight drop-shadow-lg">
-              Contact US
+              Contact Us
             </h3>
             <input
               type="text"

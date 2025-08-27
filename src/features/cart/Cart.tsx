@@ -78,7 +78,7 @@ function Cart() {
         onClick={() => navigate("/orders/finish")}
         className="flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-[var(--color-accent2)] text-[var(--text-light)] font-medium shadow-xl transition-transform duration-200 hover:scale-85 hover:shadow-xl"
       >
-        Finalizează comanda
+        Finish Order
       </button>
     </div>
   );

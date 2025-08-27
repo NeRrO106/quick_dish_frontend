@@ -29,31 +29,31 @@ function Register() {
       !passwordPattern.test(form.confirmPassword)
     ) {
       setError(
-        "Parola trebuie sa aiba minim 8 caractere(litere mari, litere mici, caractere speciale etc.)"
+        "Password must be at least 8 characters long and include uppercase, lowercase, numbers, and special characters."
       );
       showToast(
-        "Parola trebuie sa aiba minim 8 caractere(litere mari, litere mici, caractere speciale etc.)",
+        "Password must be at least 8 characters long and include uppercase, lowercase, numbers, and special characters.",
         "error"
       );
       return;
     }
 
     if (form.password !== form.confirmPassword) {
-      setError("Password doesnt match");
-      showToast("Password doesnt match", "error");
+      setError("Password doesn't match");
+      showToast("Password doesn't match", "error");
       return;
     }
 
     if (!validator.isEmail(form.email)) {
-      setError("Invalide email");
-      showToast("Invalide email", "error");
+      setError("Invalid email");
+      showToast("Invalid email", "error");
       return;
     }
 
     await postEntity(`${endpointUrl}`, form)
       .then((response) => {
         console.log(response);
-        showToast("Register successful!", "success");
+        showToast("Registration successful!", "success");
 
         setTimeout(() => {
           navigate("/login");

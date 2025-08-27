@@ -100,7 +100,7 @@ function Orders() {
     <div className="min-h-screen bg-[var(--color-secondary)] flex items-center justify-center px-4 flex-col">
       <div className="text-center max-w-xl text-[var(--text-light)] space-y-6">
         <h1 className="text-6xl font-extrabold tracking-tight leading-tight drop-shadow-lg">
-          Orders Page
+          Orders
         </h1>
       </div>
       <ul className="flex flex-wrap justify-center items-center mt-8 space-x-4 rtl:space-x-reverse">
@@ -111,16 +111,16 @@ function Orders() {
           >
             <p>Comanda: #{order.Id}</p>
             <p className="text-xl text-center font-semibold text-[var(--text-dark)] mb-2">
-              UserName: {order.UserName}
+              Username: {order.UserName}
             </p>
             <p className="text-xl text-center font-semibold text-[var(--text-dark)] mb-2">
-              CourierName: {order.CourierName ?? "N/A"}
+              Courier name: {order.CourierName ?? "N/A"}
             </p>
             <p className="text-xl text-center font-semibold text-[var(--text-dark)] mb-2">
               Address: {order.Address}
             </p>
             <p className="text-xl text-center font-semibold text-[var(--text-dark)] mb-2">
-              Note: {order.Notes}
+              Notes: {order.Notes}
             </p>
             {user.Role === "Manager" ? (
               <>
@@ -142,7 +142,7 @@ function Orders() {
                   onClick={() => handleSaveStatus(order.Id)}
                   className="mt-2 px-4 py-2 bg-[var(--color-accent1)] text-[var(--text-dark)] rounded hover:bg-[var(--color-accent3)]"
                 >
-                  Save Status
+                  Save status
                 </button>
               </>
             ) : (
@@ -155,7 +155,7 @@ function Orders() {
                     onClick={() => handleTakeOrder(order.Id)}
                     className="mt-2 px-4 py-2 bg-[var(--color-accent1)] text-[var(--text-dark)] rounded hover:bg-[var(--color-accent3)]"
                   >
-                    Take Order
+                    Take order
                   </button>
                 )}
                 {order.Status === "Taken" &&
@@ -177,29 +177,29 @@ function Orders() {
                         onClick={() => handleDeliverOrder(order.Id)}
                         className="mt-2 px-4 py-2 bg-[var(--color-accent1)] text-[var(--text-dark)] rounded hover:bg-[var(--color-accent3)]"
                       >
-                        Mark as Delivered
+                        Mark as delivered
                       </button>
                     </>
                   )}
               </>
             )}
             <p className="text-sm text-center font-semibold text-[var(--text-dark)] mb-2">
-              Payment Method: {order.PaymentMethod}
+              Payment method: {order.PaymentMethod}
             </p>
             <p className="text-md text-center font-semibold text-[var(--text-dark)] mb-2">
-              Phone Number: {order.PhoneNumber}
+              Phone number: {order.PhoneNumber}
             </p>
             <p className="text-sm text-center font-semibold text-[var(--text-dark)] mb-2">
-              Total Amount: {order.TotalAmount.toFixed(2)} lei
+              Total amount: {order.TotalAmount.toFixed(2)} lei
             </p>
-            <h3>Produse: </h3>
+            <h3>Products: </h3>
             <ul className="text-sm mt-1">
               {order.Items.map((item) => (
                 <p
                   key={item.Id}
                   className="text-md text-center font-semibold text-[var(--text-dark)] mb-2"
                 >
-                  Produs: {item.ProductName} - {item.Quantity} *{" "}
+                  Product: {item.ProductName} - {item.Quantity} *{" "}
                   {item.UnitPrice} lei = {item.TotalPrice} lei
                 </p>
               ))}
@@ -209,7 +209,7 @@ function Orders() {
       </ul>
       {data?.length === 0 && (
         <p className="text-lg md:text-xl font-light text-white">
-          No items available in the menu.
+          No orders available
         </p>
       )}
     </div>

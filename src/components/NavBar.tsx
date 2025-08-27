@@ -9,12 +9,13 @@ const navLinks: Record<Role, { name: string; path: string }[]> = {
     { name: "About", path: "/about" },
     { name: "Menu", path: "/menu" },
     { name: "Contact", path: "/contact" },
+    { name: "Cart", path: "/cart" },
   ],
   Guest: [
     { name: "About", path: "/about" },
     { name: "Menu", path: "/menu" },
     { name: "Contact", path: "/contact" },
-    { name: "LogIn", path: "/login" },
+    { name: "Login", path: "/login" },
   ],
   Admin: [
     { name: "Users", path: "/users" },

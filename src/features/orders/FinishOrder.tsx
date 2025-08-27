@@ -32,13 +32,13 @@ function FinishOrder() {
 
   const handleFinishOrder = async () => {
     if (!formData.address || !formData.phone) {
-      setError("Adresa și telefonul sunt obligatorii.");
-      showToast("Adresa și telefonul sunt obligatorii.", "error");
+      setError("Address and phone number are required.");
+      showToast("Address and phone number are required.", "error");
       return;
     }
     if (!validator.isMobilePhone(formData.phone, "ro-RO")) {
-      setError("Telefon invalid");
-      showToast("Telefon invalid", "error");
+      setError("Invalid phone number");
+      showToast("Invalid phone number", "error");
       return;
     }
     const orderData = {
@@ -59,17 +59,15 @@ function FinishOrder() {
     try {
       await postEntity(`${endpoint}`, orderData);
       localStorage.removeItem("cart");
-      showToast("Comanda plasata cu succes", "success");
+      showToast("Order placed successfully!", "success");
       setTimeout(() => {
         navigate("/");
       }, 1000);
     } catch (error) {
       console.error("Error placing order:", error);
-      setError(
-        "A apărut o eroare la plasarea comenzii. Vă rugăm să încercați din nou."
-      );
+      setError("An error occurred while placing your order. Please try again.");
       showToast(
-        "A apărut o eroare la plasarea comenzii. Vă rugăm să încercați din nou.",
+        "An error occurred while placing your order. Please try again.",
         "error"
       );
     }
@@ -78,12 +76,12 @@ function FinishOrder() {
   return (
     <div className="max-w mx-auto p-6 bg-[var(--color-secondary)] shadow-2xl gap-8">
       <h1 className="text-3xl font-extrabold text-center text-[var(--text-dark)] mb-6">
-        Finalizează Comanda
+        Complete Your Order
       </h1>
       {error && <p className="text-[var(--color-accent2)]">{error}</p>}
       <div className="mb-4">
         <label className="block mb-2">
-          Adresă de livrare*:
+          Delivery Address*:
           <input
             type="text"
             value={formData.address}
@@ -95,7 +93,7 @@ function FinishOrder() {
           />
         </label>
         <label className="block mb-2">
-          Telefon*:
+          Phone*:
           <input
             type="tel"
             value={formData.phone}
@@ -107,7 +105,7 @@ function FinishOrder() {
           />
         </label>
         <label className="block mb-2">
-          Metodă de plată:
+          Payment Method:
           <select
             value={formData.paymentMethod}
             onChange={(e) =>
@@ -120,7 +118,7 @@ function FinishOrder() {
           </select>
         </label>
         <label className="block mb-2">
-          Note suplimentare:
+          Additional Notes:
           <textarea
             value={formData.notes}
             onChange={(e) =>
@@ -131,10 +129,10 @@ function FinishOrder() {
         </label>
       </div>
       <div className="mb-4">
-        <h2 className="text-xl font-semibold mb-2">Produse în coș</h2>
+        <h2 className="text-xl font-semibold mb-2">Cart Items</h2>
         <p className="font-bold">Total: {totalAmount()} lei</p>
         {cart.length === 0 ? (
-          <p>Coșul este gol.</p>
+          <p>Your cart is empty.</p>
         ) : (
           <ul>
             {cart.map(
@@ -146,7 +144,7 @@ function FinishOrder() {
               }) => (
                 <li key={item.id} className="mb-2">
                   <p>
-                    {item.name}, Cantitate: {item.quantity}, Preț: {item.price}{" "}
+                    {item.name}, Quantity: {item.quantity}, Price: {item.price}{" "}
                     lei, Subtotal: {(item.price * item.quantity).toFixed(2)} lei
                   </p>
                 </li>
@@ -159,7 +157,7 @@ function FinishOrder() {
         onClick={handleFinishOrder}
         className="flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-[var(--color-accent2)] text-[var(--text-light)] font-medium shadow-xl transition-transform duration-200 hover:scale-85 hover:shadow-xl"
       >
-        Plasează comanda
+        Place Order
       </button>
     </div>
   );

@@ -19,7 +19,7 @@ function NoPage() {
             onClick={() => navigate("/")}
             className="transition-all duration-300 focus:outline-none text-[var(--text-dark)] bg-[var(--color-accent3)] hover:bg-green-700 focus:ring-4 focus:ring-green-300 font-semibold rounded-lg text-md px-6 py-2 shadow-lg dark:focus:ring-green-800"
           >
-            HOME
+            Home
           </button>
         </div>
       </div>

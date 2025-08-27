@@ -30,23 +30,23 @@ function ForgotPassword() {
       passwordPattern.test(form.confirmNewPassword)
     ) {
       setError(
-        "Parola trebuie sa aiba minim 8 caractere(litere mari, litere mici, caractere speciale etc.)"
+        "Password must be at least 8 characters long (uppercase, lowercase, numbers, special characters, etc.)"
       );
       showToast(
-        "Parola trebuie sa aiba minim 8 caractere(litere mari, litere mici, caractere speciale etc.)",
+        "Password must be at least 8 characters long (uppercase, lowercase, numbers, special characters, etc.)",
         "error"
       );
       return;
     }
 
     if (form.newPassword !== form.confirmNewPassword) {
-      setError("Password doesnt match");
-      showToast("Password doesnt match", "error");
+      setError("Password doesn't match");
+      showToast("Password doesn't match", "error");
       return;
     }
 
     if (!validator.isEmail(form.email)) {
-      setError("Invalide email");
+      setError("Invalid email");
       showToast("Invalid email", "error");
       return;
     }
@@ -150,7 +150,7 @@ function ForgotPassword() {
             className="w-full px-4 py-2 text-[var(--text-light)] bg-[var(--color-accent3)] rounded hover:bg-[var(--color-darker-accent3)] focus:outline-none focus:ring-2 focus:ring-[var(--color-accent3)]"
             onClick={(e) => handleResetPassword(e)}
           >
-            Reset your Password
+            Reset Password
           </button>
         </form>
       </div>

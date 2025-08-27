@@ -20,7 +20,7 @@ function Hero() {
           Quick Dish
         </h1>
         <p className="text-lg md:text-xl font-light">
-          For the best experice you need to loggin
+          For the best experience, you need to log in
         </p>
         <div className="flex justify-center gap-4 flex-wrap">
           <button

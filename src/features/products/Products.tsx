@@ -28,10 +28,10 @@ function Products() {
           onClick={() => navigate("/products/add")}
           className="text-[var(--text-dark)] bg-[var(--color-accent3)] hover:bg-[var(--color-darker-accent3)] font-medium rounded-full text-sm px-3 py-3 transition"
         >
-          Add product
+          Add Product
         </button>
         <h1 className="text-6xl font-extrabold tracking-tight leading-tight drop-shadow-lg">
-          Product Page
+          Products Page
         </h1>
       </div>
       <ul className="flex flex-wrap justify-center items-center mt-8 space-x-4 rtl:space-x-reverse">
@@ -63,13 +63,13 @@ function Products() {
                 onClick={() => navigate(`/products/${prod.Id}`)}
                 className="text-[var(--text-dark)] bg-[var(--color-accent1)] hover:bg-[var(--color-accent3)] font-medium rounded-full text-sm px-3 py-3 transition"
               >
-                Edit product
+                Edit Product
               </button>
               <button
                 onClick={() => handleDelete(prod.Id)}
                 className="text-[var(--text-dark)] bg-red-700 hover:bg-red-900 font-medium rounded-full text-sm px-3 py-3 transition"
               >
-                Delete product
+                Delete Product
               </button>
             </div>
           </li>
@@ -77,7 +77,7 @@ function Products() {
       </ul>
       {data?.length === 0 && (
         <p className="text-lg md:text-xl font-light text-[var(--text-dark)]">
-          No items available in the menu.
+          No products available.
         </p>
       )}
     </div>

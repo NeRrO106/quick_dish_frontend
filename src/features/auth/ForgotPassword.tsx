@@ -13,14 +13,14 @@ function ForgotPassword() {
   const handleForgotPassword = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validator.isEmail(email)) {
-      setError("Please fill in your email");
-      showToast("Please fill in your email", "error");
+      setError("Please enter a valid email");
+      showToast("Please enter a valid email", "error");
       return;
     }
     await postEntity(`${endpointUrl}forgotpassword`, email)
       .then((response) => {
         console.log(response);
-        showToast("Email send successful!", "success");
+        showToast("Email sent successfully!", "success");
         setTimeout(() => {
           navigate("/resetpassword");
         }, 1000);
@@ -65,7 +65,7 @@ function ForgotPassword() {
           </button>
         </form>
         <p className="mt-4 text-sm text-center text-gray-600">
-          You rememberd you password?{" "}
+          Remembered your password?{" "}
           <a href="/login" className="text-blue-600 hover:underline">
             Login
           </a>

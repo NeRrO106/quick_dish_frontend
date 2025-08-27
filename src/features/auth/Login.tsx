@@ -15,8 +15,8 @@ function Login() {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.name || !form.password) {
-      setError("Name and password needs to be filled");
-      showToast("Name and password needs to be filled", "error");
+      setError("Name and password need to be filled");
+      showToast("Name and password need to be filled", "error");
       return;
     }
     await postEntity(`${endpoitUrl}login`, form)
@@ -88,7 +88,7 @@ function Login() {
         <p className="mt-4 text-sm text-center text-gray-600">
           Forgot your password?{" "}
           <a href="/forgotpassword" className="text-blue-600 hover:underline">
-            Reset Password
+            Reset password
           </a>
         </p>
         <p className="mt-4 text-sm text-center text-gray-600">

@@ -27,24 +27,24 @@ function AddUser() {
     const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
 
     if (!form.Name || !form.Email || !form.Password) {
-      showToast("Please fill in all the fields", "error");
+      showToast("Please fill in all fields", "error");
       return;
     }
 
     if (!passwordPattern.test(form.Password)) {
-      showToast("Invalid password / invalid confirm password", "error");
+      showToast("Invalid password", "error");
       return;
     }
 
     if (!validator.isEmail(form.Email)) {
-      showToast("Invalide email", "error");
+      showToast("Invalid email", "error");
       return;
     }
     const data = await postEntity<User>(`${endpointUrl}`, form);
     if (data === null) {
       showToast("Null data", "error");
     } else {
-      showToast("User added", "success");
+      showToast("User added successfully", "success");
 
       setTimeout(() => {
         window.history.back();
@@ -57,7 +57,7 @@ function AddUser() {
       <div className="min-h-screen bg-[var(--color-secondary)] flex items-center justify-center px-4 flex-col">
         <div className="text-center max-w-xl text-[var(--text-light)] space-y-6">
           <h2 className="text-6xl font-extrabold tracking-tight leading-tight drop-shadow-lg">
-            Create user
+            Create User
           </h2>
         </div>
         <div className="max-w-2xl w-full p-8 bg-[var(--color-secondary)]/20 backdrop-blur-md rounded-2xl shadow-2xl">

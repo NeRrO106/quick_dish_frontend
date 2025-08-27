@@ -39,13 +39,13 @@ function EditUser() {
     const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
 
     if (!validator.isEmail(form.email)) {
-      showToast("Invalide email", "error");
+      showToast("Invalid email", "error");
       return;
     }
 
     if (passwordPattern.test(form.password)) {
       showToast(
-        "Parola trebuie sa aiba minim 8 caractere(litere mari, litere mici, caractere speciale etc.)",
+        "Password must be at least 8 characters long and include uppercase, lowercase, numbers, and special characters.",
         "error"
       );
       return;
@@ -71,13 +71,13 @@ function EditUser() {
       <div className="min-h-screen bg-[var(--color-secondary)] flex items-center justify-center px-4 flex-col">
         <div className="text-center max-w-xl text-[var(--text-light)] space-y-6">
           <h2 className="text-6xl font-extrabold tracking-tight leading-tight drop-shadow-lg">
-            Edit user
+            Edit User
           </h2>
         </div>
         <div className="max-w-2xl w-full p-8 bg-[var(--color-secondary)]/20 backdrop-blur-md rounded-2xl shadow-2xl">
           <div>
             <label className="block mb-2 text-md font-medium text-[var(--text-dark)]">
-              User Name
+              Username
               <input
                 className="w-full p-3 mb-4 rounded-xl border-2 border-white/30 bg-white/10 placeholder-white/70 text-[var(--text-dark)] focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 transition"
                 name="name"

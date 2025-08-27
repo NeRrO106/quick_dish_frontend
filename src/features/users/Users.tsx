@@ -15,7 +15,7 @@ function Users() {
   });
 
   const handleDelete = async (id: number) => {
-    showToast("User sters cu succes", "success");
+    showToast("User deleted successfully", "success");
     await deleteEntity(endpointUrl, id);
     queryClient.invalidateQueries({ queryKey: ["users"] });
   };
@@ -30,10 +30,10 @@ function Users() {
           onClick={() => navigate("/users/add")}
           className="text-[var(--text-light)] bg-[var(--color-accent3)] hover:bg-[var(--color-darker-accent3)] font-medium rounded-full text-sm px-3 py-3 transition"
         >
-          Add user
+          Add User
         </button>
         <h1 className="text-6xl font-extrabold tracking-tight leading-tight drop-shadow-lg">
-          Users Page
+          Users
         </h1>
       </div>
       <ul className="flex flex-wrap justify-center items-center mt-8 space-x-4 rtl:space-x-reverse">
@@ -59,13 +59,13 @@ function Users() {
                 onClick={() => navigate(`/users/${user.Id}`)}
                 className="text-[var(--text-dark)] bg-[var(--color-accent1)] hover:bg-[var(--color-accent3)] font-medium rounded-full text-sm px-3 py-3 transition"
               >
-                Edit user
+                Edit User
               </button>
               <button
                 onClick={() => handleDelete(user.Id)}
                 className="text-[var(--text-dark)] bg-red-700 hover:bg-red-900 font-medium rounded-full text-sm px-3 py-3 transition"
               >
-                Delete user
+                Delete User
               </button>
             </div>
           </li>
@@ -73,7 +73,7 @@ function Users() {
       </ul>
       {data?.length === 0 && (
         <p className="text-lg md:text-xl font-light text-[var(--text-dark)]">
-          No items available in the user menu.
+          No users available.
         </p>
       )}
     </div>

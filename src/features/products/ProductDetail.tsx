@@ -29,7 +29,7 @@ function ProductDetail() {
     price: number,
     name: string
   ) => {
-    showToast("Produs adaugat in cos cu succes!", "success");
+    showToast("Produs adăugat în coș cu succes!", "success");
     addToCart(id, quantity, price, name);
   };
 

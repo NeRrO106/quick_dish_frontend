@@ -27,14 +27,14 @@ function MyOrder() {
             key={order.Id}
             className="w-64 p-2 border border-gray-200 rounded-lg shadow-sm bg-[var(--color-accent2)] border-[var(--color-secondary)] mb-4"
           >
-            <p>Comanda: #{order.Id}</p>
+            <p>Order: #{order.Id}</p>
             <p className="text-xl text-center font-semibold text-[var(--text-dark)] mb-2">
               Name: {order.UserName}
             </p>
             <p className="text-xl text-center font-semibold text-[var(--text-dark)] mb-2">
               Courier Name: {order.CourierName}
             </p>
-            <p className="text-md text-center font-semibold text-[var(--text-dakr)] mb-2">
+            <p className="text-md text-center font-semibold text-[var(--text-dark)] mb-2">
               Address: {order.Address}
             </p>
             <p className="text-md text-center font-semibold text-[var(--text-dark)] mb-2">
@@ -52,14 +52,14 @@ function MyOrder() {
             <p className="text-md font-bold text-[var(--text-light)] mb-2">
               Total Amount: {order.TotalAmount.toFixed(2)} lei
             </p>
-            <h3>Produse: </h3>
+            <h3>Products: </h3>
             <ul className="flex flex-wrap justify-center items-center mt-8 space-x-4 rtl:space-x-reverse">
               {order.Items.map((item) => (
                 <p
                   key={item.Id}
                   className="text-sm text-center font-semibold text-[var(--text-dark)] mb-2"
                 >
-                  Produs: {item.ProductName} Cantitate: {item.Quantity} *{" "}
+                  Product: {item.ProductName} Quantity: {item.Quantity} *{" "}
                   {item.UnitPrice}lei = {item.TotalPrice}lei
                 </p>
               ))}
@@ -68,9 +68,7 @@ function MyOrder() {
         ))}
       </ul>
       {data?.length === 0 && (
-        <p className="text-lg md:text-xl font-light text-white">
-          No items available in the menu.
-        </p>
+        <p className="text-lg md:text-xl font-light text-white">No orders.</p>
       )}
     </div>
   );

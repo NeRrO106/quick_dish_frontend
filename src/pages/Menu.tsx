@@ -28,16 +28,16 @@ function Menu() {
     name: string
   ) => {
     if (role === "Guest") {
-      showToast("Nu poti plasa o comanda ca si oaspete!", "warning");
+      showToast("Nu poți plasa o comandă ca oaspete!", "warning");
       return;
     }
-    showToast("Produs adaugat in cos cu succes!", "success");
+    showToast("Produs adăugat în coș cu succes!", "success");
     addToCart(id, quantity, price, name);
   };
 
   const handleViewProduct = (id: number) => {
     if (role === "Guest") {
-      showToast("Nu poti vizualiza un produs ca si oaspete!", "warning");
+      showToast("Nu poți vizualiza un produs ca oaspete!", "warning");
       return;
     }
     navigate(`/productdetails/${id}`);
