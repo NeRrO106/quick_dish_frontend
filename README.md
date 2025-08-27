@@ -31,7 +31,7 @@ src/
 package.json
 vite.config.ts
 
-
+```
 ---
 
 ## ⚙️ Instalare & Rulare
@@ -42,12 +42,15 @@ vite.config.ts
    cd ceva
 
 2. Instalează dependențele:
+   ```bash
    npm install
 
-3. Rulează în development:
+4. Rulează în development:
+   ```bash
    npm run dev
-4. Build pentru productie:
-  npm run build
+5. Build pentru productie:
+   ```bash
+   npm run build
 
 ✨ Features
   🔑 Autentificare cu roluri (Admin, Manager, Courier, Client, Guest)
