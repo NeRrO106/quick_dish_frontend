@@ -52,13 +52,13 @@ vite.config.ts
    ```bash
    npm run build
 
-✨ Features
-  🔑 Autentificare cu roluri (Admin, Manager, Courier, Client, Guest)
-  📦 CRUD pentru produse și utilizatori
-  🛒 Coș de cumpărături cu finalizare comandă
-  📸 Upload imagini în Firebase
-  ⚡ Filtrare și sortare produse (categorie, preț, alfabetic)
-  🔔 Toast notifications pentru acțiuni
+## ✨ Features
+  - 🔑 Autentificare cu roluri (Admin, Manager, Courier, Client, Guest)
+  - 📦 CRUD pentru produse și utilizatori
+  - 🛒 Coș de cumpărături cu finalizare comandă
+  - 📸 Upload imagini în Firebase
+  - ⚡ Filtrare și sortare produse (categorie, preț, alfabetic)
+  - 🔔 Toast notifications pentru acțiuni
 
 📜 License
   Distributed under the MIT License.
