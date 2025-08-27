@@ -50,8 +50,10 @@ function Login() {
             >
               Username
               <input
-                type="username"
+                type="text"
                 id="username"
+                autoComplete="username"
+                name="username"
                 className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-[var(--color-accent2)]"
                 placeholder="Enter your username"
                 onChange={(e) => setForm({ ...form, name: e.target.value })}

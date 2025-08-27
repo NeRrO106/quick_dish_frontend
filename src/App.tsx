@@ -27,10 +27,12 @@ import FinishOrder from "./features/orders/FinishOrder";
 import { RouteProtector } from "./routes/RouteProtector";
 import AuthRedirect from "./routes/AuthRedirect";
 import Orders from "./features/orders/Orders";
+import { useSyncUserWithCookie } from "./hooks/useSyncUserWithCookie";
 
 const queryClient = new QueryClient();
 
 function App() {
+  useSyncUserWithCookie();
   return (
     <CartProvider>
       <QueryClientProvider client={queryClient}>
@@ -38,8 +40,6 @@ function App() {
           <div className="flex flex-col min-h-screen">
             <AuthRedirect />
             <NavBar />
-
-            {/* Conținutul paginilor ocupă tot spațiul disponibil */}
             <main className="flex-grow">
               <Routes>
                 <Route path="/" element={<Hero />} />
@@ -168,7 +168,6 @@ function App() {
               </Routes>
             </main>
 
-            {/* Footer împins jos */}
             <Footer />
           </div>
 
