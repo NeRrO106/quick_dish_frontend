@@ -2,7 +2,6 @@ import { initializeApp } from "firebase/app";
 import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyC6X1DijSgpur-YUVe7s8byv15oYwaSMQ4",
   authDomain: "quickdish-1e0aa.firebaseapp.com",
   projectId: "quickdish-1e0aa",
   storageBucket: "quickdish-1e0aa.firebasestorage.app",
