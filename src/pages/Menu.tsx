@@ -15,8 +15,6 @@ function Menu() {
     queryKey: ["products"],
     queryFn: () => getEntity<Product[]>(endpointUrl),
   });
-  const user = JSON.parse(localStorage.getItem("user") || "{}");
-  const role = user?.Role;
 
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [sortOption, setSortOption] = useState<string>("default");
@@ -27,19 +25,11 @@ function Menu() {
     price: number,
     name: string
   ) => {
-    if (role === "Guest") {
-      showToast("Nu poți plasa o comandă ca oaspete!", "warning");
-      return;
-    }
     showToast("Produs adăugat în coș cu succes!", "success");
     addToCart(id, quantity, price, name);
   };
 
   const handleViewProduct = (id: number) => {
-    if (role === "Guest") {
-      showToast("Nu poți vizualiza un produs ca oaspete!", "warning");
-      return;
-    }
     navigate(`/productdetails/${id}`);
   };
 
@@ -77,7 +67,7 @@ function Menu() {
         <select
           value={selectedCategory}
           onChange={(e) => setSelectedCategory(e.target.value)}
-          className="p-2 rounded-lg bg-[var(--color-accent2)] text-[var(--text-dark)]"
+          className="p-2 rounded-lg bg-[var(--color-accent2)] text-[var(--text-dark)] hover:scale-105 transition"
         >
           <option value="all">All Categories</option>
           <option value="Pizza">Pizza</option>
@@ -94,7 +84,7 @@ function Menu() {
         <select
           value={sortOption}
           onChange={(e) => setSortOption(e.target.value)}
-          className="p-2 rounded-lg bg-[var(--color-accent2)] text-[var(--text-dark)]"
+          className="p-2 rounded-lg bg-[var(--color-accent2)] text-[var(--text-dark)]  hover:scale-105 transition"
         >
           <option value="default">Default</option>
           <option value="name-asc">Name A → Z</option>
