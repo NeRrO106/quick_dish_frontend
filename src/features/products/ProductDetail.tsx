@@ -1,6 +1,6 @@
-import { useQuery } from "@tanstack/react-query";
-import { useParams } from "react-router-dom";
 import { useState } from "react";
+import { useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 import { useCart } from "../cart/useCart";
 import getEntity from "../../utils/GetEntity";
 import type { Product } from "./Product";
@@ -11,30 +11,25 @@ function ProductDetail() {
   const [quantity, setQuantity] = useState(1);
   const { id } = useParams<{ id: string }>();
   const endpointUrl = import.meta.env.VITE_PRODUCTS_ENDPOINT;
+
   const { data, isLoading, isError, error } = useQuery<Product | null>({
     queryKey: ["products", id],
+    enabled: !!id,
     queryFn: () => getEntity<Product>(`${endpointUrl}${id}`),
   });
 
-  const handleQuantity = (value: number) => {
-    setQuantity((q) => {
-      const newQuantity = q + value;
-      return newQuantity < 1 ? 1 : newQuantity;
-    });
+  const handleQuantity = (delta: number) =>
+    setQuantity((q) => Math.max(1, q + delta));
+
+  const handleAddToCart = () => {
+    if (!data) return;
+    addToCart(data.Id, quantity, data.Price, data.Name);
+    showToast("Product added to cart!", "success");
   };
 
-  const handleAddToCart = (
-    id: number,
-    quantity: number,
-    price: number,
-    name: string
-  ) => {
-    showToast("Produs adăugat în coș cu succes!", "success");
-    addToCart(id, quantity, price, name);
-  };
-
-  if (isLoading) return <p>Loading....</p>;
+  if (isLoading) return <p>Loading...</p>;
   if (isError) return <p>Error: {(error as Error).message}</p>;
+  if (!data) return <p>Product not found.</p>;
 
   return (
     <div className="min-h-[calc(100vh-80px)] max-w mx-auto p-6 bg-[var(--color-secondary)] shadow-2xl flex flex-col md:flex-row gap-8">
@@ -63,7 +58,7 @@ function ProductDetail() {
           <div className="flex items-center gap-4">
             <button
               onClick={() => handleQuantity(-1)}
-              className="px-4 py-2 rounded-full bg-[var(--color-primary)] text-[var(--text-light)] font-semibold shadow-lg transition-transform duration-200 hover:scale-85 hover:shadow-xl hover:bg-[var(--color-accent1)]"
+              className="px-4 py-2 rounded-full bg-[var(--color-primary)] text-[var(--text-light)] font-semibold shadow-lg transition-transform duration-200 hover:scale-105 hover:shadow-xl hover:bg-[var(--color-accent1)]"
             >
               -
             </button>
@@ -72,7 +67,7 @@ function ProductDetail() {
             </span>
             <button
               onClick={() => handleQuantity(+1)}
-              className="px-4 py-2 rounded-full bg-[var(--color-primary)] text-[var(--text-light)] font-semibold shadow-lg transition-transform duration-200 hover:scale-85 hover:shadow-xl hover:bg-[var(--color-accent1)]"
+              className="px-4 py-2 rounded-full bg-[var(--color-primary)] text-[var(--text-light)] font-semibold shadow-lg transition-transform duration-200 hover:scale-105 hover:shadow-xl hover:bg-[var(--color-accent1)]"
             >
               +
             </button>
@@ -81,11 +76,11 @@ function ProductDetail() {
           <button
             onClick={() => {
               if (data) {
-                handleAddToCart(data.Id, quantity, data.Price, data.Name);
+                handleAddToCart();
               }
             }}
             disabled={!data}
-            className="flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-[var(--color-accent2)] text-[var(--text-light)] font-medium shadow-xl transition-transform duration-200 hover:scale-85 hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-[var(--color-accent2)] text-[var(--text-light)] font-medium shadow-xl transition-transform duration-200 hover:scale-95 hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <svg
               className="w-5 h-5"

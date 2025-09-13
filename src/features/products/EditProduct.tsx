@@ -1,24 +1,27 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 import type { Product } from "./Product";
 import getEntity from "../../utils/GetEntity";
-import { useQuery } from "@tanstack/react-query";
 import putEntity from "../../utils/PutEntity";
 import { showToast } from "../../utils/ShowToast";
 import storage from "../../../firebaseConfig";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 function EditProduct() {
-  const [image, setImage] = useState<File | null>(null);
   const { id } = useParams<{ id: string }>();
-  const [form, setForm] = useState({
-    name: "",
-    description: "",
-    price: 0,
-    category: "",
+  const navigate = useNavigate();
+  const [image, setImage] = useState<File | null>(null);
+  const [form, setForm] = useState<Omit<Product, "Id">>({
+    Name: "",
+    Description: "",
+    Price: 0,
+    Category: "",
     ImageUrl: "",
   });
+
   const endpointUrl = import.meta.env.VITE_PRODUCTS_ENDPOINT;
+
   useQuery<Product | null>({
     queryKey: ["products", id],
     enabled: !!id,
@@ -26,10 +29,10 @@ function EditProduct() {
       const result = await getEntity<Product>(`${endpointUrl}${id}`);
       if (result) {
         setForm({
-          name: result.Name,
-          description: result.Description,
-          price: result.Price,
-          category: result.Category,
+          Name: result.Name,
+          Description: result.Description,
+          Price: result.Price,
+          Category: result.Category,
           ImageUrl: result.ImageUrl,
         });
       }
@@ -38,115 +41,120 @@ function EditProduct() {
   });
 
   const handleSave = async () => {
-    let imageUrl = form.ImageUrl;
+    try {
+      let imageUrl = form.ImageUrl;
 
-    if (image) {
-      const storageRef = ref(storage, `/${form.name}`);
-      const snapshot = await uploadBytes(storageRef, image);
-      imageUrl = await getDownloadURL(snapshot.ref);
-    }
+      if (image) {
+        const storageRef = ref(storage, `products/${image.name}`);
+        const snapshot = await uploadBytes(storageRef, image);
+        imageUrl = await getDownloadURL(snapshot.ref);
+      }
 
-    const data = await putEntity(`${endpointUrl}${id}`, {
-      ...form,
-      ImageUrl: imageUrl,
-    });
+      const updated = await putEntity(`${endpointUrl}${id}`, {
+        ...form,
+        ImageUrl: imageUrl,
+      });
 
-    if (data === null) {
-      showToast("Null data", "error");
-    } else {
-      showToast("Product updated", "success");
-      setTimeout(() => window.history.back(), 1000);
+      if (!updated) return showToast("Failed to update product.", "error");
+
+      showToast("Product updated!", "success");
+      navigate(-1);
+    } catch (err) {
+      console.error(err);
+      showToast("Unexpected error updating product.", "error");
     }
   };
 
   return (
-    <div className="min-h-screen bg-[var(--color-secondary)] flex items-center justify-center px-4 flex-col">
-      <div className="text-center max-w-xl text-[var(--text-light)] space-y-6">
-        <h2 className="text-6xl font-extrabold tracking-tight leading-tight drop-shadow-lg">
-          Edit Product
-        </h2>
-      </div>
-      <div className="max-w-2xl w-full p-8 bg-[var(--color-secondary)]/20 backdrop-blur-md rounded-2xl shadow-2xl">
-        <div>
-          <label className="block mb-2 text-md font-medium text-[var(--text-dark)]">
-            Product Name
-            <input
-              className="w-full p-3 mb-4 rounded-xl border-2 border-white/30 bg-white/10 placeholder-white/70 text-[var(--text-dark)] focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 transition"
-              name="name"
-              value={form.name}
-              onChange={(e) => setForm({ ...form, name: e.target.value })}
-            />
-          </label>
-        </div>
+    <div className="min-h-screen bg-[var(--color-secondary)] flex flex-col items-center justify-center px-4">
+      <h2 className="text-6xl font-extrabold text-[var(--text-light)] mb-6">
+        Edit Product
+      </h2>
 
-        <div>
-          <label className="block mb-2 text-md font-medium text-[var(--text-dark)]">
-            Product Description
-            <input
-              className="w-full p-3 mb-4 rounded-xl border-2 border-white/30 bg-white/10 placeholder-white/70 text-[var(--text-dark)] focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 transition"
-              name="description"
-              value={form.description}
-              onChange={(e) =>
-                setForm({ ...form, description: e.target.value })
-              }
-            />
-          </label>
-        </div>
-
-        <div>
-          <label className="block mb-2 text-md font-medium text-[var(--text-dark)]">
-            Product Category
-          </label>
+      <div className="max-w-2xl w-full p-8 bg-[var(--color-secondary)]/20 rounded-2xl shadow-2xl space-y-4">
+        <label className="block text-md font-medium text-[var(--text-dark)]">
+          Product Name
           <input
-            className="w-full p-3 mb-4 rounded-xl border-2 border-white/30 bg-white/10 placeholder-white/70 text-[var(--text-dark)] focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 transition"
-            name="category"
-            value={form.category}
-            onChange={(e) => setForm({ ...form, category: e.target.value })}
+            className="w-full p-3 rounded-xl border bg-white/10"
+            value={form.Name}
+            onChange={(e) => setForm({ ...form, Name: e.target.value })}
           />
-        </div>
+        </label>
 
-        <div>
-          <label className="block mb-2 text-md font-medium text-[var(--text-dark)]">
-            Product Price
-          </label>
+        <label className="block text-md font-medium text-[var(--text-dark)]">
+          Description
           <input
-            className="w-full p-3 mb-4 rounded-xl border-2 border-white/30 bg-white/10 placeholder-white/70 text-[var(--text-dark)] focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 transition"
-            name="price"
+            className="w-full p-3 rounded-xl border bg-white/10"
+            value={form.Description}
+            onChange={(e) => setForm({ ...form, Description: e.target.value })}
+          />
+        </label>
+
+        <label className="block text-md font-medium text-[var(--text-dark)]">
+          Category
+          <input
+            className="w-full p-3 rounded-xl border bg-white/10"
+            value={form.Category}
+            onChange={(e) => setForm({ ...form, Category: e.target.value })}
+          />
+        </label>
+
+        <label className="block text-md font-medium text-[var(--text-dark)]">
+          Price
+          <input
             type="number"
             step="0.01"
-            value={form.price}
-            onChange={(e) =>
-              setForm({ ...form, price: parseFloat(e.target.value) })
-            }
+            className="w-full p-3 rounded-xl border bg-white/10"
+            value={form.Price}
+            onChange={(e) => setForm({ ...form, Price: +e.target.value })}
           />
-        </div>
-        <div>
-          <label className="block mb-2 text-md font-medium text-[var(--text-dark)]">
-            Image
+        </label>
+
+        <label className="block text-md font-medium text-[var(--text-dark)]">
+          Image
+          <div className="mt-2 flex flex-col items-center border-2 border-dashed border-gray-400 p-4 rounded-xl cursor-pointer hover:border-gray-600 transition">
+            {image ? (
+              <img
+                src={URL.createObjectURL(image)}
+                alt="Preview"
+                className="w-40 h-40 object-cover rounded-xl mb-2"
+              />
+            ) : form.ImageUrl ? (
+              <img
+                src={form.ImageUrl}
+                alt="Current"
+                className="w-40 h-40 object-cover rounded-xl mb-2"
+              />
+            ) : (
+              <p className="text-gray-400">Click to select an image</p>
+            )}
             <input
               type="file"
-              className="w-full p-3 mb-4 rounded-xl border-2 border-white/30 bg-white/10 placeholder-white/70 focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 transition"
-              onChange={(e) => {
-                if (e.target.files && e.target.files[0]) {
-                  setImage(e.target.files[0]);
-                } else {
-                  setImage(null);
-                }
-              }}
+              accept="image/*"
+              className="hidden"
+              onChange={(e) => setImage(e.target.files?.[0] ?? null)}
+              id="image-upload"
             />
-          </label>
-        </div>
+            <label
+              htmlFor="image-upload"
+              className="px-4 py-2 bg-[var(--color-primary)] text-[var(--text-light)] rounded-full mt-2 cursor-pointer hover:bg-[var(--color-accent1)] transition"
+            >
+              {image ? "Change Image" : "Select Image"}
+            </label>
+          </div>
+        </label>
       </div>
-      <div>
+
+      <div className="mt-6 flex gap-4">
         <button
-          className="px-6 py-3 text-[var(--text-light)] bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+          className="px-6 py-3 bg-green-700 text-white rounded-full hover:bg-green-800"
           onClick={handleSave}
         >
           Save
         </button>
         <button
-          className="px-6 py-3 text-[var(--text-light)] bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
-          onClick={() => window.history.back()}
+          className="px-6 py-3 bg-gray-800 text-white rounded-full hover:bg-gray-900"
+          onClick={() => navigate(-1)}
         >
           Back
         </button>

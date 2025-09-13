@@ -1,82 +1,85 @@
 import { useQuery } from "@tanstack/react-query";
-import getEntity from "../../utils/GetEntity";
-import deleteEntity from "../../utils/DeleteEntity";
 import { useNavigate } from "react-router-dom";
 import type { Product } from "./Product";
+import getEntity from "../../utils/GetEntity";
+import deleteEntity from "../../utils/DeleteEntity";
 import { showToast } from "../../utils/ShowToast";
 
 function Products() {
   const navigate = useNavigate();
   const endpointUrl = import.meta.env.VITE_PRODUCTS_ENDPOINT;
+
   const { data, isLoading, isError, error } = useQuery<Product[] | null>({
     queryKey: ["products"],
     queryFn: () => getEntity<Product[]>(endpointUrl),
   });
 
   const handleDelete = async (id: number) => {
-    showToast("Product deleted", "error");
-    await deleteEntity(endpointUrl, id);
+    try {
+      await deleteEntity(endpointUrl, id);
+      showToast("Product deleted", "success");
+    } catch (err) {
+      console.error(err);
+      showToast("Error deleting product", "error");
+    }
   };
 
-  if (isLoading) return <p>Loading....</p>;
+  if (isLoading) return <p>Loading...</p>;
   if (isError) return <p>Error: {(error as Error).message}</p>;
 
   return (
-    <div className="min-h-screen bg-[var(--color-secondary)] flex items-center justify-center px-4 flex-col">
-      <div className="text-center max-w-xl text-[var(--text-light)] space-y-6">
+    <div className="min-h-screen bg-[var(--color-secondary)] flex flex-col items-center px-4">
+      <div className="text-center text-[var(--text-light)] mb-6">
+        <h1 className="text-6xl font-extrabold mb-4">Products</h1>
         <button
           onClick={() => navigate("/products/add")}
-          className="text-[var(--text-dark)] bg-[var(--color-accent3)] hover:bg-[var(--color-darker-accent3)] font-medium rounded-full text-sm px-3 py-3 transition"
+          className="bg-[var(--color-accent3)] hover:bg-[var(--color-darker-accent3)] px-4 py-2 rounded-full transition"
         >
           Add Product
         </button>
-        <h1 className="text-6xl font-extrabold tracking-tight leading-tight drop-shadow-lg">
-          Products Page
-        </h1>
       </div>
-      <ul className="flex flex-wrap justify-center items-center mt-8 space-x-4 rtl:space-x-reverse">
+
+      <ul className="flex flex-wrap justify-center gap-4">
         {data?.map((prod) => (
           <li
             key={prod.Id}
-            className="w-64 p-2 border border-gray-200 rounded-lg shadow-sm bg-[var(--color-accent2)] border-[var(--color-secondary)] mb-4"
+            className="w-64 p-4 bg-[var(--color-accent2)] rounded-lg shadow"
           >
             <img
               src={prod.ImageUrl}
               alt={prod.Name}
-              loading="lazy"
               className="w-full h-36 object-cover rounded-lg mb-3"
             />
-            <p className="text-xl text-center font-semibold text-[var(--text-dark)] mb-2">
+            <h3 className="text-lg font-semibold text-[var(--text-dark)]">
               {prod.Name}
-            </p>
-            <p className="text-sm text-center font-medium text-[var(--text-dark)] mb-2">
+            </h3>
+            <p className="text-sm text-[var(--text-dark)]">
               {prod.Description}
             </p>
-            <p className="text-sm text-center font-medium text-[var(--text-dark)] mb-2">
-              {prod.Category}
-            </p>
-            <p className="text-xl font-bold text-[var(--text-dark)] mb-2">
+            <p className="text-sm text-[var(--text-dark)]">{prod.Category}</p>
+            <p className="text-xl font-bold text-[var(--text-dark)]">
               {prod.Price.toFixed(2)} lei
             </p>
-            <div className="flex gap-2 justify-center">
+            <div className="flex gap-2 mt-3 justify-center">
               <button
                 onClick={() => navigate(`/products/${prod.Id}`)}
                 className="text-[var(--text-dark)] bg-[var(--color-accent1)] hover:bg-[var(--color-accent3)] font-medium rounded-full text-sm px-3 py-3 transition"
               >
-                Edit Product
+                Edit
               </button>
               <button
                 onClick={() => handleDelete(prod.Id)}
-                className="text-[var(--text-dark)] bg-red-700 hover:bg-red-900 font-medium rounded-full text-sm px-3 py-3 transition"
+                className="px-3 py-2 bg-red-700 text-white rounded-full hover:bg-red-900 transition"
               >
-                Delete Product
+                Delete
               </button>
             </div>
           </li>
         ))}
       </ul>
+
       {data?.length === 0 && (
-        <p className="text-lg md:text-xl font-light text-[var(--text-dark)]">
+        <p className="text-lg text-[var(--text-dark)]">
           No products available.
         </p>
       )}
