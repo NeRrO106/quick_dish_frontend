@@ -6,71 +6,74 @@ import getEntity from "../../utils/GetEntity";
 function MyOrder() {
   const { id } = useParams();
   const endpointUrl = import.meta.env.VITE_ORDERS_ENDPOINT;
+
   const { data, isLoading, isError, error } = useQuery<Order[] | null>({
     queryKey: ["orders", id],
     queryFn: () => getEntity<Order[]>(`${endpointUrl}orders/${id}`),
   });
 
-  if (isLoading) return <p>Loading....</p>;
+  if (isLoading) return <p>Loading...</p>;
   if (isError) return <p>Error: {(error as Error).message}</p>;
+  if (!data || data.length === 0)
+    return (
+      <p className="text-lg md:text-xl font-light text-white">No orders.</p>
+    );
 
   return (
-    <div className="min-h-screen bg-[var(--color-secondary)] flex items-center justify-center px-4 flex-col">
-      <div className="text-center max-w-xl text-[var(--text-light)] space-y-6">
-        <h1 className="text-6xl font-extrabold tracking-tight leading-tight drop-shadow-lg">
-          Orders Page
-        </h1>
-      </div>
-      <ul className="flex flex-wrap justify-center items-center mt-8 space-x-4 rtl:space-x-reverse">
-        {data?.map((order) => (
+    <div className="min-h-screen bg-[var(--color-secondary)] flex flex-col items-center px-4">
+      <h1 className="text-6xl font-extrabold tracking-tight text-[var(--text-light)] drop-shadow-lg mt-8">
+        Orders Page
+      </h1>
+
+      <ul className="flex flex-wrap justify-center gap-4 mt-8">
+        {data.map((order) => (
           <li
             key={order.Id}
-            className="w-64 p-2 border border-gray-200 rounded-lg shadow-sm bg-[var(--color-accent2)] border-[var(--color-secondary)] mb-4"
+            className="w-64 p-4 rounded-lg shadow-sm bg-[var(--color-accent2)] border border-[var(--color-secondary)]"
           >
-            <p>Order: #{order.Id}</p>
-            <p className="text-xl text-center font-semibold text-[var(--text-dark)] mb-2">
+            <p>Order #{order.Id}</p>
+            <p className="text-xl font-semibold text-[var(--text-dark)]">
               Name: {order.UserName}
             </p>
-            <p className="text-xl text-center font-semibold text-[var(--text-dark)] mb-2">
-              Courier Name: {order.CourierName}
+            <p className="text-xl font-semibold text-[var(--text-dark)]">
+              Courier: {order.CourierName || "N/A"}
             </p>
-            <p className="text-md text-center font-semibold text-[var(--text-dark)] mb-2">
+            <p className="text-md font-semibold text-[var(--text-dark)]">
               Address: {order.Address}
             </p>
-            <p className="text-md text-center font-semibold text-[var(--text-dark)] mb-2">
-              Notes: {order.Notes}
+            <p className="text-md font-semibold text-[var(--text-dark)]">
+              Notes: {order.Notes || "—"}
             </p>
-            <p className="text-md text-center font-semibold text-[var(--text-dark)] mb-2">
+            <p className="text-md font-semibold text-[var(--text-dark)]">
               Status: {order.Status}
             </p>
-            <p className="text-sm text-center font-semibold text-[var(--text-dark)] mb-2">
-              Payment Method: {order.PaymentMethod}
+            <p className="text-sm font-semibold text-[var(--text-dark)]">
+              Payment: {order.PaymentMethod}
             </p>
-            <p className="text-sm text-center font-semibold text-[var(--text-dark)] mb-2">
-              Phone Number: {order.PhoneNumber}
+            <p className="text-sm font-semibold text-[var(--text-dark)]">
+              Phone: {order.PhoneNumber}
             </p>
-            <p className="text-md font-bold text-[var(--text-light)] mb-2">
-              Total Amount: {order.TotalAmount.toFixed(2)} lei
+            <p className="text-md font-bold text-[var(--text-light)]">
+              Total: {order.TotalAmount.toFixed(2)} lei
             </p>
-            <h3>Products: </h3>
-            <ul className="flex flex-wrap justify-center items-center mt-8 space-x-4 rtl:space-x-reverse">
+
+            <h3 className="mt-2 font-bold">Products:</h3>
+            <ul className="space-y-1">
               {order.Items.map((item) => (
-                <p
+                <li
                   key={item.Id}
-                  className="text-sm text-center font-semibold text-[var(--text-dark)] mb-2"
+                  className="text-sm font-semibold text-[var(--text-dark)]"
                 >
-                  Product: {item.ProductName} Quantity: {item.Quantity} *{" "}
-                  {item.UnitPrice}lei = {item.TotalPrice}lei
-                </p>
+                  {item.ProductName} — {item.Quantity} × {item.UnitPrice} lei ={" "}
+                  {item.TotalPrice} lei
+                </li>
               ))}
             </ul>
           </li>
         ))}
       </ul>
-      {data?.length === 0 && (
-        <p className="text-lg md:text-xl font-light text-white">No orders.</p>
-      )}
     </div>
   );
 }
+
 export default MyOrder;
