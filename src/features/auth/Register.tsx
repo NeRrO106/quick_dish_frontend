@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import postEntity from "../../utils/PostEntity";
-import validator from "validator";
 import { showToast } from "../../utils/ShowToast";
 
 function Register() {
@@ -13,13 +12,12 @@ function Register() {
     password: "",
     confirmPassword: "",
   });
-  const [error, setError] = useState("");
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!form.name || !form.email || !form.password || !form.confirmPassword) {
-      setError("Please fill in all the fields");
       showToast("All fields needs to be filled!", "error");
       return;
     }
@@ -28,9 +26,6 @@ function Register() {
       !passwordPattern.test(form.password) ||
       !passwordPattern.test(form.confirmPassword)
     ) {
-      setError(
-        "Password must be at least 8 characters long and include uppercase, lowercase, numbers, and special characters."
-      );
       showToast(
         "Password must be at least 8 characters long and include uppercase, lowercase, numbers, and special characters.",
         "error"
@@ -39,13 +34,11 @@ function Register() {
     }
 
     if (form.password !== form.confirmPassword) {
-      setError("Password doesn't match");
       showToast("Password doesn't match", "error");
       return;
     }
 
-    if (!validator.isEmail(form.email)) {
-      setError("Invalid email");
+    if (!emailPattern.test(form.email)) {
       showToast("Invalid email", "error");
       return;
     }
@@ -70,8 +63,7 @@ function Register() {
         <h2 className="text-2xl font-bold text-center text-[var(--text-dark)] mb-6">
           Register
         </h2>
-        {error && <p className="text-[var(--color-accent2)]">{error}</p>}
-        <form>
+        <form onSubmit={handleRegister}>
           <div className="mb-4">
             <label
               className="block text-sm font-medium text-[var(--text-dark)] mb-2"
@@ -123,7 +115,7 @@ function Register() {
           <div className="mb-6">
             <label
               className="block text-sm font-medium text-[var(--text-dark)] mb-2"
-              htmlFor="password"
+              htmlFor="cpassword"
             >
               Confirm Password
               <input
@@ -141,7 +133,6 @@ function Register() {
           <button
             type="submit"
             className="w-full px-4 py-2 text-[var(--text-light)] bg-[var(--color-accent3)] rounded hover:bg-[var(--color-darker-accent3)] focus:outline-none focus:ring-2 focus:ring-[var(--color-accent3)]"
-            onClick={(e) => handleRegister(e)}
           >
             Register
           </button>

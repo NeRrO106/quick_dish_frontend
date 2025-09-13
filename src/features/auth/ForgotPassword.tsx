@@ -1,20 +1,18 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import postEntity from "../../utils/PostEntity";
-import validator from "validator";
 import { showToast } from "../../utils/ShowToast";
 
 function ForgotPassword() {
   const endpointUrl = import.meta.env.VITE_AUTH_ENDPOINT;
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
-  const [error, setError] = useState("");
 
   const handleForgotPassword = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!validator.isEmail(email)) {
-      setError("Please enter a valid email");
-      showToast("Please enter a valid email", "error");
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+      showToast("Invalid email", "error");
       return;
     }
     await postEntity(`${endpointUrl}forgotpassword`, email)
@@ -38,7 +36,6 @@ function ForgotPassword() {
           Forgot Password
         </h2>
         <form>
-          {error && <p className="text-[var(--color-accent2)] mb-4">{error}</p>}
           <div className="mb-4">
             <label
               className="block text-sm font-medium text-[var(--text-dark)] mb-2"

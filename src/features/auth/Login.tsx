@@ -2,30 +2,32 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { showToast } from "../../utils/ShowToast";
 import postEntity from "../../utils/PostEntity";
+import { useQueryClient } from "@tanstack/react-query";
 
 function Login() {
-  const endpoitUrl = import.meta.env.VITE_AUTH_ENDPOINT;
+  const queryClient = useQueryClient();
+  const endpointUrl = import.meta.env.VITE_AUTH_ENDPOINT;
   const navigate = useNavigate();
   const [form, setForm] = useState({
     name: "",
     password: "",
   });
-  const [error, setError] = useState("");
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.name || !form.password) {
-      setError("Name and password need to be filled");
       showToast("Name and password need to be filled", "error");
       return;
     }
-    await postEntity(`${endpoitUrl}login`, form)
+    await postEntity(`${endpointUrl}login`, form)
       .then((data) => {
         localStorage.setItem("user", JSON.stringify(data));
         showToast("Login successful!", "success");
 
+        queryClient.setQueryData(["currentUser"], data);
+
         setTimeout(() => {
-          navigate("/about");
+          navigate("/menu");
         }, 1000);
       })
 
@@ -41,8 +43,7 @@ function Login() {
         <h2 className="text-2xl font-bold text-center text-[var(--text-dark)] mb-6">
           Login
         </h2>
-        <form>
-          {error && <p className="text-[var(--color-accent2)]">{error}</p>}
+        <form onSubmit={handleLogin}>
           <div className="mb-4">
             <label
               className="block text-sm font-medium text-[var(--text-dark)] mb-2"
@@ -80,7 +81,6 @@ function Login() {
           <button
             type="submit"
             className="w-full px-4 py-2 text-white bg-[var(--color-accent3)] rounded hover:bg-[var(--color-darker-accent3)] focus:outline-none focus:ring-2 focus:ring-blue-500"
-            onClick={(e) => handleLogin(e)}
           >
             Login
           </button>

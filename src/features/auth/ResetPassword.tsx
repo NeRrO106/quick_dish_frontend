@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import postEntity from "../../utils/PostEntity";
-import validator from "validator";
 import { showToast } from "../../utils/ShowToast";
 
 function ForgotPassword() {
@@ -13,25 +12,20 @@ function ForgotPassword() {
     newPassword: "",
     confirmNewPassword: "",
   });
-  const [error, setError] = useState("");
 
   const handleResetPassword = async (e: React.FormEvent) => {
     e.preventDefault();
     const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
 
     if (!form.email || !form.newPassword || !form.confirmNewPassword) {
-      setError("Please fill in all the fields");
       showToast("Please fill in all the fields", "error");
       return;
     }
 
     if (
-      passwordPattern.test(form.newPassword) ||
-      passwordPattern.test(form.confirmNewPassword)
+      !passwordPattern.test(form.newPassword) ||
+      !passwordPattern.test(form.confirmNewPassword)
     ) {
-      setError(
-        "Password must be at least 8 characters long (uppercase, lowercase, numbers, special characters, etc.)"
-      );
       showToast(
         "Password must be at least 8 characters long (uppercase, lowercase, numbers, special characters, etc.)",
         "error"
@@ -40,13 +34,12 @@ function ForgotPassword() {
     }
 
     if (form.newPassword !== form.confirmNewPassword) {
-      setError("Password doesn't match");
       showToast("Password doesn't match", "error");
       return;
     }
 
-    if (!validator.isEmail(form.email)) {
-      setError("Invalid email");
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(form.email)) {
       showToast("Invalid email", "error");
       return;
     }
@@ -71,7 +64,6 @@ function ForgotPassword() {
         <h2 className="text-2xl font-bold text-center text-[var(--text-dark)] mb-6">
           Reset Password
         </h2>
-        {error && <p className="text-[var(--color-accent2)]">{error}</p>}
         <form>
           <div className="mb-4">
             <label
