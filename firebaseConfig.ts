@@ -2,13 +2,13 @@ import { initializeApp } from "firebase/app";
 import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyC6X1DijSgpur-YUVe7s8byv15oYwaSMQ4",
-  authDomain: "quickdish-1e0aa.firebaseapp.com",
-  projectId: "quickdish-1e0aa",
-  storageBucket: "quickdish-1e0aa.firebasestorage.app",
-  messagingSenderId: "670620986025",
-  appId: "1:670620986025:web:9505b44b212dbfde9817b8",
-  measurementId: "G-6VJ9SQX3VK",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 };
 
 const app = initializeApp(firebaseConfig);
