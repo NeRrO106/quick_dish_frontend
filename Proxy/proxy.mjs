@@ -9,11 +9,11 @@ app.use(
     target: "https://localhost:7100/api",
     secure: false,
     changeOrigin: true,
-    cookieDomainRewrite: "", // gol => lasă domeniul cookie-ului neschimbat
+    cookieDomainRewrite: "",
     xfwd: true,
     onProxyReq: (proxyReq, req, res) => {
       if (req.headers.cookie) {
-        proxyReq.setHeader("cookie", req.headers.cookie); // trimite cookie-urile originale
+        proxyReq.setHeader("cookie", req.headers.cookie);
       }
     },
   })
