@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import type { User } from "./User";
 import getEntity from "../../utils/GetEntity";
 import { useQuery } from "@tanstack/react-query";
@@ -10,6 +10,7 @@ import { showToast } from "../../utils/ShowToast";
 function EditUser() {
   const roles = ["Client", "Admin", "Manager", "Courier"];
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -18,6 +19,7 @@ function EditUser() {
   });
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const endpointUrl = import.meta.env.VITE_USERS_ENDPOINT;
+
   useQuery<User | null>({
     queryKey: ["users", id],
     enabled: !!id,
@@ -36,142 +38,113 @@ function EditUser() {
   });
 
   const handleSave = async () => {
-    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
 
     if (!validator.isEmail(form.email)) {
-      showToast("Invalid email", "error");
-      return;
+      return showToast("Invalid email", "error");
     }
 
-    if (passwordPattern.test(form.password)) {
-      showToast(
-        "Password must be at least 8 characters long and include uppercase, lowercase, numbers, and special characters.",
+    if (form.password && !passwordPattern.test(form.password)) {
+      return showToast(
+        "Password must be at least 8 chars, include upper, lower, number, special char.",
         "error"
       );
-      return;
     }
 
-    const data = await putEntity(`${endpointUrl}${id}`, form);
-    if (data === null) {
-      showToast("Null data", "error");
-    } else {
+    try {
+      const updated = await putEntity(`${endpointUrl}${id}`, form);
+      if (!updated) return showToast("Update failed", "error");
+
       showToast("User updated", "success");
-
-      setTimeout(() => {
-        window.history.back();
-      }, 1000);
+      navigate(-1);
+    } catch (err) {
+      console.error(err);
+      showToast("Unexpected error", "error");
     }
   };
+
   const handleSelect = (role: string) => {
-    setForm({ ...form, role: role });
-    setDropdownOpen(!dropdownOpen);
+    setForm({ ...form, role });
+    setDropdownOpen(false);
   };
+
   return (
-    <>
-      <div className="min-h-screen bg-[var(--color-secondary)] flex items-center justify-center px-4 flex-col">
-        <div className="text-center max-w-xl text-[var(--text-light)] space-y-6">
-          <h2 className="text-6xl font-extrabold tracking-tight leading-tight drop-shadow-lg">
-            Edit User
-          </h2>
-        </div>
-        <div className="max-w-2xl w-full p-8 bg-[var(--color-secondary)]/20 backdrop-blur-md rounded-2xl shadow-2xl">
-          <div>
-            <label className="block mb-2 text-md font-medium text-[var(--text-dark)]">
-              Username
-              <input
-                className="w-full p-3 mb-4 rounded-xl border-2 border-white/30 bg-white/10 placeholder-white/70 text-[var(--text-dark)] focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 transition"
-                name="name"
-                value={form.name}
-                onChange={(e) => setForm({ ...form, name: e.target.value })}
-              />
-            </label>
-          </div>
+    <div className="min-h-screen bg-[var(--color-secondary)] flex flex-col items-center px-4">
+      <h2 className="text-6xl font-extrabold text-[var(--text-light)] mb-6">
+        Edit User
+      </h2>
 
-          <div>
-            <label className="block mb-2 text-md font-medium text-[var(--text-dark)]">
-              Email
-              <input
-                className="w-full p-3 mb-4 rounded-xl border-2 border-white/30 bg-white/10 placeholder-white/70 text-[var(--text-dark)] focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 transition"
-                name="email"
-                type="email"
-                value={form.email}
-                onChange={(e) => setForm({ ...form, email: e.target.value })}
-              />
-            </label>
-          </div>
+      <div className="max-w-2xl w-full p-8 bg-[var(--color-secondary)]/20 rounded-2xl shadow-2xl">
+        <label className="block mb-4 text-md text-[var(--text-dark)]">
+          Username
+          <input
+            className="w-full p-3 rounded-xl border bg-white/10"
+            value={form.name}
+            onChange={(e) => setForm({ ...form, name: e.target.value })}
+          />
+        </label>
 
-          <div>
-            <label className="block mb-2 text-md font-medium text-[var(--text-dark)]">
-              Role
-            </label>
-            <button
-              onClick={() => setDropdownOpen(!dropdownOpen)}
-              className="px-3 py-3 mb-4 rounded-xl border-2 border-white/30 placeholder-white/70 focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 transition"
-            >
-              {form.role}
-              <svg
-                className="w-2.5 h-2.5 ms-3"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 10 6"
-              >
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="m1 1 4 4 4-4"
-                />
-              </svg>
-            </button>
-            {dropdownOpen && (
-              <div className="absolute mt-2 z-50 bg-[var(--color-secondary)] rounded-lg shadow w-44">
-                <ul className="py-2 text-sm text-gray-700">
-                  {roles.map((role) => (
-                    <li key={role}>
-                      <button
-                        onClick={() => handleSelect(role)}
-                        className="block w-full px-4 py-2 text-left hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                      >
-                        {role}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </div>
+        <label className="block mb-4 text-md text-[var(--text-dark)]">
+          Email
+          <input
+            type="email"
+            className="w-full p-3 rounded-xl border bg-white/10"
+            value={form.email}
+            onChange={(e) => setForm({ ...form, email: e.target.value })}
+          />
+        </label>
 
-          <div>
-            <label className="block mb-2 text-md font-medium text-[var(--text-dark)]">
-              Password
-              <input
-                className="w-full p-3 mb-4 rounded-xl border-2 border-white/30 bg-white/10 placeholder-white/70 text-[var(--text-dark)] focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 transition"
-                name="password"
-                type="password"
-                value={form.password}
-                onChange={(e) => setForm({ ...form, password: e.target.value })}
-              />
-            </label>
-          </div>
-        </div>
-        <div>
+        <label className="block mb-4 text-md text-[var(--text-dark)]">
+          Role
           <button
-            className="px-6 py-3 text-[var(--text-light)] bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
-            onClick={handleSave}
+            onClick={() => setDropdownOpen(!dropdownOpen)}
+            className="w-full p-3 rounded-xl border bg-white/10 flex justify-between"
           >
-            Save
+            {form.role || "Select Role"}
+            <span>▼</span>
           </button>
-          <button
-            className="px-6 py-3 text-[var(--text-light)] bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
-            onClick={() => window.history.back()}
-          >
-            Back
-          </button>
-        </div>
+          {dropdownOpen && (
+            <ul className="mt-2 bg-[var(--color-secondary)] rounded shadow">
+              {roles.map((role) => (
+                <li key={role}>
+                  <button
+                    onClick={() => handleSelect(role)}
+                    className="block w-full px-4 py-2 text-left hover:bg-gray-200"
+                  >
+                    {role}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
+        </label>
+
+        <label className="block mb-4 text-md text-[var(--text-dark)]">
+          Password
+          <input
+            type="password"
+            className="w-full p-3 rounded-xl border bg-white/10"
+            value={form.password}
+            onChange={(e) => setForm({ ...form, password: e.target.value })}
+          />
+        </label>
       </div>
-    </>
+
+      <div className="mt-6 flex gap-4">
+        <button
+          onClick={handleSave}
+          className="px-6 py-3 text-[var(--text-light)] bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+        >
+          Save
+        </button>
+        <button
+          onClick={() => navigate(-1)}
+          className="px-6 py-3 text-[var(--text-light)] bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
+        >
+          Back
+        </button>
+      </div>
+    </div>
   );
 }
 export default EditUser;

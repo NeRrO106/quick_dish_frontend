@@ -1,163 +1,134 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import type { User } from "./User";
 import postEntity from "../../utils/PostEntity";
 import validator from "validator";
 import { showToast } from "../../utils/ShowToast";
 
 function AddUser() {
+  const navigate = useNavigate();
   const [form, setForm] = useState({
-    Id: 0,
     Name: "",
     Email: "",
     Password: "",
     Role: "",
-    CreatedAt: "",
   });
+  const [dropdownOpen, setDropdownOpen] = useState(false);
   const roles = ["Client", "Admin", "Manager", "Courier"];
   const endpointUrl = import.meta.env.VITE_USERS_ENDPOINT;
-  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const handleSelect = (role: string) => {
-    console.log("Selected role:", role);
     setForm({ ...form, Role: role });
-    setDropdownOpen(!dropdownOpen);
+    setDropdownOpen(false);
   };
 
   const handleSave = async () => {
-    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
 
-    if (!form.Name || !form.Email || !form.Password) {
-      showToast("Please fill in all fields", "error");
-      return;
-    }
-
-    if (!passwordPattern.test(form.Password)) {
-      showToast("Invalid password", "error");
-      return;
+    if (!form.Name || !form.Email || !form.Password || !form.Role) {
+      return showToast("Please fill in all fields", "error");
     }
 
     if (!validator.isEmail(form.Email)) {
-      showToast("Invalid email", "error");
-      return;
+      return showToast("Invalid email", "error");
     }
-    const data = await postEntity<User>(`${endpointUrl}`, form);
-    if (data === null) {
-      showToast("Null data", "error");
-    } else {
-      showToast("User added successfully", "success");
 
-      setTimeout(() => {
-        window.history.back();
-      }, 1000);
+    if (!passwordPattern.test(form.Password)) {
+      return showToast(
+        "Password must be at least 8 chars, include upper, lower, number, special char.",
+        "error"
+      );
+    }
+
+    try {
+      const created = await postEntity<Partial<User>>(endpointUrl, form);
+      if (!created) return showToast("Failed to create user", "error");
+
+      showToast("User added successfully", "success");
+      navigate(-1);
+    } catch (err) {
+      console.error(err);
+      showToast("Unexpected error", "error");
     }
   };
 
   return (
-    <>
-      <div className="min-h-screen bg-[var(--color-secondary)] flex items-center justify-center px-4 flex-col">
-        <div className="text-center max-w-xl text-[var(--text-light)] space-y-6">
-          <h2 className="text-6xl font-extrabold tracking-tight leading-tight drop-shadow-lg">
-            Create User
-          </h2>
-        </div>
-        <div className="max-w-2xl w-full p-8 bg-[var(--color-secondary)]/20 backdrop-blur-md rounded-2xl shadow-2xl">
-          <div>
-            <label className="block mb-2 text-md font-medium text-[var(--text-dark)]">
-              User Name
-              <input
-                className="w-full p-3 mb-4 rounded-xl border-2 border-white/30 bg-white/10 placeholder-white/70 text-[var(--text-dark)] focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 transition"
-                name="name"
-                value={form.Name}
-                onChange={(e) => setForm({ ...form, Name: e.target.value })}
-              />
-            </label>
-          </div>
+    <div className="min-h-screen bg-[var(--color-secondary)] flex flex-col items-center px-4">
+      <h2 className="text-6xl font-extrabold text-[var(--text-light)] mb-6">
+        Create User
+      </h2>
 
-          <div>
-            <label className="block mb-2 text-md font-medium text-[var(--text-dark)]">
-              Email
-              <input
-                className="w-full p-3 mb-4 rounded-xl border-2 border-white/30 bg-white/10 placeholder-white/70 text-[var(--text-dark)] focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 transition"
-                name="email"
-                type="email"
-                value={form.Email}
-                onChange={(e) => setForm({ ...form, Email: e.target.value })}
-              />
-            </label>
-          </div>
+      <div className="max-w-2xl w-full p-8 bg-[var(--color-secondary)]/20 rounded-2xl shadow-2xl">
+        <label className="block mb-4 text-md text-[var(--text-dark)]">
+          User Name
+          <input
+            className="w-full p-3 rounded-xl border bg-white/10"
+            value={form.Name}
+            onChange={(e) => setForm({ ...form, Name: e.target.value })}
+          />
+        </label>
 
-          <div>
-            <label className="block mb-2 text-md font-medium text-[var(--text-dark)]">
-              Role
-            </label>
-            <button
-              onClick={() => setDropdownOpen(!dropdownOpen)}
-              className="px-3 py-3 mb-4 rounded-xl border-2 border-white/30 bg-white/10 placeholder-white/70 text-[var(--text-dark)] focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 transition"
-            >
-              {form.Role || "Select Role"}
-              <svg
-                className="w-2.5 h-2.5 ms-3"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 10 6"
-              >
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="m1 1 4 4 4-4"
-                />
-              </svg>
-            </button>
-            {dropdownOpen && (
-              <div className="absolute mt-2 z-50 bg-[var(--color-secondary)] rounded-lg shadow w-44">
-                <ul className="py-2 text-sm ">
-                  {roles.map((role) => (
-                    <li key={role}>
-                      <button
-                        onClick={() => handleSelect(role)}
-                        className="block w-full px-4 py-2 text-left hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-[var(--text-dark)]"
-                      >
-                        {role}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </div>
+        <label className="block mb-4 text-md text-[var(--text-dark)]">
+          Email
+          <input
+            type="email"
+            className="w-full p-3 rounded-xl border bg-white/10"
+            value={form.Email}
+            onChange={(e) => setForm({ ...form, Email: e.target.value })}
+          />
+        </label>
 
-          <div>
-            <label className="block mb-2 text-md font-medium text-[var(--text-dark)]">
-              Password
-              <input
-                className="w-full p-3 mb-4 rounded-xl border-2 border-white/30 bg-white/10 placeholder-white/70 text-[var(--text-dark)] focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 transition"
-                name="password"
-                type="password"
-                value={form.Password}
-                onChange={(e) => setForm({ ...form, Password: e.target.value })}
-              />
-            </label>
-          </div>
-        </div>
-        <div>
+        <label className="block mb-4 text-md text-[var(--text-dark)]">
+          Role
           <button
-            className="px-6 py-3 text-[var(--text-light)] bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
-            onClick={handleSave}
+            onClick={() => setDropdownOpen(!dropdownOpen)}
+            className="w-full p-3 rounded-xl border bg-white/10 flex justify-between"
           >
-            Save
+            {form.Role || "Select Role"}
+            <span>▼</span>
           </button>
-          <button
-            className="px-6 py-3 text-[var(--text-light)] bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
-            onClick={() => window.history.back()}
-          >
-            Back
-          </button>
-        </div>
+          {dropdownOpen && (
+            <ul className="mt-2 bg-[var(--color-secondary)] rounded shadow">
+              {roles.map((role) => (
+                <li key={role}>
+                  <button
+                    onClick={() => handleSelect(role)}
+                    className="block w-full px-4 py-2 text-left hover:bg-gray-200"
+                  >
+                    {role}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
+        </label>
+
+        <label className="block mb-4 text-md text-[var(--text-dark)]">
+          Password
+          <input
+            type="password"
+            className="w-full p-3 rounded-xl border bg-white/10"
+            value={form.Password}
+            onChange={(e) => setForm({ ...form, Password: e.target.value })}
+          />
+        </label>
       </div>
-    </>
+
+      <div className="mt-6 flex gap-4">
+        <button
+          onClick={handleSave}
+          className="px-6 py-3 text-[var(--text-light)] bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+        >
+          Save
+        </button>
+        <button
+          onClick={() => navigate(-1)}
+          className="px-6 py-3 text-[var(--text-light)] bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
+        >
+          Back
+        </button>
+      </div>
+    </div>
   );
 }
 export default AddUser;

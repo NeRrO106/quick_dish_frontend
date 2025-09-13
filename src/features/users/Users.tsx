@@ -9,72 +9,70 @@ function Users() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const endpointUrl = import.meta.env.VITE_USERS_ENDPOINT;
+
   const { data, isLoading, isError, error } = useQuery<User[] | null>({
     queryKey: ["users"],
     queryFn: () => getEntity<User[]>(endpointUrl),
   });
 
   const handleDelete = async (id: number) => {
-    showToast("User deleted successfully", "success");
-    await deleteEntity(endpointUrl, id);
-    queryClient.invalidateQueries({ queryKey: ["users"] });
+    try {
+      await deleteEntity(endpointUrl, id);
+      showToast("User deleted successfully", "success");
+      queryClient.invalidateQueries({ queryKey: ["users"] });
+    } catch (err) {
+      console.error(err);
+      showToast("Error deleting user", "error");
+    }
   };
 
   if (isLoading) return <p>Loading....</p>;
   if (isError) return <p>Error: {(error as Error).message}</p>;
 
   return (
-    <div className="min-h-screen bg-[var(--color-secondary)] flex items-center justify-center px-4 flex-col">
-      <div className="text-center max-w-xl text-[var(--text-light)] space-y-6">
+    <div className="min-h-screen bg-[var(--color-secondary)] flex flex-col items-center px-4">
+      <div className="text-center text-[var(--text-light)] mb-6">
+        <h1 className="text-6xl font-extrabold mb-4">Users</h1>
         <button
           onClick={() => navigate("/users/add")}
-          className="text-[var(--text-light)] bg-[var(--color-accent3)] hover:bg-[var(--color-darker-accent3)] font-medium rounded-full text-sm px-3 py-3 transition"
+          className="bg-[var(--color-accent3)] hover:bg-[var(--color-darker-accent3)] px-4 py-2 rounded-full transition"
         >
           Add User
         </button>
-        <h1 className="text-6xl font-extrabold tracking-tight leading-tight drop-shadow-lg">
-          Users
-        </h1>
       </div>
-      <ul className="flex flex-wrap justify-center items-center mt-8 space-x-4 rtl:space-x-reverse">
+
+      <ul className="flex flex-wrap justify-center gap-4">
         {data?.map((user) => (
           <li
             key={user.Id}
-            className="w-64 p-2 border border-gray-200 rounded-lg shadow-sm bg-[var(--color-accent2)] border-[var(--color-secondary)] mb-4"
+            className="w-64 p-4 bg-[var(--color-accent2)] rounded-lg shadow"
           >
-            <p className="text-xl text-center font-semibold text-[var(--text-light)] mb-2">
-              {user.Name}
-            </p>
-            <p className="text-sm text-center font-medium text-[var(--text-light)] mb-2">
-              {user.Email}
-            </p>
-            <p className="text-sm text-center font-medium text-[var(--text-light)] mb-2">
-              {user.Role}
-            </p>
-            <p className="text-xl font-bold text-[var(--text-light)] text-center mb-2">
+            <p className="text-lg font-semibold text-center">{user.Name}</p>
+            <p className="text-sm text-center">{user.Email}</p>
+            <p className="text-sm text-center">{user.Role}</p>
+            <p className="text-sm text-center">
               {new Date(user.CreatedAt).toLocaleDateString()}
             </p>
-            <div className="flex gap-2 justify-center">
+            <div className="flex gap-2 mt-3 justify-center">
               <button
                 onClick={() => navigate(`/users/${user.Id}`)}
                 className="text-[var(--text-dark)] bg-[var(--color-accent1)] hover:bg-[var(--color-accent3)] font-medium rounded-full text-sm px-3 py-3 transition"
               >
-                Edit User
+                Edit
               </button>
               <button
                 onClick={() => handleDelete(user.Id)}
-                className="text-[var(--text-dark)] bg-red-700 hover:bg-red-900 font-medium rounded-full text-sm px-3 py-3 transition"
+                className="px-3 py-2 bg-red-700 text-white rounded-full hover:bg-red-900 transition"
               >
-                Delete User
+                Delete
               </button>
             </div>
           </li>
         ))}
       </ul>
+
       {data?.length === 0 && (
-        <p className="text-lg md:text-xl font-light text-[var(--text-dark)]">
-          No users available.
-        </p>
+        <p className="text-lg text-[var(--text-dark)]">No users available.</p>
       )}
     </div>
   );
