@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useCurrentUser } from "../hooks/useCurrentUser";
 
 export const RouteProtector = ({
   children,
@@ -8,19 +9,21 @@ export const RouteProtector = ({
   children: React.ReactNode;
   allowedRoles?: string[];
 }) => {
-  const user = JSON.parse(localStorage.getItem("user") || "{}");
-  const isAuthenticated = !!user?.Role;
+  const { data: user, isLoading } = useCurrentUser();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!isAuthenticated) {
-      navigate("/login");
-    } else if (allowedRoles && !allowedRoles.includes(user.Role)) {
-      navigate("/");
-    }
-  }, [isAuthenticated, user.Role, allowedRoles, navigate]);
+    if (isLoading) return;
 
-  if (!isAuthenticated) return null;
+    if (!user?.Role) {
+      navigate("/login", { replace: true });
+    } else if (allowedRoles && !allowedRoles.includes(user.Role)) {
+      navigate("/", { replace: true });
+    }
+  }, [user, isLoading, allowedRoles, navigate]);
+
+  if (isLoading) return null;
+  if (!user?.Role) return null;
   if (allowedRoles && !allowedRoles.includes(user.Role)) return null;
 
   return <>{children}</>;

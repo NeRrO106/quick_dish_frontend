@@ -25,7 +25,7 @@ function AuthRedirect() {
         navigate("/login", { state: { from: location }, replace: true });
       }
     } else if (["Client", "Guest"].includes(data.Role) && isPublic) {
-      navigate("/about", { replace: true });
+      navigate("/menu", { replace: true });
     }
   }, [data, isLoading, location, navigate]);
   return null;
