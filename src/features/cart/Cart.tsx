@@ -12,12 +12,18 @@ function Cart() {
   const handleIncrede = (id: number) => {
     const item = cart.find((p) => p.id === id);
     if (item) addToCart(id, 1, item.price, item.name);
+    showToast("One more product added", "success");
   };
 
   const handleDecrese = (id: number) => {
     const item = cart.find((p) => p.id === id);
-    if (item && item.quantity > 1) addToCart(id, -1, item.price, item.name);
-    else removeFromCart(id);
+    if (item && item.quantity > 1) {
+      addToCart(id, -1, item.price, item.name);
+      showToast("One product removed", "warning");
+    } else {
+      removeFromCart(id);
+      showToast("Product removed from cart", "error");
+    }
   };
 
   const handleFinishOrder = () => {

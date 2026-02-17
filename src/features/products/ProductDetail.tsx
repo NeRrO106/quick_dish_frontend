@@ -5,6 +5,7 @@ import { useCart } from "../cart/useCart";
 import getEntity from "../../utils/GetEntity";
 import type { Product } from "./Product";
 import { showToast } from "../../utils/ShowToast";
+import Loading from "../../components/Loading";
 
 function ProductDetail() {
   const { addToCart } = useCart();
@@ -27,21 +28,22 @@ function ProductDetail() {
     showToast("Product added to cart!", "success");
   };
 
-  if (isLoading) return <p>Loading...</p>;
-  if (isError) return <p>Error: {(error as Error).message}</p>;
-  if (!data) return <p>Product not found.</p>;
+  if (isLoading) return <Loading message="Loading product details..." />;
+  if (isError)
+    return <Loading message={`Error: ${(error as Error).message}`} />;
+  if (!data) return <Loading message="Product not found." />;
 
   return (
-    <div className="min-h-[calc(100vh-80px)] max-w mx-auto p-6 bg-[var(--color-secondary)] shadow-2xl flex flex-col md:flex-row gap-8">
-      <div className="flex-1 relative group overflow-hidden rounded-xl">
+    <div className="min-h-[calc(100vh-166px)] max-w mx-auto p-6 bg-[var(--color-secondary)] shadow-2xl flex flex-col md:flex-row gap-8">
+      <div className="flex-1 relative group overflow-hidden rounded-xl flex items-center justify-center">
         <img
           src={data?.ImageUrl}
           alt={data?.Name}
-          className="w-full h-auto object-cover rounded-xl transform transition-transform duration-500 group-hover:scale-105"
+          className="max-h-[700px] max-w-[700px] object-cover rounded-xl transform transition-transform duration-500 group-hover:scale-105"
         />
       </div>
 
-      <div className="flex-1 flex flex-col justify-between gap-6">
+      <div className="flex-1 flex flex-col gap-3">
         <div>
           <h1 className="text-4xl font-extrabold text-[var(--text-dark)]">
             {data?.Name}
@@ -54,7 +56,7 @@ function ProductDetail() {
           </p>
         </div>
 
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-10">
           <div className="flex items-center gap-4">
             <button
               onClick={() => handleQuantity(-1)}

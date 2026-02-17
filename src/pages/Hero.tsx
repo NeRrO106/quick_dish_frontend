@@ -10,7 +10,7 @@ function Hero() {
       "user",
       JSON.stringify({ Name: "Guest", Role: "Guest" })
     );
-    navigate("/about");
+    navigate("/menu");
   };
 
   return (

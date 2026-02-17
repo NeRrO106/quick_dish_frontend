@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import type { Order } from "./Order";
 import getEntity from "../../utils/GetEntity";
+import Loading from "../../components/Loading";
 
 function MyOrder() {
   const { id } = useParams();
@@ -12,12 +13,10 @@ function MyOrder() {
     queryFn: () => getEntity<Order[]>(`${endpointUrl}orders/${id}`),
   });
 
-  if (isLoading) return <p>Loading...</p>;
-  if (isError) return <p>Error: {(error as Error).message}</p>;
-  if (!data || data.length === 0)
-    return (
-      <p className="text-lg md:text-xl font-light text-white">No orders.</p>
-    );
+  if (isLoading) return <Loading message="Loading..." />;
+  if (isError)
+    return <Loading message={`Error: ${(error as Error).message}`} />;
+  if (!data || data.length === 0) return <Loading message="No orders." />;
 
   return (
     <div className="min-h-screen bg-[var(--color-secondary)] flex flex-col items-center px-4">
@@ -29,46 +28,42 @@ function MyOrder() {
         {data.map((order) => (
           <li
             key={order.Id}
-            className="w-64 p-4 rounded-lg shadow-sm bg-[var(--color-accent2)] border border-[var(--color-secondary)]"
+            className="w-64 p-4 rounded-lg shadow-md bg-[var(--color-accent2)] border border-[var(--color-secondary)] hover:shadow-xl transition-shadow"
           >
-            <p>Order #{order.Id}</p>
-            <p className="text-xl font-semibold text-[var(--text-dark)]">
-              Name: {order.UserName}
-            </p>
-            <p className="text-xl font-semibold text-[var(--text-dark)]">
-              Courier: {order.CourierName || "N/A"}
-            </p>
-            <p className="text-md font-semibold text-[var(--text-dark)]">
-              Address: {order.Address}
-            </p>
-            <p className="text-md font-semibold text-[var(--text-dark)]">
-              Notes: {order.Notes || "—"}
-            </p>
-            <p className="text-md font-semibold text-[var(--text-dark)]">
-              Status: {order.Status}
-            </p>
-            <p className="text-sm font-semibold text-[var(--text-dark)]">
-              Payment: {order.PaymentMethod}
-            </p>
-            <p className="text-sm font-semibold text-[var(--text-dark)]">
-              Phone: {order.PhoneNumber}
-            </p>
-            <p className="text-md font-bold text-[var(--text-light)]">
-              Total: {order.TotalAmount.toFixed(2)} lei
-            </p>
+            <div className="mb-2">
+              <p className="text-sm font-medium text-[var(--text-dark)]">
+                Order #{order.Id} — Status: {order.Status}
+              </p>
+              <p className="text-lg font-bold text-[var(--text-dark)]">
+                {order.UserName}
+              </p>
+            </div>
 
-            <h3 className="mt-2 font-bold">Products:</h3>
-            <ul className="space-y-1">
-              {order.Items.map((item) => (
-                <li
-                  key={item.Id}
-                  className="text-sm font-semibold text-[var(--text-dark)]"
-                >
-                  {item.ProductName} — {item.Quantity} × {item.UnitPrice} lei ={" "}
-                  {item.TotalPrice} lei
-                </li>
-              ))}
-            </ul>
+            <div className="text-sm text-[var(--text-dark)] space-y-1 mb-2">
+              <p>Courier: {order.CourierName || "N/A"}</p>
+              <p>Address: {order.Address}</p>
+              <p>Notes: {order.Notes || "—"}</p>
+              <p>Payment: {order.PaymentMethod}</p>
+              <p>Phone: {order.PhoneNumber}</p>
+              <p>Total: {order.TotalAmount.toFixed(2)} lei</p>
+            </div>
+
+            <div>
+              <h3 className="font-semibold mb-1">Products:</h3>
+              <ul className="space-y-1">
+                {order.Items.map((item) => (
+                  <li
+                    key={item.Id}
+                    className="text-sm text-[var(--text-dark)] flex justify-between"
+                  >
+                    <span>
+                      {item.ProductName} × {item.Quantity}
+                    </span>
+                    <span>{item.TotalPrice} lei</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </li>
         ))}
       </ul>

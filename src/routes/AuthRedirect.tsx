@@ -24,10 +24,14 @@ function AuthRedirect() {
       if (!isPublic) {
         navigate("/login", { state: { from: location }, replace: true });
       }
-    } else if (["Client", "Guest"].includes(data.Role) && isPublic) {
+      return;
+    }
+
+    if (data.Role === "Client" && isPublic) {
       navigate("/menu", { replace: true });
     }
   }, [data, isLoading, location, navigate]);
+
   return null;
 }
 export default AuthRedirect;
