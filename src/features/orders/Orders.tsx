@@ -6,12 +6,13 @@ import { showToast } from "../../utils/ShowToast";
 import axios from "axios";
 import { useCurrentUser } from "../../hooks/useCurrentUser";
 import { useState } from "react";
+import Loading from "../../components/Loading";
 
 function Orders() {
   const { data: user } = useCurrentUser();
   const queryClient = useQueryClient();
   const [deliveryCode, setDeliveryCode] = useState<Record<number, number | "">>(
-    {}
+    {},
   );
 
   const endpointUrl = import.meta.env.VITE_ORDERS_ENDPOINT;
@@ -78,14 +79,12 @@ function Orders() {
     return true;
   });
 
-  if (isLoading) return <p>Loading...</p>;
-  if (isError) return <p>Error: {(error as Error).message}</p>;
+  if (isLoading) return <Loading message="Loading..." />;
+  if (isError)
+    return <Loading message={`Error: ${(error as Error).message}`} />;
   if (!visibleOrders || visibleOrders.length === 0)
-    return (
-      <p className="text-lg md:text-xl font-light text-white">
-        No orders available
-      </p>
-    );
+    return <Loading message={`Error: No orders available`} />;
+
   return (
     <div className="min-h-screen bg-[var(--color-secondary)] flex flex-col items-center px-4">
       <h1 className="text-6xl font-extrabold tracking-tight text-[var(--text-light)] drop-shadow-lg mt-8">

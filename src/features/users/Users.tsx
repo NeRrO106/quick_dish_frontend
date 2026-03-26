@@ -4,6 +4,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import type { User } from "./User";
 import { useNavigate } from "react-router-dom";
 import { showToast } from "../../utils/ShowToast";
+import Loading from "../../components/Loading";
 
 function Users() {
   const navigate = useNavigate();
@@ -26,8 +27,9 @@ function Users() {
     }
   };
 
-  if (isLoading) return <p>Loading....</p>;
-  if (isError) return <p>Error: {(error as Error).message}</p>;
+  if (isLoading) return <Loading message="Loading..." />;
+  if (isError)
+    return <Loading message={`Error: ${(error as Error).message}`} />;
 
   return (
     <div className="min-h-screen bg-[var(--color-secondary)] flex flex-col items-center px-4">
