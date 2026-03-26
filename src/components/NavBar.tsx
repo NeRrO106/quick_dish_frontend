@@ -38,7 +38,7 @@ function NavBar() {
 
   const handleSignOut = async () => {
     try {
-      await postEntity(`${endpointUrl}/logout`, {});
+      await postEntity(`${endpointUrl}logout`, {});
       localStorage.removeItem("user");
       queryClient.removeQueries({ queryKey: ["currentUser"] });
       setIsDropdownOpen(false);

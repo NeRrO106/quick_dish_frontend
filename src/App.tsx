@@ -167,7 +167,6 @@ function App() {
                 <Route path="*" element={<NoPage />} />
               </Routes>
             </main>
-
             <Footer />
           </div>
         </BrowserRouter>

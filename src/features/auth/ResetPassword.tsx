@@ -28,7 +28,7 @@ function ForgotPassword() {
     ) {
       showToast(
         "Password must be at least 8 characters long (uppercase, lowercase, numbers, special characters, etc.)",
-        "error"
+        "error",
       );
       return;
     }

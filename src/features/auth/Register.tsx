@@ -28,7 +28,7 @@ function Register() {
     ) {
       showToast(
         "Password must be at least 8 characters long and include uppercase, lowercase, numbers, and special characters.",
-        "error"
+        "error",
       );
       return;
     }
