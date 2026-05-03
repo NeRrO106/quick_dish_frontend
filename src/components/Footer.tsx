@@ -6,7 +6,17 @@ function Footer() {
           <p className="text-md">
             &copy; {new Date().getFullYear()} Quick Dish. All rights reserved.
           </p>
-          <p className="text-sm">Made by NeRrO</p>
+          <div className="text-[10px] tracking-wider uppercase">
+              <span className="opacity-40 text-stone-500">Design de</span>{" "}
+              <a
+                href="https://candystudio.netlify.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-stone-300 font-medium hover:text-white transition-colors"
+              >
+                Candy Studio
+              </a>
+            </div>
         </div>
 
         <div className="flex gap-4">
