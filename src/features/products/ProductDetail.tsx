@@ -25,13 +25,13 @@ function ProductDetail() {
   const handleAddToCart = () => {
     if (!data) return;
     addToCart(data.Id, quantity, data.Price, data.Name);
-    showToast("Product added to cart!", "success");
+    showToast("Produs adăugat în coș cu succes!", "success");
   };
 
-  if (isLoading) return <Loading message="Loading product details..." />;
+  if (isLoading) return <Loading message="Se încarcă detalii produs..." />;
   if (isError)
     return <Loading message={`Error: ${(error as Error).message}`} />;
-  if (!data) return <Loading message="Product not found." />;
+  if (!data) return <Loading message="Produsul nu a fost găsit." />;
 
   return (
     <div className="min-h-[calc(100vh-166px)] max-w mx-auto p-6 bg-[var(--color-secondary)] shadow-2xl flex flex-col md:flex-row gap-8">

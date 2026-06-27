@@ -41,7 +41,7 @@ function Cart() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[var(--color-secondary)]">
         <p className="text-center text-xl text-[var(--text-dark)]">
-          Cart is empty
+          Coșul este gol
         </p>
       </div>
     );
@@ -49,7 +49,7 @@ function Cart() {
   return (
     <div className="min-h-screen flex flex-col bg-[var(--color-secondary)] px-4">
       <h1 className="text-3xl font-extrabold text-center text-[var(--text-dark)] mb-6">
-        Your Cart
+        Coșul tău
       </h1>
 
       <div className="flex-grow w-full max-w-screen-xl mx-auto flex flex-col gap-6">
@@ -61,7 +61,7 @@ function Cart() {
             >
               <div className="flex-1 w-full">
                 <p className="font-semibold text-lg">
-                  Produs Name: {item.name}
+                  Nume Produs: {item.name}
                 </p>
                 <p className="text-gray-700">Cantitate: {item.quantity}</p>
                 <p className="text-gray-700">Preț unitar: {item.price} lei</p>

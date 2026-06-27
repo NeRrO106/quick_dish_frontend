@@ -79,11 +79,11 @@ function Orders() {
     return true;
   });
 
-  if (isLoading) return <Loading message="Loading..." />;
+  if (isLoading) return <Loading message="Se încarcă..." />;
   if (isError)
     return <Loading message={`Error: ${(error as Error).message}`} />;
   if (!visibleOrders || visibleOrders.length === 0)
-    return <Loading message={`Error: No orders available`} />;
+    return <Loading message={`Error: Nu există comenzi disponibile`} />;
 
   return (
     <div className="min-h-screen bg-[var(--color-secondary)] flex flex-col items-center px-4">

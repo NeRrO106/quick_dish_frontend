@@ -29,12 +29,12 @@ function FinishOrder() {
 
   const handleFinishOrder = async () => {
     if (!formData.address || !formData.phone) {
-      return showToast("Address and phone number are required.", "error");
+      return showToast("Adresa și numărul de telefon sunt obligatorii.", "error");
     }
     if (!/^(?:\+40|0)?7\d{2}[-\s]?\d{3}[-\s]?\d{3}$/.test(formData.phone)) {
-      return showToast("Invalid phone number", "error");
+      return showToast("Număr de telefon invalid", "error");
     }
-    if (cart.length === 0) return showToast("Cart is empty", "error");
+    if (cart.length === 0) return showToast("Coșul este gol", "error");
 
     const orderData = {
       UserId: user?.Id,
@@ -53,16 +53,16 @@ function FinishOrder() {
     };
 
     setLoading(true);
-    showToast("Placing your order...", "warning");
+    showToast("Se plasează comanda...", "warning");
 
     try {
       await postEntity(endpoint, orderData);
       localStorage.removeItem("cart");
-      showToast("Order placed successfully!", "success");
+      showToast("Comanda plasată cu succes!", "success");
       navigate("/", { replace: true });
     } catch (err) {
       console.error("Error placing order:", err);
-      showToast("An error occurred while placing your order.", "error");
+      showToast("A apărut o eroare la plasarea comenzii.", "error");
     } finally {
       setLoading(false);
     }
