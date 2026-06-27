@@ -102,7 +102,7 @@ function Cart() {
           onClick={handleFinishOrder}
           className="flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-[var(--color-accent2)] text-[var(--text-light)] font-medium shadow-xl hover:scale-105 transition-transform duration-200 w-full md:w-auto mx-auto"
         >
-          Finish Order
+          Finalizează Comanda
         </button>
       </div>
     </div>

@@ -62,7 +62,7 @@ function Menu() {
     <div className="min-h-screen bg-[var(--color-secondary)] flex items-center justify-center px-4 flex-col">
       <div className="text-center max-w-xl text-[var(--text-dark)] space-y-6">
         <h1 className="text-6xl font-extrabold tracking-tight leading-tight drop-shadow-lg">
-          Menu Page
+          Pagina Meniu
         </h1>
       </div>
       <div className="flex flex-wrap justify-center gap-4 mt-8">
@@ -71,7 +71,7 @@ function Menu() {
           onChange={(e) => setSelectedCategory(e.target.value)}
           className="p-2 rounded-lg bg-[var(--color-accent2)] text-[var(--text-dark)] hover:scale-105 transition"
         >
-          <option value="all">All Categories</option>
+          <option value="all">Toate categoriile</option>
           <option value="Pizza">Pizza</option>
           <option value="Burgeri">Burgeri</option>
           <option value="Salate">Salate</option>
@@ -88,11 +88,11 @@ function Menu() {
           onChange={(e) => setSortOption(e.target.value)}
           className="p-2 rounded-lg bg-[var(--color-accent2)] text-[var(--text-dark)]  hover:scale-105 transition"
         >
-          <option value="default">Default</option>
-          <option value="name-asc">Name A → Z</option>
-          <option value="name-desc">Name Z → A</option>
-          <option value="price-asc">Price Low → High</option>
-          <option value="price-desc">Price High → Low</option>
+          <option value="default">Implicit</option>
+          <option value="name-asc">Nume A → Z</option>
+          <option value="name-desc">Nume Z → A</option>
+          <option value="price-asc">Preț Mic → Mare</option>
+          <option value="price-desc">Preț Mare → Mic</option>
         </select>
       </div>
       <ul className="flex flex-wrap justify-center items-center mt-8 space-x-4 rtl:space-x-reverse">
@@ -109,7 +109,7 @@ function Menu() {
                 className="w-full h-36 object-cover rounded-lg mb-3"
               />
             ) : (
-              <div>No image</div>
+              <div>Nu există imagine</div>
             )}
             <p className="text-xl text-center font-semibold text-[var(--text-dark)] mb-2">
               {prod.Name}
@@ -125,7 +125,7 @@ function Menu() {
                 onClick={() => handleViewProduct(prod.Id)}
                 className="text-[var(--text-dark)] bg-[var(--color-accent1)] hover:bg-[var(--color-accent3)] font-medium rounded-full text-sm px-3 py-3 transition"
               >
-                View Product
+                Vezi Produsul
               </button>
               <button
                 onClick={() =>
@@ -133,7 +133,7 @@ function Menu() {
                 }
                 className="text-[var(--text-dark)] bg-[var(--color-accent1)] hover:bg-[var(--color-accent3)] font-medium rounded-full text-sm px-3 py-3 transition"
               >
-                Add to cart
+                Adaugă în coș
               </button>
             </div>
           </li>
@@ -141,7 +141,7 @@ function Menu() {
       </ul>
       {data?.length === 0 && (
         <p className="text-lg md:text-xl font-light text-[var(--text-dark)]">
-          No items available in the menu.
+          Nu există produse în meniu.
         </p>
       )}
     </div>

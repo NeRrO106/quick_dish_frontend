@@ -21,7 +21,7 @@ function MyOrder() {
   return (
     <div className="min-h-screen bg-[var(--color-secondary)] flex flex-col items-center px-4">
       <h1 className="text-6xl font-extrabold tracking-tight text-[var(--text-light)] drop-shadow-lg mt-8">
-        Orders Page
+        Pagina Comenzilor
       </h1>
 
       <ul className="flex flex-wrap justify-center gap-4 mt-8">
@@ -32,7 +32,7 @@ function MyOrder() {
           >
             <div className="mb-2">
               <p className="text-sm font-medium text-[var(--text-dark)]">
-                Order #{order.Id} — Status: {order.Status}
+                Comanda #{order.Id} — Status: {order.Status}
               </p>
               <p className="text-lg font-bold text-[var(--text-dark)]">
                 {order.UserName}
@@ -40,16 +40,16 @@ function MyOrder() {
             </div>
 
             <div className="text-sm text-[var(--text-dark)] space-y-1 mb-2">
-              <p>Courier: {order.CourierName || "N/A"}</p>
-              <p>Address: {order.Address}</p>
-              <p>Notes: {order.Notes || "—"}</p>
-              <p>Payment: {order.PaymentMethod}</p>
-              <p>Phone: {order.PhoneNumber}</p>
+              <p>Curier: {order.CourierName || "N/A"}</p>
+              <p>Adresă: {order.Address}</p>
+              <p>Note: {order.Notes || "—"}</p>
+              <p>Metodă de plată: {order.PaymentMethod}</p>
+              <p>Telefon: {order.PhoneNumber}</p>
               <p>Total: {order.TotalAmount.toFixed(2)} lei</p>
             </div>
 
             <div>
-              <h3 className="font-semibold mb-1">Products:</h3>
+              <h3 className="font-semibold mb-1">Produse:</h3>
               <ul className="space-y-1">
                 {order.Items.map((item) => (
                   <li

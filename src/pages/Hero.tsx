@@ -20,7 +20,7 @@ function Hero() {
           Quick Dish
         </h1>
         <p className="text-lg md:text-xl font-light">
-          For the best experience, you need to log in
+          Pentru cea mai bună experiență, trebuie să te loghezi
         </p>
         <div className="flex justify-center gap-4 flex-wrap">
           <button
@@ -33,7 +33,7 @@ function Hero() {
             className="transition-all duration-300 focus:outline-none text-[var(--text-dark)] bg-[var(--color-accent2)] hover:bg-[var(--color-accent3)] focus:ring-4 focus:ring-yellow-300 font-semibold rounded-lg text-md px-6 py-2 shadow-lg dark:focus:ring-yellow-900"
             onClick={(e) => handleGuest(e)}
           >
-            Continue as Guest
+            Continuă ca oaspete
           </button>
         </div>
       </div>

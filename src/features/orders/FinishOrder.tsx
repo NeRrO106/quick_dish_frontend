@@ -72,13 +72,13 @@ function FinishOrder() {
     <div className="min-h-screen max-w mx-auto p-6 bg-[var(--color-secondary)] shadow-2xl flex flex-col md:flex-row gap-8">
       <div className="flex-1 flex flex-col gap-4">
         <h1 className="text-3xl font-extrabold text-[var(--text-dark)] text-center md:text-left">
-          Complete Your Order
+          Completează Comanda
         </h1>
 
         <div className="flex flex-col gap-4">
           <div>
             <label className="block mb-1 font-semibold text-[var(--text-dark)]">
-              Delivery Address*
+              Adresă de livrare*
             </label>
             <input
               type="text"
@@ -92,7 +92,7 @@ function FinishOrder() {
 
           <div>
             <label className="block mb-1 font-semibold text-[var(--text-dark)]">
-              Phone*
+              Telefon*
             </label>
             <input
               type="tel"
@@ -106,7 +106,7 @@ function FinishOrder() {
 
           <div>
             <label className="block mb-1 font-semibold text-[var(--text-dark)]">
-              Payment Method
+              Metodă de plată
             </label>
             <select
               value={formData.paymentMethod}
@@ -125,7 +125,7 @@ function FinishOrder() {
 
           <div>
             <label className="block mb-1 font-semibold text-[var(--text-dark)]">
-              Additional Notes
+              Note suplimentare
             </label>
             <textarea
               value={formData.notes}
@@ -140,14 +140,14 @@ function FinishOrder() {
 
       <div className="flex-1 flex flex-col gap-4">
         <h2 className="text-2xl font-semibold text-[var(--text-dark)] text-center md:text-left">
-          Cart Items
+          Produse din Coș
         </h2>
         <p className="font-bold text-[var(--text-dark)]">
           Total: {totalAmount()} lei
         </p>
 
         {cart.length === 0 ? (
-          <p className="text-[var(--text-dark)]">Your cart is empty.</p>
+          <p className="text-[var(--text-dark)]">Coșul este gol.</p>
         ) : (
           <ul className="space-y-2 max-h-64 overflow-y-auto">
             {cart.map((item) => (
@@ -170,10 +170,10 @@ function FinishOrder() {
           className="mt-4 w-full px-6 py-3 rounded-lg bg-[var(--color-accent2)] text-[var(--text-light)] font-medium shadow-xl transition hover:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {loading
-            ? "Placing Order..."
+            ? "Plasare comenzi..."
             : cart.length === 0
-            ? "Cart Empty"
-            : "Place Order"}
+            ? "Coș gol"
+            : "Plasare comandă"}
         </button>
       </div>
     </div>

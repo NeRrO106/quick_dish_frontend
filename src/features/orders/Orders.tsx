@@ -88,7 +88,7 @@ function Orders() {
   return (
     <div className="min-h-screen bg-[var(--color-secondary)] flex flex-col items-center px-4">
       <h1 className="text-6xl font-extrabold tracking-tight text-[var(--text-light)] drop-shadow-lg mt-8">
-        Orders
+        Comenzi
       </h1>
 
       <ul className="flex flex-wrap justify-center gap-4 mt-8">
@@ -97,24 +97,24 @@ function Orders() {
             key={order.Id}
             className="w-64 p-4 rounded-lg shadow-sm bg-[var(--color-accent2)] border border-[var(--color-secondary)]"
           >
-            <p>Order #{order.Id}</p>
+            <p>Comanda #{order.Id}</p>
             <p className="text-xl font-semibold text-[var(--text-dark)]">
-              User: {order.UserName}
+              Utilizator: {order.UserName}
             </p>
             <p className="text-xl font-semibold text-[var(--text-dark)]">
-              Courier: {order.CourierName ?? "N/A"}
+              Curier: {order.CourierName ?? "N/A"}
             </p>
             <p className="text-md font-semibold text-[var(--text-dark)]">
-              Address: {order.Address}
+              Adresă: {order.Address}
             </p>
             <p className="text-md font-semibold text-[var(--text-dark)]">
-              Notes: {order.Notes || "—"}
+              Note: {order.Notes || "—"}
             </p>
 
             {user?.Role === "Manager" ? (
               <>
                 <p className="text-md font-semibold text-[var(--text-dark)]">
-                  Status: {order.Status}
+                  Stare: {order.Status}
                 </p>
 
                 <div className="flex gap-2 my-2">
@@ -149,7 +149,7 @@ function Orders() {
                     onClick={() => handleTakeOrder(order.Id)}
                     className="mt-2 px-4 py-2 bg-[var(--color-accent1)] text-[var(--text-dark)] rounded hover:bg-[var(--color-accent3)]"
                   >
-                    Take order
+                    Acceptă comanda
                   </button>
                 )}
                 {order.Status === "Taken" &&
@@ -157,7 +157,7 @@ function Orders() {
                     <>
                       <input
                         type="number"
-                        placeholder="Enter delivery code"
+                        placeholder="Introduceți codul de livrare"
                         value={deliveryCode[order.Id] ?? ""}
                         onChange={(e) =>
                           setDeliveryCode((prev) => ({
@@ -171,7 +171,7 @@ function Orders() {
                         onClick={() => handleDeliverOrder(order.Id)}
                         className="mt-2 px-4 py-2 bg-[var(--color-accent1)] text-[var(--text-dark)] rounded hover:bg-[var(--color-accent3)]"
                       >
-                        Mark delivered
+                        Marchează ca livrat
                       </button>
                     </>
                   )}
@@ -179,16 +179,16 @@ function Orders() {
             )}
 
             <p className="text-sm font-semibold text-[var(--text-dark)]">
-              Payment: {order.PaymentMethod}
+              Metodă de plată: {order.PaymentMethod}
             </p>
             <p className="text-sm font-semibold text-[var(--text-dark)]">
-              Phone: {order.PhoneNumber}
+              Telefon: {order.PhoneNumber}
             </p>
             <p className="text-sm font-semibold text-[var(--text-dark)]">
               Total: {order.TotalAmount.toFixed(2)} lei
             </p>
 
-            <h3 className="mt-2 font-bold">Products:</h3>
+            <h3 className="mt-2 font-bold">Produse:</h3>
             <ul className="space-y-1">
               {order.Items.map((item) => (
                 <li
